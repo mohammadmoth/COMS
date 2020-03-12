@@ -11,6 +11,28 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/app','vuejsAppController@app');
+
+Route::resource('api/tags', 'TagsController');
+Route::resource('api/Sponsors', 'SponsorsController');
+Route::resource('api/Hasfromsponsors', 'HasfromsponsorsController');
+Route::resource('api/Medicines', 'MedicinesController');
+Route::resource('api/Children', 'ChildrenController');
+
+
+
+
+
+
+
+
+
+//////////////////////vuejs
+Route::get('/{all}','vuejsAppController@index')->where("all",".*");
+Route::get('login', function () {
+})->name("login");
+
+
+
+
+
