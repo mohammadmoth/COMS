@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\children;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ChildrenController extends Controller
 {
     /**
@@ -101,11 +102,10 @@ class ChildrenController extends Controller
     {
         if ( !is_numeric($id))
         return response()->json(['error'=>true]);
-         $child = $children->whereId($id)->first();
-
-           if ( $child == null ) return response()->json(['error'=>true]);
-            else
-           return response()->json(['error'=>false, "data"=> $child]);
+        $child = $children->whereId($id)->first();
+        if ( $child == null ) return response()->json(['error'=>true]);
+        else
+        return response()->json(['error'=>false, "data"=> $child]);
         //
     }
 
