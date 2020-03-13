@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\children;
+use App\Childrens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-class ChildrenController extends Controller
+class ChildrensController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,14 @@ class ChildrenController extends Controller
      */
     public function index()
     {
-        return response()->json(['error'=>false , "data" => children::get()]);
+        return response()->json(['error'=>false , "data" => Childrens::get()]);
 
         //
     }
 
     public function __construct()
     {
-        $this->middleware('auth');
+  //      $this->middleware('auth');
     }
 
 
@@ -59,23 +59,23 @@ class ChildrenController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $children = new children();
-            $children->firstname = $request->input("firstname");
-            $children->lastname = $request->input("lastname");
-            $children->mothername = $request->input("mothername");
-            $children->father = $request->input("father");
-            $children->mobilephone = $request->input("mobilephone");
+            $Childrens = new Childrens();
+            $Childrens->firstname = $request->input("firstname");
+            $Childrens->lastname = $request->input("lastname");
+            $Childrens->mothername = $request->input("mothername");
+            $Childrens->father = $request->input("father");
+            $Childrens->mobilephone = $request->input("mobilephone");
 
-            $children->phone = $request->input("phone");
+            $Childrens->phone = $request->input("phone");
 
-            $children->birthplace = $request->input("birthplace");
-            $children->birthday = $request->input("birthday");
-            $children->extradata = $request->input("extradata");
+            $Childrens->birthplace = $request->input("birthplace");
+            $Childrens->birthday = $request->input("birthday");
+            $Childrens->extradata = $request->input("extradata");
 
-            $children->save();
+            $Childrens->save();
 
                     return response()->json([
-                        'error' => 0 ,"data"=> $children
+                        'error' => 0 ,"data"=> $Childrens
                     ]);
 
 
@@ -94,28 +94,38 @@ class ChildrenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\children  $children
+     * @param  \App\Childrens  $Childrens
      * @return \Illuminate\Http\Response
      */
-    public function show(children $children , $id)
+    public function show(Request $request ,Childrens $Childrens ,$id )
     {
-        if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
-         $child = $children->whereId($id)->first();
+        $request["id"] = $id ;
+        $validator = Validator::make($request->all(), [
+            'id' => 'exists:childrens,id',
+        ]);
 
-           if ( $child == null ) return response()->json(['error'=>true]);
-            else
-           return response()->json(['error'=>false, "data"=> $child]);
-        //
+        if ($validator->passes()) {
+
+            return response()->json(['error'=>false, "data"=>$Childrens->whereId($request->id)->first()]);
+        }
+        else {
+
+            return response()->json([
+                'error' => 1,
+                'data' => $validator->errors()
+                    ->all()
+            ]);
+
+            }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\children  $children
+     * @param  \App\Childrens  $Childrens
      * @return \Illuminate\Http\Response
      */
-    public function edit(children $children)
+    public function edit(Childrens $Childrens)
     {
 
 
@@ -126,14 +136,14 @@ class ChildrenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\children  $children
+     * @param  \App\Childrens  $Childrens
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, children $children , $id)
+    public function update(Request $request, Childrens $Childrens , $id)
     {
         $request->input["id"]=$id;
         $validator = Validator::make($request->all(), [
-            'id'=>"exists:children,id",
+            'id'=>"exists:childrens,id",
             'firstname'=>"required|string",
             'lastname' =>"required|string",
             'mothername'=>"required|string",
@@ -148,18 +158,18 @@ class ChildrenController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $children = $children->whereId("id",$id );
-            $children->firstname = $request->input("firstname");
-            $children->lastname = $request->input("lastname");
-            $children->mothername = $request->input("mothername");
-            $children->father = $request->input("father");
-            $children->mobilephone = $request->input("mobilephone");
+            $Childrens = $Childrens->whereId("id",$id );
+            $Childrens->firstname = $request->input("firstname");
+            $Childrens->lastname = $request->input("lastname");
+            $Childrens->mothername = $request->input("mothername");
+            $Childrens->father = $request->input("father");
+            $Childrens->mobilephone = $request->input("mobilephone");
 
-            $children->phone = $request->input("phone");
+            $Childrens->phone = $request->input("phone");
 
-            $children->birthplace = $request->input("birthplace");
-            $children->birthday = $request->input("birthday");
-            $children->extradata = $request->input("extradata");
+            $Childrens->birthplace = $request->input("birthplace");
+            $Childrens->birthday = $request->input("birthday");
+            $Childrens->extradata = $request->input("extradata");
 
 
             return response()->json([
@@ -180,16 +190,16 @@ class ChildrenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\children  $children
+     * @param  \App\Childrens  $Childrens
      * @return \Illuminate\Http\Response
      */
-    public function destroy(children $children , $id)
+    public function destroy(Childrens $Childrens , $id)
     {
         if ( !is_numeric($id))
         return response()->json(['error'=>true]);
 
 
-           $children->whereId( $id)-> delete();
+           $Childrens->whereId( $id)-> delete();
 
             return response()->json([
                 'error' => 0
