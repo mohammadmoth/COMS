@@ -8,10 +8,7 @@ use App\Doctor;
 
 class DoctorController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +29,7 @@ class DoctorController extends Controller
     public function create()
     {
         //
-    
+
     }
 
     /**
@@ -49,7 +46,7 @@ class DoctorController extends Controller
         ]);
 
         if ($validator->passes()) {
-         $savedDate= Doctor::create($validatedData);  
+         $savedDate= Doctor::create($validatedData);
         return response()->json([
                 'error' => 0 ,"data"=> $savedDate
                 ]);
@@ -61,7 +58,7 @@ class DoctorController extends Controller
                     ->all()
             ]);
         }
-        
+
 
     }
 
@@ -118,7 +115,7 @@ class DoctorController extends Controller
                     return response()->json([
                         'error' => 0
                     ]);
-                
+
                 }
                 else {
 
@@ -128,7 +125,7 @@ class DoctorController extends Controller
                             ->all()
                     ]);
 
-    
+
             }
         }
     }

@@ -13,11 +13,6 @@ class ClinicalExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         return response()->json(['error'=>false ,"data"=>CliniclExam::get()]);
@@ -41,12 +36,12 @@ class ClinicalExamController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
 
             'children_id'=>"required|exists:childrens,id",
             'doctor_id'=>"required|exists:doctors,id",
-           
+
         ]);
         if ($validator->passes()) {
             $clinicalExam= new ClinicalExam();
@@ -110,7 +105,7 @@ class ClinicalExamController extends Controller
             $clinicalExam->children_id = $request->input("children_id");
             $clinicalExam->doctor_id = $request->input("doctor_id");
             $clinicalExam->save();
-           
+
 
 
             return response()->json([
@@ -134,7 +129,7 @@ class ClinicalExamController extends Controller
      */
     public function destroy($id)
     {
-        if (!is_numeric($id)) 
+        if (!is_numeric($id))
         return respose()->json(['error'=>true]);
         $clinicalExam=ClinicalExam::where('id',$id)->delete();
         return response()->json([

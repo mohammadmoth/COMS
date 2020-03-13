@@ -5,12 +5,7 @@ namespace App\Http\Controllers;
 use App\Childrens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-<<<<<<< HEAD:app/Http/Controllers/ChildrensController.php
 class ChildrensController extends Controller
-=======
-
-class ChildrenController extends Controller
->>>>>>> 773eedca44c992d82fbd833a21fff61724d17a93:app/Http/Controllers/ChildrenController.php
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +18,6 @@ class ChildrenController extends Controller
 
         //
     }
-
-    public function __construct()
-    {
-  //      $this->middleware('auth');
-    }
-
 
     /**
      * Show the form for creating a new resource.
