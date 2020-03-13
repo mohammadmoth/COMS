@@ -17,6 +17,12 @@ class CreateClinicalExamsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('children_id');
             $table->unsignedBigInteger('doctor_id');
+
+
+            $table->foreign('children_id')->references('id')->on('childrens'); // foreign
+            $table->foreign('doctor_id')->references('id')->on('doctors');// foreign
+
+
             $table->timestamps();
         });
     }
