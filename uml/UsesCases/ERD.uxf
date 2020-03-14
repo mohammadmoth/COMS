@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>2</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>606</x>
+      <y>332</y>
+      <w>112</w>
+      <h>82</h>
+    </coordinates>
+    <panel_attributes>
+Medicines
+
+--
+
+bigIncrements       : id
+
+--
+
+unsignedBigInteger : id_childrens
+
+--
+
+unsignedBigInteger : nameTag
+
+--
+
+json               :  extradata")
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>496</x>
+      <y>292</y>
+      <w>78</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>
+Users
+
+--
+
+bigIncrements : ID
+
+--
+
+string : Name
+
+--
+
+string : Email
+
+--
+
+timestamp : Email_verified_at
+
+--
+
+timestamp : Lastlogin
+
+--
+
+ipAddress : ip
+
+--
+
+enum : ['rules',["admin" ,"editor" , "monitor"]]
+
+--
+
+String : password
+
+--
+
+rememberToken();
+
+--
+
+timestamps();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>588</x>
+      <y>440</y>
+      <w>60</w>
+      <h>86</h>
+    </coordinates>
+    <panel_attributes>
+Sponsors
+
+--
+
+bigIncrements :id
+
+--
+
+string: firstname 
+
+--
+
+string : lastname
+
+--
+
+string : mobilephone
+
+--
+
+string : phone
+
+--
+
+json : infoSponser
+
+--
+
+timestamps();</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>412</x>
+      <y>332</y>
+      <w>60</w>
+      <h>118</h>
+    </coordinates>
+    <panel_attributes>
+Tags
+
+--
+
+bigIncrements : id
+
+--
+
+string : firstname 
+
+--
+
+string : lastname
+
+--
+
+string : mothername
+
+--
+
+string : father
+
+--
+
+string : mobilephone
+
+--
+
+string : phone
+
+--
+
+string : birthplace
+
+--
+
+date   : birthday
+
+--
+
+json   : extradata
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>510</x>
+      <y>144</y>
+      <w>60</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>	Children
+
+--
+
+bigIncrements : id
+
+--
+
+string : firstname
+
+--
+
+string : lastname
+
+--
+
+string : mothername
+
+--
+
+string : father 
+
+--
+
+string : mobilephone
+
+--
+
+string : phone
+
+--
+
+string : birthplace
+
+--
+
+date : birthday
+
+--
+
+json : extradata
+
+--
+
+timestamps()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>666</x>
+      <y>436</y>
+      <w>112</w>
+      <h>82</h>
+    </coordinates>
+    <panel_attributes>
+hasFromSponosors
+
+--
+
+
+bigIncrements      : id
+
+--
+
+unsignedBigInteger : id_child
+
+--
+
+unsignedBigInteger : id_sponsor
+
+--
+
+date               : startsopnser
+
+--
+
+date               : startend
+
+--
+
+json               : extradata</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>386</x>
+      <y>486</y>
+      <w>112</w>
+      <h>82</h>
+    </coordinates>
+    <panel_attributes>
+Medicines
+
+--
+        
+bigIncrements   : id
+            
+--                   
+            
+string          : name
+            
+--            
+
+string          : specialization
+            
+              </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>154</x>
+      <y>58</y>
+      <w>60</w>
+      <h>118</h>
+    </coordinates>
+    <panel_attributes>
+	ClinicalExam
+
+
+--
+
+bigIncrements      :id
+
+--
+
+unsignedBigInteger :children_id
+
+--
+
+unsignedBigInteger :doctor_id
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
