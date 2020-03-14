@@ -1,14 +1,17 @@
 ## Install
 
 ```bash
-composer instal
 npm install
+composer instal
+php artisan passport:install
+npm run production
 ```
 ## Update
 
 ```bash
-composer instal
 npm install
+composer instal
+npm run production
 ```
 
 ## About Charitable organization management system
