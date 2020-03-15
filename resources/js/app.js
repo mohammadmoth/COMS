@@ -5,10 +5,22 @@
  */
 
 require('./bootstrap');
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
 
+import Vue from 'vue'
+
+import router from './router'
+
+
+
+/***lang start */
+import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
+
+import { languages } from './lang/config.js'
+import { defaultLocale } from './lang/config.js'
+import { htmlDir } from './lang/config.js'
+const messages = Object.assign(languages)
+/***lang end */
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,32 +33,31 @@ Vue.use(VueI18n)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./layouts/welcome.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-const messages = {
-    ar: {
-      message: {
-        "hello word" : "مرحبا" ,
-      }
-    },
-    en: {
-      message: {
-        "hello word" : "hi man" ,
-      }
-    }
-  };
 
 const app = new Vue({
     el: '#app',
-    i18n: new VueI18n({
-        locale: 'ar',
-        messages: messages
-      }),
+    router, // router
+      
 
+//lang start
+    i18n: new VueI18n({
+        locale: defaultLocale,
+        fallbackLocale: 'ar',
+         messages
+      })
+
+      ,created(){
+        let htmlEl=document.querySelector("html");
+         htmlEl.setAttribute('dir',htmlDir[defaultLocale]);
+         htmlEl.setAttribute('lang',defaultLocale);
+       }, 
+//langend
 
 });

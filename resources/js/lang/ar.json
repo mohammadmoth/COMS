@@ -1,0 +1,14 @@
+{
+    "defaultLocale":"rtl",
+
+    "hello": "مرحبا" ,
+    "email": "بريد",
+    "enter-email":"ادخل البريد الالكتروني",
+    "enter-Password":"ادخل كلمة المرور",
+    "remember-me":"تذكرني",
+    "login":"تسجيل دخول"
+
+    ,"password":"كلمة مرور"
+
+
+}
