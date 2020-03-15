@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::post('details', 'UserController@details');
 
 Route::resource('tags',             'TagsController');
+Route::resource('ClinicalExams',             'ClinicalExamController');
+Route::resource('Doctors',             'DoctorController');
 Route::resource('Sponsors',         'SponsorsController');
 Route::resource('Hasfromsponsors',  'HasfromsponsorsController');
 Route::resource('Medicines',        'MedicinesController');

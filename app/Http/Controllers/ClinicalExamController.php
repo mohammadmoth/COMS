@@ -15,7 +15,7 @@ class ClinicalExamController extends Controller
      */
     public function index()
     {
-        return response()->json(['error'=>false ,"data"=>CliniclExam::get()]);
+        return response()->json(['error'=>false ,"data"=>ClinicalExam::get()]);
     }
 
     /**
@@ -93,17 +93,17 @@ class ClinicalExamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->input["id"]=$id;
+        $request["id"]=$id;
         $validator = Validator::make($request->all(), [
-            'id'=>"exists:ClinicalExams,id",
+            'id'=>"exists:clinical_exams,id",
             'children_id'=>"required|exists:childrens,id",
             'doctor_id'=>"required|exists:doctors,id",
         ]);
 
         if ($validator->passes()) {
             $clinicalExam = ClinicalExam::where("id",$id )->first();
-            $clinicalExam->children_id = $request->input("children_id");
-            $clinicalExam->doctor_id = $request->input("doctor_id");
+            $clinicalExam->children_id = $request["children_id"];
+            $clinicalExam->doctor_id = $request["doctor_id"];
             $clinicalExam->save();
 
 
@@ -131,7 +131,7 @@ class ClinicalExamController extends Controller
     {
         if (!is_numeric($id))
         return respose()->json(['error'=>true]);
-        $clinicalExam=ClinicalExam::where('id',$id)->delete();
+        ClinicalExam::where('id',$id)->delete();
         return response()->json([
             'error' => 0
         ]);

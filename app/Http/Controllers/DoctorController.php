@@ -40,13 +40,14 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name'=>['required','unique:doctors','max:100'],
-            'specialization'=>['required','max:100']
+        $validator = Validator::make($request->all(),
+         [
+            'name'=>'required|unique:doctors|max:100',
+            'specialization'=>'required|max:100'
         ]);
 
         if ($validator->passes()) {
-         $savedDate= Doctor::create($validatedData);
+         $savedDate= Doctor::create($request->all());
         return response()->json([
                 'error' => 0 ,"data"=> $savedDate
                 ]);
@@ -72,7 +73,7 @@ class DoctorController extends Controller
     {
         if ( !is_numeric($id))
          return response()->json(['error'=>true]);
-        $doctor = $doctors::where('id',$id)->first();
+        $doctor = Doctor::where('id',$id)->first();
         if ( $doctor == null ) return response()->json(['error'=>true]);
         else
         return response()->json(['error'=>false, "data"=> $doctor]);
@@ -98,37 +99,37 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        if ( !is_numeric($id)){
-            $request->input["id"]=$id;
-            $validator = $request->validate([
-                'id'=>['exists:doctorss','id'],
-                'name'=>['required','string'],
-                'specialization'=>['required','string'],
-                ]);
-                if($validator->passes()){
-                    $doctor=Doctor::where("id",$id )->first();
-                    $doctor->name=$request->input("name");
-                    $doctor->specialization=$request->input("specialization");
-                    $doctor->save();
+    {   
+        $request["id"]=$id;
+        
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:191',
+            'specialization' => 'required|string|max:191',
+            
+        ]);
 
-                    return response()->json([
-                        'error' => 0
-                    ]);
+        if ($validator->passes()) {
+            $doctor = Doctor::find($id);
+            $doctor->name= $request->input("name");
+            $doctor->specialization = $request->input("specialization");
+             $doctor->save();
 
-                }
-                else {
+            return response()->json([
+                'error' => 0
+            ]);
+        } else {
 
-                    return response()->json([
-                        'error' => 1,
-                        'data' => $validator->errors()
-                            ->all()
-                    ]);
-
-
-            }
-        }
+            return response()->json([
+                'error' => 1,
+                'data' => $validator->errors()
+                    ->all()
+            ]);
+        } 
     }
+
+                
+
+     
     /**
      * Remove the specified resource from storage.
      *
@@ -140,7 +141,7 @@ class DoctorController extends Controller
         return response()->json(['error'=>true]);
 
 
-           Doctor::whereId('id',$id)-> delete();
+           Doctor::where('id',$id)-> delete();
 
             return response()->json([
                 'error' => 0

@@ -84,9 +84,9 @@ class SponsorsController extends Controller
         return response()->json(['error'=>true]);
          $sponsor = $sponsors->whereId($id)->first();
 
-           if ( $sponsor == null ) return response()->json(['error'=>true]);
-            else
-           return response()->json(['error'=>false, "data"=> $sponsor]);
+        if ( $sponsor == null ) return response()->json(['error'=>true]);
+        else
+        return response()->json(['error'=>false, "data"=> $sponsor]);
         //
     }
 
@@ -110,10 +110,11 @@ class SponsorsController extends Controller
      * @param  \App\sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, sponsors $sponsors)
-    {
+    public function update(Request $request, $id)
+    {   
+        $request["id"]=$id;
+        
         $validator = Validator::make($request->all(), [
-
             'firstname' => 'required|string|max:191',
             'lastname' => 'required|string|max:191',
             'mobilephone' => 'required|string|max:191',
@@ -122,7 +123,7 @@ class SponsorsController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $sponsors = new sponsors();
+            $sponsors = sponsors::find($id);
             $sponsors->firstname = $request->input("firstname");
             $sponsors->lastname = $request->input("lastname");
             $sponsors->mobilephone = $request->input("mobilephone");
