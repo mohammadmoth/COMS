@@ -47,7 +47,7 @@ class ChildrensController extends Controller
             'mobilephone' => 'required',
             'phone' => 'required',
             'birthplace' => 'required',
-            'birthday' => 'required|date_format:m/d/Y|before_or_equal:'.date('m/d/Y'),
+            'birthday' => 'required|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
             'extradata' => 'required|json',
 
         ]);
@@ -137,7 +137,7 @@ class ChildrensController extends Controller
      */
     public function update(Request $request, Childrens $Childrens , $id)
     {
-        $request->input["id"]=$id;
+        $request["id"]=$id;
         $validator = Validator::make($request->all(), [
             'id'=>"exists:childrens,id",
             'firstname'=>"required|string",
@@ -147,14 +147,14 @@ class ChildrensController extends Controller
             'mobilephone' => 'required',
             'phone' => 'required',
             'birthplace' => 'required',
-            'birthday' => 'required|date_format:m/d/Y|before_or_equal:'.date('m/d/Y'),
+            'birthday' => 'required|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
             'extradata' => 'required|json',
 
 
         ]);
 
         if ($validator->passes()) {
-            $Childrens = $Childrens->whereId("id",$id );
+            $Childrens = $Childrens::find($id );
             $Childrens->firstname = $request->input("firstname");
             $Childrens->lastname = $request->input("lastname");
             $Childrens->mothername = $request->input("mothername");
@@ -166,9 +166,8 @@ class ChildrensController extends Controller
             $Childrens->birthplace = $request->input("birthplace");
             $Childrens->birthday = $request->input("birthday");
             $Childrens->extradata = $request->input("extradata");
-
-
-            return response()->json([
+            $Childrens->save();
+             return response()->json([
                 'error' => 0
             ]);
         } else {
