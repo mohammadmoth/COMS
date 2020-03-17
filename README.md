@@ -1,18 +1,34 @@
+## Programs you needs
+
+```
+composer
+npm
+node
+
+xampp =>
+php
+mysql database
+
+```
+
 ## Install
 
 ```bash
-npm install
 composer instal
+npm install
+php artisan migrate
 php artisan passport:install
 npm run production
 ```
 ## Update
 
 ```bash
-npm install
 composer instal
+npm install
 npm run production
 ```
+
+
 
 ## About Charitable organization management system
 
