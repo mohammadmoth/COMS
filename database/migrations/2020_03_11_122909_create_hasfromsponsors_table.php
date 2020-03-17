@@ -17,8 +17,8 @@ class CreateHasfromsponsorsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_child');
             $table->unsignedBigInteger('id_sponsor');
-            $table->date('startsopnser');
-            $table->date('startend');
+            $table->date('startSponser');
+            $table->date('endSponosor');
             $table->json('extradata');
             $table->timestamps();
 
