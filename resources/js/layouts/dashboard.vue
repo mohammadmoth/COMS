@@ -9,7 +9,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+         <router-link  class="nav-link" :to="{ name: 'home'}"><a >{{$t("homepage")}} </a></router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -727,7 +727,7 @@
 </template>
 
 <script>
-import * as auth   from '.././api/auth.js'
+
     export default {
 
         data:function () {
@@ -737,11 +737,12 @@ import * as auth   from '.././api/auth.js'
                 }
         },
         mounted() {
-    if ( auth.getToken()){
+          console.log(this.$route.meta);
+    if ( this.$auth.getToken()){
             axios
                 .post('/api/details' , {},{
                     headers: {
-            'Authorization': `Bearer ${auth.getToken()}`
+            'Authorization': `Bearer ${this.$auth.getToken()}`
                 } ,
                 })  .then(response => {   })
                 .catch(e => {

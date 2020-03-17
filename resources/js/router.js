@@ -18,20 +18,20 @@ export const constantRoutes = [
   { path: '/404',  name :"404" ,  component: require ("./views/NotFound.vue").default },
   { path: '*',  redirect: '/404' },
   {
-    path: '/',
+    path: '/dashboard',
     component: require ("./layouts/dashboard.vue").default ,
-    meta: { title: 'Dashboard', icon: 'Dashboard' ,
+    meta: {  requiresAuth : true,
     roles: ['admin', 'editor' ,'montor'] },
     children: [
       {
-        path: 'dashboard',
+        path: '/users',
         component: require ("./pages/homeDashboard.vue").default ,
         name: 'dashboard',
-        meta: { title: 'Dashboard', icon: 'Dashboard' ,
-         roles:  ['admin', 'editor' ,'montor'] }
+        meta: { title: 'users', icon: 'Dashboard' ,
+         roles:  ['admin'] }
       },
       {
-        path: 'children',
+        path: '/children',
         component: require ("./pages/children.vue").default ,
         name: 'children',
         meta: { title: 'children', icon: 'children' ,
@@ -63,10 +63,11 @@ export function resetRouter() {
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
 
-      if (!auth.loggedIn()) {
+
+      if (!Vue.auth.loggedIn()) {
         next({
           path: '/login',
-          query: { redirect: to.fullPath } // editing
+        //  query: { redirect: to.fullPath } // editing
         })
       } else { // add monter admin editor
         next()

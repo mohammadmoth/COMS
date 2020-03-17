@@ -10,12 +10,35 @@ import Vue from 'vue'
 
 import router from './router'
 
+import * as auth   from './api/auth.js'
 
+
+
+
+
+
+
+
+
+
+
+const PluginMethodeGlobal = {
+  install () {
+      Vue.auth = auth
+      Vue.prototype.$auth = auth
+
+
+  }
+}
+
+
+Vue.use(PluginMethodeGlobal)
 
 /***lang start */
 import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)
+
 
 import { languages } from './lang/config.js'
 import { defaultLocale } from './lang/config.js'
@@ -45,7 +68,7 @@ const messages = Object.assign(languages)
 const app = new Vue({
     el: '#app',
     router, // router
-
+    auth,
 
 //lang start
     i18n: new VueI18n({
