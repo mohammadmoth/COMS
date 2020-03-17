@@ -7,54 +7,54 @@
         <!-- /.card-header -->
         <!-- form start -->
         <form role="form">
-    
+
           <div class="card-body">
-            
+
             <!-- Child First Name Input-->
             <div class="form-group">
               <label for="firstname">{{$t("Child First Name")}}</label>
               <input type="text" class="form-control" id="firstname" name="firstname"
-                placeholder="{{$t( 'Enter Child First Name')}}">
+                :placeholder="$t( 'EnterChildFirstName')">
             </div>
             <!-- Child Last Name Input-->
             <div class="form-group">
               <label for="lastname">{{$t("Child Last Name")}}</label>
               <input type="text" class="form-control form-control-sm" id="lastname" name="lastname"
-                placeholder="{{$t('Enter Child Last Name')}}">
+                :placeholder="$t('EnterChildLastName')">
             </div>
             <!-- Child Father Name Input-->
             <div class="form-group">
               <label for="father">{{$t("Child Father Name")}}</label>
               <input type="text" class="form-control form-control-sm" id="father" name="father"
-                placeholder="{{$t(' Enter Child Father  Name')}}">
+                :placeholder="$t('EnterChildFatherName')">
             </div>
             <!-- Child Mother Name Input-->
             <div class="form-group">
               <label for="mothername">{{$t("Child Mother Name")}}</label>
               <input type="text" class="form-control form-control-sm" id="mothername" name="mothername"
-                placeholder="{{$t('Enter Child Mother First And Name')}}">
+                :placeholder="$t('EnterChildMotherFirstAndName')">
             </div>
             <!-- Child Phone Number Input-->
             <div class="form-group">
               <label for="phone_number">{{$t("Child Phone Number")}}</label>
               <input type="text" class="form-control form-control-sm" id="phone" name="phone"
-                placeholder="{{$t(' Enter Child Phone Number')}}">
+                :placeholder="$t('EnterChildPhoneNumber')">
             </div>
             <!-- Child MobliePhone Number Input-->
             <div class="form-group">
-              <label for="phone_number">{{$t("Child Moblie Phone Number")}}</label>
+              <label for="phone_number">{{$t("ChildMobliePhoneNumber")}}</label>
               <input type="text" class="form-control form-control-sm" id="mobilephone" name="mobilephone"
-                placeholder="{{$t('Enter Child Moblie Phone Number')}}">
+                :placeholder="$t('EnterChildMobliePhoneNumber')">
             </div>
             <!-- Child Birth Place Input-->
             <div class="form-group">
-              <label for="BirthPlace">{{$t("Child Birth Place")}}</label>
+              <label for="BirthPlace">{{$t("ChildBirthPlace")}}</label>
               <input type="text" class="form-control form-control-sm" id="birthplace" name="birthplace"
-                placeholder="{{$t(' Enter Birth Place  Number')}}">
+                :placeholder="$t('EnterBirthPlaceNumber')">
             </div>
             <!-- Child Birth Date Input-->
             <div class="form-group">
-              <label for="BirthDate">{{$t("Child Birth Date ")}}</label>
+              <label for="BirthDate">{{$t("ChildBirthDate")}}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
@@ -73,7 +73,7 @@
             <div class="form-group" v-bind:class="{ hide: hideSponsor }">
               <label for="SponsorAnswer">Sponsore Name</label>
               <input type="text" class="form-control form-control-sm" id="sponsor" name="sponosr"
-                placeholder="{{$t(' Enter Sponsor   Name')}}">
+                :placeholder="$t('EnterSponsorName')">
             </div>
             <!--Sponosr Start and End Date -->
             <div class="form-group" v-bind:class="{ hide: hideSponsor }" >
@@ -94,31 +94,30 @@
             <div class="form-group" >
                 <label for="SurgerQuestion">Does the child need a surgery?</label>
                 <input type="checkbox"  v-on:click="hide_unhide_surgery"  class="form-control form-control-sm" name="sponsor"
-                  placeholder="{{$t(' Enter Sponsor   Name')}}">
-            
+                  :placeholder="$t('EnterSponsorName')">
+
               <!-- Surgery Type-->
               <div class="form-group" v-bind:class="{ hide: hideSurgery }">
                 <label for="SurgerAnswer">Does the child need a surgery?</label>
                 <input type="text" class="form-control form-control-sm" name="sponsorName"
-                  placeholder="{{$t(' Enter Sponsor   Name')}}">
+                 :placeholder="$t('Enter Sponsor   Name')">
               </div>
               <!-- /.input group -->
             </div>
-            
-         
+
+
           </div>
         </form>
-         
-         
-         
+
+
+
  </div>
 
-      
+
 </template>
   <script lang="ts">
   import Vue from 'vue'
   export default Vue.extend({
-      
+
   })
   </script>
- 

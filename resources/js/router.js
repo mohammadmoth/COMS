@@ -29,6 +29,13 @@ export const constantRoutes = [
         name: 'dashboard',
         meta: { title: 'Dashboard', icon: 'Dashboard' ,
          roles:  ['admin', 'editor' ,'montor'] }
+      },
+      {
+        path: 'children',
+        component: require ("./pages/children.vue").default ,
+        name: 'children',
+        meta: { title: 'children', icon: 'children' ,
+         roles:  ['admin', 'editor' ,'montor'] }
       }
     ]
   }
