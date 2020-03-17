@@ -11,7 +11,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .rnd
-/public/dist
-/public/js
-/public/css
+public/dist
+public/js
+public/css
 public/mix-manifest.json
+public/fonts
