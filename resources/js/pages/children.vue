@@ -1,6 +1,10 @@
 <template>
-<div>
-          <!-- card-header -->
+<div class="row">
+  <div class=" col">
+
+  </div>
+  <div class=" col">
+              <!-- card-header -->
         <div class="card-header">
           <h3 class="card-title">{{$t("Child Input")}}</h3>
         </div>
@@ -110,14 +114,16 @@
         </form>
 
 
+  </div>
+  <div class=" col">
+
+  </div>
+
 
  </div>
 
 
 </template>
   <script lang="ts">
-  import Vue from 'vue'
-  export default Vue.extend({
-
-  })
+  
   </script>
