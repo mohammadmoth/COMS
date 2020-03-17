@@ -18,4 +18,3 @@ Route::get('/{all}','vuejsAppController@index')->where("all",".*");
 
 
 
-
