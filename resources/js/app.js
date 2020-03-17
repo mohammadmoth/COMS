@@ -14,6 +14,7 @@ import router from './router'
 
 /***lang start */
 import VueI18n from 'vue-i18n'
+
 Vue.use(VueI18n)
 
 import { languages } from './lang/config.js'
@@ -44,7 +45,7 @@ const messages = Object.assign(languages)
 const app = new Vue({
     el: '#app',
     router, // router
-      
+
 
 //lang start
     i18n: new VueI18n({
@@ -57,7 +58,7 @@ const app = new Vue({
         let htmlEl=document.querySelector("html");
          htmlEl.setAttribute('dir',htmlDir[defaultLocale]);
          htmlEl.setAttribute('lang',defaultLocale);
-       }, 
+       },
 //langend
 
 });

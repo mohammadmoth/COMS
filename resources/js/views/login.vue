@@ -1,8 +1,8 @@
 <template>
-  
+
 
   <div class="container  ">
-  
+
     <div><label for="uname"><b>{{$t("email")}}</b></label>
     <input  @keyup.enter="login" :disabled="!enb" v-model="email" type="text" :placeholder="$t('enter-email')" name="uname" required>
     </div>
@@ -14,34 +14,9 @@
     <label>
       <input  type="checkbox" checked name="remember"> {{$t('remember-me')}}
     </label>
-
-    <v-card>
-          <v-card-title
-            class="headline grey lighten-2"
-            primary-title
-          >
-            {{$t("errorlogin")}}
-          </v-card-title>
-  
-          <v-card-text>
-          {{mesgbox}}
-          </v-card-text>
-  
-          <v-divider></v-divider>
-  
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="dialog = false"
-            >
-              {{$t("retry")}}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-
   </div>
+
+
 
 
 </template>
@@ -61,12 +36,35 @@ export default {
   };
 },
   methods:{
-    showmessge(data)
+          showMsgBoxTwo() {
+              $.alert({
+	    title: this.$t("error"),
+	    content: this.$t("error_password_or_username"),
+
+
+	    typeAnimated: true,
+	    buttons: {
+	        tryAgain: {
+	            rtl: true,
+	            text: this.$t("try_agein"),
+	            btnClass: 'btn',
+	            action: function(){
+	            }
+	        }
+
+	    }
+    });
+
+
+      },
+    showmessge()
     {
-      data.forEach(e=>( mesgbox += e +"<br>"));
-    dialog=true;
+         this.showMsgBoxTwo();
+
     },
     login() {
+
+
         this.enb = false;
     axios
       .post('/api/login' ,{email:this.email
@@ -79,8 +77,9 @@ export default {
         })
       .catch(e => {
         this.enb= true
+         this.showmessge();
                     console.log(e)
-             
+
             });
 
     }

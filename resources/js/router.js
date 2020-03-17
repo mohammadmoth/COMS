@@ -5,10 +5,10 @@ Vue.use(Router)
 
 
 export const constantRoutes = [
- 
-    
+
+
   {path: "/login" , name :"login" ,  component: require ("./views/login.vue").default},
-  
+
   {path: "/" ,  name :"home" ,  component: require ("./components/RedirectAuth.vue").default},
 
 
@@ -19,13 +19,16 @@ export const constantRoutes = [
   { path: '*',  redirect: '/404' },
   {
     path: '/',
-    component: require ("./layouts/dashboard.vue") ,
+    component: require ("./layouts/dashboard.vue").default ,
+    meta: { title: 'Dashboard', icon: 'Dashboard' ,
+    roles: ['admin', 'editor' ,'montor'] },
     children: [
       {
         path: 'dashboard',
         component: require ("./pages/homeDashboard.vue").default ,
         name: 'dashboard',
-        meta: { title: 'Dashboard', icon: 'Dashboard', affix: true }
+        meta: { title: 'Dashboard', icon: 'Dashboard' ,
+         roles:  ['admin', 'editor' ,'montor'] }
       }
     ]
   }
@@ -50,5 +53,19 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
 
+      if (!auth.loggedIn()) {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath } // editing
+        })
+      } else { // add monter admin editor
+        next()
+      }
+    } else {
+      next()
+    }
+  })
 export default router

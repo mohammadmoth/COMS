@@ -10,5 +10,5 @@ export const languages = {
 
 export const htmlDir = {
     en: "ltl",
-    ar: "rtl",
+    ar: "ltl",
   }

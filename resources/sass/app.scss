@@ -1,10 +1,19 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
 
-// Bootstrap
+
+
+
 @import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '~admin-lte/dist/css/adminlte.min.css';
+@import '~jqvmap/dist/jqvmap.min.css';
 
-@import '~admin-lte/dist/css/adminlte.css';
+@import 'variables';
+// Bootstrap
+
+
+// Variables
+
+

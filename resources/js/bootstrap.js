@@ -9,10 +9,21 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    require('moment');
+
 
     require('bootstrap');
+    require('overlayscrollbars');
+    require('jqvmap');
+    require('@fortawesome/fontawesome-free');
     require('admin-lte');
-} catch (e) {}
+    require('bs4-summernote');
+    require('codemirror');
+
+    require('chart.js');
+
+    require   ('./javascript/confirm.js')
+} catch (e) {console.log(e)}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
