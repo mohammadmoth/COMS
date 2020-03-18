@@ -36,6 +36,13 @@ export const constantRoutes = [
         name: 'children',
         meta: { title: 'children', icon: 'children' ,
          roles:  ['admin', 'editor' ,'montor'] }
+      },
+      {
+        path: '/sponsers',
+        component: require ("./pages/sponsers.vue").default ,
+        name: 'sponsers',
+        meta: { title: 'sponsers', icon: 'sponsers' ,
+         roles:  ['admin', 'editor' ,'montor'] }
       }
     ]
   }
