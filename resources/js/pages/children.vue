@@ -69,18 +69,18 @@
             </div>
             <!--CheckBox For Sponsors-->
             <div class="form-check">
-              <label for="sponsorQuestion">{{$t("Is the child sponsored>")}}</label>
-              <input v-on:click="hide_unhide_sponsor" type="checkbox" class="form-check-input" id="exampleCheck1">
-              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <label for="sponsorQuestion">{{$t("IsTheChildSponsored>")}}</label>
+              <input  v-on:click="hide_unhide_sponsor" type="checkbox" name="IsTheChildSponsored" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">{{$t("HasASponsor")}}</label>
             </div>
             <!--Input If there is a sponsor-->
-            <div class="form-group" v-bind:class="{ hide: hideSponsor }">
+            <div  v-bind:class="{ hide:sponsorVar  }" class="form-group" >
               <label for="SponsorAnswer">Sponsore Name</label>
               <input type="text" class="form-control form-control-sm" id="sponsor" name="sponosr"
                 :placeholder="$t('EnterSponsorName')">
             </div>
             <!--Sponosr Start and End Date -->
-            <div class="form-group" v-bind:class="{ hide: hideSponsor }" >
+            <div  v-bind:class="{ hide:sponsorVar  }" class="form-group"  >
               <label>Date and time range:</label>
 
               <div class="input-group">
@@ -97,14 +97,14 @@
               <!-- Need Surgery-->
             <div class="form-group" >
                 <label for="SurgerQuestion">Does the child need a surgery?</label>
-                <input type="checkbox"  v-on:click="hide_unhide_surgery"  class="form-control form-control-sm" name="sponsor"
-                  :placeholder="$t('EnterSponsorName')">
+                <input type="checkbox"  v-on:click="hide_unhide_surgeryNeed" class="form-control form-control-sm" name="Need_A_Surgery"
+                  :placeholder="$t('DoesTheChildNeedAsurgery')">
 
               <!-- Surgery Type-->
               <div class="form-group" v-bind:class="{ hide: hideSurgery }">
-                <label for="SurgerAnswer">Does the child need a surgery?</label>
-                <input type="text" class="form-control form-control-sm" name="sponsorName"
-                 :placeholder="$t('Enter Sponsor   Name')">
+                <label for="SurgerAnswer">SrugeryType</label>
+                <input type="text" class="form-control form-control-sm" name="surgeryType"
+                 :placeholder="$t('EnterSurgeryType')">
               </div>
               <!-- /.input group -->
             </div>
@@ -125,5 +125,19 @@
 
 </template>
   <script lang="ts">
-  
+  export default ({
+  el: "#app",
+  data: {
+    sponsorVar : true,
+    surgeryVar :true,
+  },
+  methods: {
+  	hide_unhide_sponsor: function(){
+    	  this.sponsorVar = !this.sponsorVar;
+    },
+    	hide_unhide_surgeryNeed: function(){
+    	  this.surgeryVar = !this.surgeryVar;
+    },
+  }
+})
   </script>
