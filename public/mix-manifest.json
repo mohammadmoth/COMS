@@ -1,8 +1,8 @@
 {
-    "/js/app.js": "/js/app.js?id=42bec29e46eca2c6b14c",
-    "/css/app.css": "/css/app.css?id=ff0cbdbe1b0707985b9c",
-    "/js/manifest.js": "/js/manifest.js?id=41f053ba9a94d81b39f8",
-    "/js/vendor.js": "/js/vendor.js?id=efaba3c7c076d1a51650",
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/manifest.js": "/js/manifest.js",
+    "/js/vendor.js": "/js/vendor.js",
     "/dist/img/AdminLTELogo.png": "/dist/img/AdminLTELogo.png?id=000ff2f80ff61067318e",
     "/dist/img/avatar.png": "/dist/img/avatar.png?id=af037d71002bf9e4137f",
     "/dist/img/avatar04.png": "/dist/img/avatar04.png?id=13b388411e76049bf1a5",
