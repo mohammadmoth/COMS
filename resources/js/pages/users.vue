@@ -1,8 +1,9 @@
 <template>
-  <div class="row">
+<div>
+  <div >
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">DataTable with default features</h3>
+        <h3 class="card-title">{{$t("user")}}</h3>
       </div>
       <!-- /.card-header -->
       <div class="card-body">
@@ -17,14 +18,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Trident</td>
+            <tr v-for="(user ,index) in users" :key="index" >
+              <td><input :key="index" type = "text" @click="show(user.name)" v-model="user.name" style="border: 0px none;" class = "txt_input"> </td>
               <td>
-                Internet
-                Explorer 4.0
+             {{user.email}}
               </td>
-              <td>Win 95+</td>
-              <td>4</td>
+              <td>     {{user.rules}}</td>
+              <td> {{user.lastlogin}}</td>
               <td>X</td>
             </tr>
           
@@ -43,6 +43,8 @@
       <!-- /.card-body -->
     </div>
     <!-- /.card -->
+    </div>
+  <!-- /.col -->
    <div class="col">
             <!-- general form elements -->
             <div class="card card-info">
@@ -94,16 +96,43 @@
             </div>
             <!-- /.card -->
       </div>
+
   </div>
-  <!-- /.col -->
 </template>
 
 <script>
 export default {
   data: function() {
-    return {};
+    return {
+      
+      users:[{id:1,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:2,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:3,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:4,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:5,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:6,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:7,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:8,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:9,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:10,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },   
+       {id:11,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:12,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:13,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:14,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:15,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:16,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:17,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:18,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },
+      {id:19,name: "mohammad" , rules:"admin"  ,email:"mgreog" , lastlogin:"2020/25/25 51" },],
+    
+    
+    };
   },
-  methods: {
+  methods: {show:function(mess)
+  {
+
+    console.log(mess);
+  },
     checkForm: function(e) {
       e.preventDefault();
     }
