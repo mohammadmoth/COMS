@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="row">
+
       <div class="col">
+      
         <div class="card card-primary">
+      
           <div class="card-header">
             <h3 class="card-title">{{$t("ChildrenTable")}}</h3>
           </div>
+          <!-- Card Body For table-->
           <div class="card-body">
             <table
               id="example1"
@@ -36,17 +40,17 @@
                 </td>
 
                 <td>
-                  <b>:{{$t("MobilePhone")}} :</b>
+                  <b>:{{$t("MobilePhone:")}} </b>
                   <br />
-                  <b>:{{$t("Phone")}} :</b>
+                  <b>:{{$t("Phone:")}} </b>
                   <br />
                 </td>
                 <td>
-                  <b>:{{$t("Age")}} :</b>
+                  <b>:{{$t("Age:")}} </b>
                   <br />
-                  <b>:{{$t("BirthDate")}} :</b>
+                  <b>:{{$t("BirthDate:")}} </b>
                   <br />
-                  <b>:{{$t("BirhPlace")}} :</b>
+                  <b>:{{$t("BirhPlace:")}} </b>
                   <br />
                 </td>
                 <td>
@@ -57,7 +61,7 @@
                   <b>:{{$t("SponsorEnd")}} :</b>
                   <br />
                 </td>
-                <td>:{{$t("TypeOfSurgery")}} :</td>
+                <td>:{{$t("TypeOfSurgery:")}} </td>
                 <td>
                   <br />
                   <br />
@@ -65,7 +69,28 @@
                   <br />
                   <br />
                 </td>
-                
+                <td>
+                  <div class="btn-group show">
+                    <button type="button" class="btn btn-info btn-flat">Action</button>
+                    <button
+                      type="button"
+                      class="btn btn-info btn-flat dropdown-toggle dropdown-icon"
+                      data-toggle="dropdown"
+                      aria-expanded="true"
+                    >
+                      <span class="sr-only">Toggle Dropdown</span>
+                      <div
+                        class="dropdown-menu show"
+                        role="menu"
+                        x-placement="top-start"
+                        style="position: absolute; transform: translate3d(-1px, -206px, 0px); top: 0px; left: 0px; will-change: transform;"
+                      >
+                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" href="#">Edit</a>
+                      </div>
+                    </button>
+                  </div>
+                </td>
               </tr>
             </table>
           </div>
@@ -180,25 +205,36 @@
               </div>
               <!--CheckBox For Sponsors-->
               <div class="form-check">
-                <label for="sponsorQuestion">{{$t("IsTheChildSponsored>")}}</label>
-                <input
-                  v-on:click="hide_unhide_sponsor"
-                  type="checkbox"
-                  name="IsTheChildSponsored"
-                  class="form-check-input"
-                  id="exampleCheck1"
-                />
-                <label class="form-check-label" for="exampleCheck1">{{$t("HasASponsor")}}</label>
+                <span>
+                  <input
+                    type="checkbox"
+                    v-on:click="hide_unhide_surgeryNeed"
+                    name="Need_A_Surgery"
+                    :placeholder="$t('DoesTheChildNeedAsurgery')"
+                  />
+                  <label for="SurgerQuestion">Does the child need a surgery?</label>
+                </span>
+                <b></b>
+
+                <span>
+                  <input
+                    v-on:click="hide_unhide_sponsor"
+                    type="checkbox"
+                    name="IsTheChildSponsored"
+                   
+                    id="exampleCheck1"
+                  />
+                  <label for="sponsorQuestion">{{$t("IsTheChildSponsored")}} &nbsp</label>
+                </span>
               </div>
               <!--Input If there is a sponsor-->
               <div v-bind:class="{ hide:sponsorVar  }" class="form-group">
                 <label for="SponsorAnswer">Sponsore Name</label>
                 <input
                   type="text"
-                  class="form-control form-control-sm"
                   id="sponsor"
                   name="sponosr"
-                  :placeholder="$t('EnterSponsorName')"
+                  placeholder="$t('EnterSponsorName')"
                 />
               </div>
               <!--Sponosr Start and End Date -->
@@ -222,15 +258,6 @@
               </div>
               <!-- Need Surgery-->
               <div class="form-group">
-                <label for="SurgerQuestion">Does the child need a surgery?</label>
-                <input
-                  type="checkbox"
-                  v-on:click="hide_unhide_surgeryNeed"
-                  class="form-control form-control-sm"
-                  name="Need_A_Surgery"
-                  :placeholder="$t('DoesTheChildNeedAsurgery')"
-                />
-
                 <!-- Surgery Type-->
                 <div class="form-group" v-bind:class="{ hide: surgeryVar }">
                   <label for="SurgerAnswer">SrugeryType</label>

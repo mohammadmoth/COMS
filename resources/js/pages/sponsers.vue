@@ -1,5 +1,6 @@
 <template>
-     <div class="col-md-6">
+<div class="row">
+ <div class="col-md-6">
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
@@ -13,31 +14,31 @@
                         <!--Firstname Input-->
                         <div class="form-group">
                             <label for="SponosorFirstname">Sponsor First Name</label>
-                            <input type="text" name="firstname" class="form-control"  placeholder="{{$t('EnterSponsorFirstName')}}">
+                            <input type="text" name="firstname" class="form-control"  >
                         </div>
                         
                         <!---->
                         <div class="form-group">
                             <label for="SponsorLastName">Sponsor Last Name</label>
-                            <input type="text" name="lastname" class="form-control"  placeholder="{{$t('EnterSponsorLastName')}}">
+                            <input type="text" name="lastname" class="form-control"  >
                         </div>
                         
                         <!---->
                         <div class="form-group">
                             <label for="SponosrMobilePhone"> Sponosr Mobile Phone</label>
-                            <input type="text" name="mobilephone" class="form-control"  placeholder="{{$t('EnterSposnsorMobilePhoneNumber')}}">
+                            <input type="text" name="mobilephone" class="form-control"  >
                         </div>
                         
                         <!---->
                         <div class="form-group">
                             <label for="PhoneNumber">Sponsor Phone Number</label>
-                            <input type="text" name="phone" class="form-control"  placeholder="{{$t('EnterSposnsorPhoneNumber')}}">
+                            <input type="text" name="phone" class="form-control"  >
                         </div>
                         
                         <!---->
                         <div class="form-group">
                             <label for="SponsorAdditionalInfo">Additional Sponospr Info</label>
-                            <input type="text" name="infoSponser" class="form-control"  placeholder="{{$t('EnterSponsorAdditionalInformation')}}">
+                            <input type="text" name="infoSponser" class="form-control"  placeholder="">
                         </div>
                         
                         </div>
@@ -50,6 +51,8 @@
             </div>
             <!-- /.card -->
       </div>
+    
+</div>
           
 </template>
 

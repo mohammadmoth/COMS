@@ -5776,6 +5776,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -101619,6 +101622,33 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
@@ -103331,26 +103361,26 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c("b", [
-                      _vm._v(":" + _vm._s(_vm.$t("MobilePhone")) + " :")
+                      _vm._v(":" + _vm._s(_vm.$t("MobilePhone:")) + " ")
                     ]),
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
-                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("Phone")) + " :")]),
+                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("Phone:")) + " ")]),
                     _vm._v(" "),
                     _c("br")
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("Age")) + " :")]),
+                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("Age:")) + " ")]),
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
-                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("BirthDate")) + " :")]),
+                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("BirthDate:")) + " ")]),
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
-                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("BirhPlace")) + " :")]),
+                    _c("b", [_vm._v(":" + _vm._s(_vm.$t("BirhPlace:")) + " ")]),
                     _vm._v(" "),
                     _c("br")
                   ]),
@@ -103376,7 +103406,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _vm._v(":" + _vm._s(_vm.$t("TypeOfSurgery")) + " :")
+                    _vm._v(":" + _vm._s(_vm.$t("TypeOfSurgery:")) + " ")
                   ]),
                   _vm._v(" "),
                   _c("td", [
@@ -103391,7 +103421,9 @@ var render = function() {
                     _c("br"),
                     _vm._v(" "),
                     _c("br")
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
                 ])
               ]
             )
@@ -103528,32 +103560,41 @@ var render = function() {
                   _vm._v(_vm._s(_vm.$t("ChildBirthDate")))
                 ]),
                 _vm._v(" "),
-                _vm._m(0)
+                _vm._m(1)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-check" }, [
-                _c("label", { attrs: { for: "sponsorQuestion" } }, [
-                  _vm._v(_vm._s(_vm.$t("IsTheChildSponsored>")))
+                _c("span", [
+                  _c("input", {
+                    attrs: {
+                      type: "checkbox",
+                      name: "Need_A_Surgery",
+                      placeholder: _vm.$t("DoesTheChildNeedAsurgery")
+                    },
+                    on: { click: _vm.hide_unhide_surgeryNeed }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "SurgerQuestion" } }, [
+                    _vm._v("Does the child need a surgery?")
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-check-input",
-                  attrs: {
-                    type: "checkbox",
-                    name: "IsTheChildSponsored",
-                    id: "exampleCheck1"
-                  },
-                  on: { click: _vm.hide_unhide_sponsor }
-                }),
+                _c("b"),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "form-check-label",
-                    attrs: { for: "exampleCheck1" }
-                  },
-                  [_vm._v(_vm._s(_vm.$t("HasASponsor")))]
-                )
+                _c("span", [
+                  _c("input", {
+                    attrs: {
+                      type: "checkbox",
+                      name: "IsTheChildSponsored",
+                      id: "exampleCheck1"
+                    },
+                    on: { click: _vm.hide_unhide_sponsor }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "sponsorQuestion" } }, [
+                    _vm._v(_vm._s(_vm.$t("IsTheChildSponsored")) + "  ")
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _c(
@@ -103565,12 +103606,11 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("input", {
-                    staticClass: "form-control form-control-sm",
                     attrs: {
                       type: "text",
                       id: "sponsor",
                       name: "sponosr",
-                      placeholder: _vm.$t("EnterSponsorName")
+                      placeholder: "$t('EnterSponsorName')"
                     }
                   })
                 ]
@@ -103582,9 +103622,9 @@ var render = function() {
                 [
                   _c("label", [_vm._v("Date and time range:")]),
                   _vm._v(" "),
-                  _vm._m(1),
-                  _vm._v(" "),
                   _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("input", {
                     staticClass: "form-control float-right",
@@ -103594,20 +103634,6 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "SurgerQuestion" } }, [
-                  _vm._v("Does the child need a surgery?")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control form-control-sm",
-                  attrs: {
-                    type: "checkbox",
-                    name: "Need_A_Surgery",
-                    placeholder: _vm.$t("DoesTheChildNeedAsurgery")
-                  },
-                  on: { click: _vm.hide_unhide_surgeryNeed }
-                }),
-                _vm._v(" "),
                 _c(
                   "div",
                   {
@@ -103638,6 +103664,63 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("div", { staticClass: "btn-group show" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-info btn-flat", attrs: { type: "button" } },
+          [_vm._v("Action")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info btn-flat dropdown-toggle dropdown-icon",
+            attrs: {
+              type: "button",
+              "data-toggle": "dropdown",
+              "aria-expanded": "true"
+            }
+          },
+          [
+            _c("span", { staticClass: "sr-only" }, [_vm._v("Toggle Dropdown")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu show",
+                staticStyle: {
+                  position: "absolute",
+                  transform: "translate3d(-1px, -206px, 0px)",
+                  top: "0px",
+                  left: "0px",
+                  "will-change": "transform"
+                },
+                attrs: { role: "menu", "x-placement": "top-start" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Delete")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item", attrs: { href: "#" } },
+                  [_vm._v("Edit")]
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -104783,8 +104866,98 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
-var staticRenderFns = []
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "card card-primary" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h3", { staticClass: "card-title" }, [
+            _vm._v(_vm._s(_vm.$t("SponsorForm")))
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { attrs: { role: "form" } }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "SponosorFirstname" } }, [
+            _vm._v("Sponsor First Name")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "firstname" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "SponsorLastName" } }, [
+            _vm._v("Sponsor Last Name")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "lastname" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "SponosrMobilePhone" } }, [
+            _vm._v(" Sponosr Mobile Phone")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "mobilephone" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "PhoneNumber" } }, [
+            _vm._v("Sponsor Phone Number")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "phone" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "SponsorAdditionalInfo" } }, [
+            _vm._v("Additional Sponospr Info")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "infoSponser", placeholder: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-footer" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Submit")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
 
 
 
