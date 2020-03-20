@@ -8,36 +8,36 @@
                 <!-- /.card-header -->
                 
                 <!-- form start -->
-                <form role="form">
+                <form @submit="checkForm" role="form">
                         <div class="card-body">
                         <!--Firstname Input-->
                         <div class="form-group">
-                            <label for="SponosorFirstname">Sponsor First Name</label>
-                            <input type="text" name="firstname" class="form-control"  placeholder="{{$t('EnterSponsorFirstName')}}">
+                            <label for="SponosorFirstname">{{$t("FirstName")}}</label>
+                            <input type="text" name="firstname" class="form-control"  :placeholder="$t('EnterFirstName')">
                         </div>
                         
                         <!---->
                         <div class="form-group">
-                            <label for="SponsorLastName">Sponsor Last Name</label>
-                            <input type="text" name="lastname" class="form-control"  placeholder="{{$t('EnterSponsorLastName')}}">
+                            <label for="SponsorLastName">{{$t("LastName")}}Last Name</label>
+                            <input type="text" name="lastname" class="form-control"  :placeholder="$t('EnterLastName')">
                         </div>
                         
                         <!---->
                         <div class="form-group">
-                            <label for="SponosrMobilePhone"> Sponosr Mobile Phone</label>
-                            <input type="text" name="mobilephone" class="form-control"  placeholder="{{$t('EnterSposnsorMobilePhoneNumber')}}">
+                            <label for="SponosrMobilePhone"> {{$t("MobileNumber")}}</label>
+                            <input type="text" name="mobilephone" class="form-control"  :placeholder="$t('EnterMobileNumber')">
                         </div>
                         
                         <!---->
                         <div class="form-group">
-                            <label for="PhoneNumber">Sponsor Phone Number</label>
-                            <input type="text" name="phone" class="form-control"  placeholder="{{$t('EnterSposnsorPhoneNumber')}}">
+                            <label for="PhoneNumber">{{$t('PhoneNumber')}}</label>
+                            <input type="text" name="phone" class="form-control"  :placeholder="$t('EnterPhoneNumber')">
                         </div>
                         
                         <!---->
                         <div class="form-group">
-                            <label for="SponsorAdditionalInfo">Additional Sponospr Info</label>
-                            <input type="text" name="infoSponser" class="form-control"  placeholder="{{$t('EnterSponsorAdditionalInformation')}}">
+                            <label for="SponsorAdditionalInfo">{{$t('EnterSponsorAdditionalInformation')}}</label>
+                            <input type="text" name="infoSponser" class="form-control"  :placeholder="$t('EnterSponsorAdditionalInformation')">
                         </div>
                         
                         </div>
@@ -55,7 +55,21 @@
 
 <script>
 export default {
+    data:function(){
+            return {
 
+
+
+            }
+    },
+    methods:{
+        
+        checkForm: function (e) { 
+       
+           
+            e.preventDefault();
+        }
+    }
 }
 </script>
 

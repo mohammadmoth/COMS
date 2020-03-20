@@ -22,20 +22,30 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('login', 'UserController@login');
-Route::post('register', 'UserController@register');
 
 
 ///Auth here
 Route::group(['middleware' => 'auth:api'], function(){
-Route::post('details', 'UserController@details');
 
-Route::resource('tags',             'TagsController');
-Route::resource('ClinicalExams',             'ClinicalExamController');
-Route::resource('Doctors',             'DoctorController');
-Route::resource('Sponsors',         'SponsorsController');
-Route::resource('Hasfromsponsors',  'HasfromsponsorsController');
-Route::resource('Medicines',        'MedicinesController');
-Route::resource('Children',         'ChildrensController');
+
+
+///rules admin here
+Route::group(['middleware' => 'Rules:admin'], function(){
+Route::apiResource ('users',             'UserController');
+Route::post('/users/register', 'UserController@register');
 });
 
-//end api
+
+
+Route::post('details', 'UserController@details');
+Route::apiResource ('tags',             'TagsController');
+Route::apiResource ('ClinicalExams',             'ClinicalExamController');
+Route::apiResource ('Doctors',             'DoctorController');
+Route::apiResource ('Sponsors',         'SponsorsController');
+Route::apiResource ('Hasfromsponsors',  'HasfromsponsorsController');
+Route::apiResource ('Medicines',        'MedicinesController');
+Route::apiResource ('Children',         'ChildrensController');
+
+});
+
+

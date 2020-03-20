@@ -22,7 +22,7 @@
 </template>
 <script>
 import * as auth   from '.././api/auth.js'
-
+import * as user   from '.././api/users.js'
 export default {
   props: ['personName'],
  data: function() {
@@ -62,9 +62,7 @@ export default {
          this.showMsgBoxTwo();
 
     },
-    login() {
-
-
+     login() {
         this.enb = false;
     axios
       .post('/api/login' ,{email:this.email
@@ -72,7 +70,12 @@ export default {
          })
       .then(response => {
           auth.setToken(response.data.success.token);
-        this.$router.push({name:"dashboard"})
+
+            user.initUserData().then( res=> this.$router.push({name:"dashboard"})).catch( e =>{
+              this.$router.push({name:"login"})
+            });
+
+      
      //   this.enb= true
         })
       .catch(e => {

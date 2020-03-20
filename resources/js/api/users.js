@@ -1,24 +1,111 @@
-import SendData from './api/SendData.js'
+import SendData from './service.js'
 
+
+var rules = ["admin"]
+var user = {};
 export function login(data) {
   return SendData({
-    url: '/vue-element-admin/user/login',
+    url: '/api/login',
     method: 'post',
     data
   })
 }
 
-export function getInfo(token) {
-  return SendData({
-    url: '/vue-element-admin/user/info',
-    method: 'get',
-    params: { token }
-  })
+export function checkRules()
+{
+
+  for (let index = 0; index < rules.length; index++) 
+  if (  rules[index] == localStorage.user.rules )
+    return true
+   return false
 }
 
-export function logout() {
-  return SendData({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
-  })
+export function getall() {
+  if ( this.checkRules() )
+  {
+    return SendData({
+      url: '/api/users',
+      method: 'post',
+      data
+    })
+  }
+  
+  return Promise.reject(new Error( {msg:"You_do_not_have_privileges_to_do_that" , code : 0 } ))
+    
 }
+export function addNewUser(data) {
+  /* 'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password',*/
+  if ( this.checkRules() )
+  {
+    return SendData({
+      url: '/users/register',
+      method: 'post',
+      data
+    })
+  }
+  
+  return Promise.reject(new Error( {msg:"You_do_not_have_privileges_to_do_that" , code : 0 } ))
+    
+}
+
+
+export function RefreshUserInfo() {
+    return SendData({
+      url: '/api/details',
+      method: 'post'
+      }
+    )
+}
+
+
+export function logout() {
+
+}
+export function init ()
+{
+  try {
+    if (   localStorage.user )
+    user =  JSON.parse( localStorage.user );
+  } catch (error) {
+
+  }
+
+
+
+this.initUserData() ;
+}
+export function getUser()
+{
+  
+  try {
+    if (   localStorage.user )
+    user =  JSON.parse( localStorage.user );
+    else
+    this.initUserData()
+  } catch (error) {
+ 
+  }
+ 
+
+ 
+
+  return user;
+
+}
+export async  function initUserData() {
+
+  await this.RefreshUserInfo().then(function(response){
+    user = response.data.success;
+    localStorage.user =  JSON.stringify(user)
+  }).catch(function (error) {
+    console.log(error);
+  });
+
+   return  user
+   }
+  
+
+
