@@ -11,21 +11,25 @@ import Vue from 'vue'
 import router from './router'
 
 import * as auth   from './api/auth.js'
-
-
-
-
-
-
-
-
-
+import * as user   from './api/users.js'
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+ 
+Vue.use(VueMoment, {
+    moment,
+})
 
 
 const PluginMethodeGlobal = {
   install () {
-      Vue.auth = auth
-      Vue.prototype.$auth = auth
+      Vue.auth = auth;
+      Vue.prototype.$auth = auth;
+
+      Vue.user = user;
+      Vue.prototype.$user = user;
+      Vue.prototype.$Version ="Master"
+
+
 
 
   }
@@ -69,7 +73,8 @@ const app = new Vue({
     el: '#app',
     router, // router
     auth,
-
+    user,
+ 
 //lang start
     i18n: new VueI18n({
         locale: defaultLocale,
@@ -85,3 +90,4 @@ const app = new Vue({
 //langend
 
 });
+Vue.user.init ();

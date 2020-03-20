@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\AuthExtend as Auth;
 use Validator;
 class UserController extends Controller
 {
@@ -56,4 +56,11 @@ return response()->json(['success'=>$success], $this-> successStatus);
         $user = Auth::user();
         return response()->json(['success' => $user], $this-> successStatus);
     }
+
+    public function edit()
+    {
+        $user = Auth::user();
+        return response()->json(['success' => $user], $this-> successStatus);
+    }
+
 }

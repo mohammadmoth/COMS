@@ -21,29 +21,39 @@ export const constantRoutes = [
     path: '/dashboard',
     component: require ("./layouts/dashboard.vue").default ,
     meta: {  requiresAuth : true,
-    roles: ['admin', 'editor' ,'montor'] },
+    roles: 'montor' },
     children: [
       {
-        path: '/users',
+        path: 'status',
         component: require ("./pages/homeDashboard.vue").default ,
         name: 'dashboard',
-        meta: { title: 'users', icon: 'Dashboard' ,
-         roles:  ['admin'] }
+        meta: { requiresAuth : true, title: 'status' ,
+         roles:  'montor' }
       },
       {
-        path: '/children',
+        path: 'children',
         component: require ("./pages/children.vue").default ,
         name: 'children',
-        meta: { title: 'children', icon: 'children' ,
-         roles:  ['admin', 'editor' ,'montor'] }
+        meta: { requiresAuth : true, title: 'children' ,
+         roles:  'montor' }
       },
       {
-        path: '/sponsers',
+        path: 'sponsers',
         component: require ("./pages/sponsers.vue").default ,
         name: 'sponsers',
-        meta: { title: 'sponsers', icon: 'sponsers' ,
-         roles:  ['admin', 'editor' ,'montor'] }
+        meta: {  requiresAuth : true,title: 'sponsers',
+         roles:  'montor' }
       }
+      ,
+      {
+        path: 'users',
+        component: require ("./pages/users.vue").default ,
+        name: 'users',
+        meta: {  requiresAuth : true,title: 'users' ,
+         roles:  'admin' }
+      }
+
+
     ]
   }
 ]
@@ -57,7 +67,6 @@ export const asyncRoutes = [
 const createRouter = () => new Router({
     routes:  constantRoutes,
     mode: 'history',
-    base: process.env.BASE_URL,
 })
 
 const router = createRouter()
@@ -68,19 +77,32 @@ export function resetRouter() {
   router.matcher = newRouter.matcher // reset router
 }
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+   
+      if (to.meta.hasOwnProperty("requiresAuth") )
+      if (to.meta.requiresAuth )
 
 
-      if (!Vue.auth.loggedIn()) {
+      if (!Vue.auth.isLoggedIn ()) {
         next({
           path: '/login',
         //  query: { redirect: to.fullPath } // editing
         })
+        
       } else { // add monter admin editor
+
+        if ( Vue.auth.isHaveAcsses(to.meta.roles))
         next()
+        else{
+        next({
+          name: '404',
+        //  query: { redirect: to.fullPath } // editing
+        })}
+
+
       }
-    } else {
-      next()
-    }
-  })
+  
+    next()
+    
+}) 
 export default router
