@@ -57,9 +57,6 @@
 export default {
     data:function(){
             return {
-
-
-
             }
     },
     methods:{
@@ -74,5 +71,4 @@ export default {
 </script>
 
 <style>
-
 </style>
