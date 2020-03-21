@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use App\tags;
 use Hamcrest\Type\IsNumeric;
@@ -15,19 +16,8 @@ class TagsController extends Controller
      */
     public function index()
     {
-        return response()->json(['error'=>false , "data" => tags::get()]);
+        return response()->json(['error' => false, "data" => tags::get()]);
 
-        //
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
         //
     }
 
@@ -52,7 +42,7 @@ class TagsController extends Controller
             $tags->type = $request->input("type");
             $tags->save();
             return response()->json([
-                'error' => 0 , "data"=> $tags
+                'error' => 0, "data" => $tags
             ]);
         } else {
 
@@ -71,30 +61,18 @@ class TagsController extends Controller
      * @param  \App\tags  $tags
      * @return \Illuminate\Http\Response
      */
-    public function show(tags $tags , $id)
+    public function show(tags $tags, $id)
     {
-        if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
-         $tag = $tags->whereId($id)->first();
+        if (!is_numeric($id))
+            return response()->json(['error' => true]);
+        $tag = $tags->whereId($id)->first();
 
-           if ( $tag == null ) return response()->json(['error'=>true]);
-            else
-           return response()->json(['error'=>false, "data"=> $tag]);
+        if ($tag == null) return response()->json(['error' => true]);
+        else
+            return response()->json(['error' => false, "data" => $tag]);
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\tags  $tags
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(tags $tags)
-    {
-
-
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -112,7 +90,7 @@ class TagsController extends Controller
         ]);
 
         if ($validator->passes()) {
-            $tags =  $tags->where("id" ,  $request->input("id"));
+            $tags =  $tags->where("id",  $request->input("id"));
             $tags->name = $request->input("name");
             $tags->type = $request->input("type");
             $tags->save();
@@ -137,17 +115,17 @@ class TagsController extends Controller
      * @param  \App\tags  $tags
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tags $tags ,$id)
+    public function destroy(tags $tags, $id)
     {
-        if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        if (!is_numeric($id))
+            return response()->json(['error' => true]);
 
 
-           $tags->whereId( $id)-> delete();
+        $tags->whereId($id)->delete();
 
-            return response()->json([
-                'error' => 0
-            ]);
+        return response()->json([
+            'error' => 0
+        ]);
 
 
         //

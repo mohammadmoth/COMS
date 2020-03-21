@@ -1,29 +1,34 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Controllers\Auth\AuthExtend as Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+
 class UserController extends Controller
 {
-public $successStatus = 200;
-/**
+    public $successStatus = 200;
+    public $errorStatus = 401;
+    /**
      * login api
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(){
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+    public function login()
+    {
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')-> accessToken;
-            return response()->json(['success' => $success], $this-> successStatus);
-        }
-        else{
-            return response()->json(['error'=>'Unauthorised'], 401);
+            $success['token'] =  $user->createToken('MyApp')->accessToken;
+            return response()->json(['success' => $success], $this->successStatus);
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
-/**
+
+    /**
      * Register api
      *
      * @return \Illuminate\Http\Response
@@ -35,18 +40,19 @@ public $successStatus = 200;
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
+            'rules' => 'required',
         ]);
-if ($validator->fails()) {
-            return response()->json(['error'=>$validator->errors()], 401);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], $this->errorStatus);
         }
-$input = $request->all();
+        $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken('MyApp')-> accessToken;
+        $success['token'] =  $user->createToken('MyApp')->accessToken;
         $success['name'] =  $user->name;
-return response()->json(['success'=>$success], $this-> successStatus);
+        return response()->json(['success' => $success], $this->successStatus);
     }
-/**
+    /**
      * details api
      *
      * @return \Illuminate\Http\Response
@@ -54,13 +60,102 @@ return response()->json(['success'=>$success], $this-> successStatus);
     public function details()
     {
         $user = Auth::user();
-        return response()->json(['success' => $user], $this-> successStatus);
+        return response()->json(['success' => $user], $this->successStatus);
     }
 
-    public function edit()
+
+    public function index()
     {
-        $user = Auth::user();
-        return response()->json(['success' => $user], $this-> successStatus);
+        return response()->json(['error' => false, "data" => User::get()]);
+
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        return $this->register($request);
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $User, $id)
+    {
+        if (!is_numeric($id))
+            return response()->json(['error' => true] , $this->errorStatus);
+        $user = $User->whereId($id)->first();
+
+        if ($user == null) return response()->json(['error' => true] , $this->errorStatus);
+        else
+            return response()->json(['error' => false, "data" => $user]);
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\tags  $tags
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $User)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|string|max:191',
+            'name' => 'required|string|max:191',
+            'type' => 'required|string|max:255',
+        ]);
+
+        if ($validator->passes()) {
+            $user =  $User->where("id",  $request->input("id"));
+            $user->name = $request->input("name");
+            $user->type = $request->input("type");
+            $user->save();
+            return response()->json([
+                'error' => 0
+            ]);
+        } else {
+
+            return response()->json([
+                'error' => 1,
+                'data' => $validator->errors()
+                    ->all()
+            ]);
+        }
+
+        //
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\tags  $tags
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy( $id)
+    {
+         $User = new User();
+        if (!is_numeric($id))
+            return response()->json(['error' => true] , $this->errorStatus);
+
+
+        $User->whereId($id)->delete();
+
+        return response()->json([
+            'error' => 0
+        ]);
+
+
+        //
+    }
 }

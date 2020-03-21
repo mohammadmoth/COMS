@@ -9,24 +9,24 @@ class AuthExtend extends Auth
 {
     public static function isAdmin()
     {
-          if (   Auth::rules() == "admin")
+          if (   Auth::user()->rules == "admin")
           return true;
           return false;
     }
     public static function isEditor()
     {
-          if (   Auth::rules() == "editor")
+          if (   Auth::user()->rules == "editor")
           return true;
           return false;
     }
 
     public static function isMonitor()
     {
-          if (   Auth::rules() == "monitor")
+          if (   Auth::user()->rules == "monitor")
           return true;
           return false;
     }
-    
+
 
     public static function ChekRulesby($rulesString)
     {
@@ -43,7 +43,7 @@ class AuthExtend extends Auth
             break;
         }
         $numberRulesUserInt = 0 ;
-        switch (Auth::rules()) {
+        switch (Auth::user()->rules ){
             case 'admin':
             $numberRulesUserInt = 0;
                 break;
@@ -58,7 +58,7 @@ class AuthExtend extends Auth
           return true;
 
 
-          return false; 
+          return false;
     }
 
 
