@@ -1,11 +1,8 @@
 <template>
   <div>
     <div class="row">
-
       <div class="col">
-      
         <div class="card card-primary">
-      
           <div class="card-header">
             <h3 class="card-title">{{$t("ChildrenTable")}}</h3>
           </div>
@@ -40,17 +37,17 @@
                 </td>
 
                 <td>
-                  <b>:{{$t("MobilePhone:")}} </b>
+                  <b>:{{$t("MobilePhone:")}}</b>
                   <br />
-                  <b>:{{$t("Phone:")}} </b>
+                  <b>:{{$t("Phone:")}}</b>
                   <br />
                 </td>
                 <td>
-                  <b>:{{$t("Age:")}} </b>
+                  <b>:{{$t("Age:")}}</b>
                   <br />
-                  <b>:{{$t("BirthDate:")}} </b>
+                  <b>:{{$t("BirthDate:")}}</b>
                   <br />
-                  <b>:{{$t("BirhPlace:")}} </b>
+                  <b>:{{$t("BirhPlace:")}}</b>
                   <br />
                 </td>
                 <td>
@@ -61,7 +58,7 @@
                   <b>:{{$t("SponsorEnd")}} :</b>
                   <br />
                 </td>
-                <td>:{{$t("TypeOfSurgery:")}} </td>
+                <td>:{{$t("TypeOfSurgery:")}}</td>
                 <td>
                   <br />
                   <br />
@@ -96,9 +93,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-7" >
         <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">{{$t("Child Input")}}</h3>
@@ -109,6 +104,7 @@
               <div class="form-group">
                 <label for="firstname">{{$t("Child First Name")}}</label>
                 <input
+                  v-model="children.firstname"
                   type="text"
                   class="form-control"
                   id="firstname"
@@ -120,6 +116,7 @@
               <div class="form-group">
                 <label for="lastname">{{$t("Child Last Name")}}</label>
                 <input
+                   v-model="children.lastname"
                   type="text"
                   class="form-control form-control-sm"
                   id="lastname"
@@ -131,6 +128,7 @@
               <div class="form-group">
                 <label for="father">{{$t("Child Father Name")}}</label>
                 <input
+                   v-model="children.father"
                   type="text"
                   class="form-control form-control-sm"
                   id="father"
@@ -142,6 +140,7 @@
               <div class="form-group">
                 <label for="mothername">{{$t("Child Mother Name")}}</label>
                 <input
+                v-model="children.mothername"
                   type="text"
                   class="form-control form-control-sm"
                   id="mothername"
@@ -153,6 +152,7 @@
               <div class="form-group">
                 <label for="phone_number">{{$t("Child Phone Number")}}</label>
                 <input
+                  v-model="children.phone"
                   type="text"
                   class="form-control form-control-sm"
                   id="phone"
@@ -164,6 +164,7 @@
               <div class="form-group">
                 <label for="phone_number">{{$t("ChildMobliePhoneNumber")}}</label>
                 <input
+                 v-model="children.mobilephone"
                   type="text"
                   class="form-control form-control-sm"
                   id="mobilephone"
@@ -175,6 +176,7 @@
               <div class="form-group">
                 <label for="BirthPlace">{{$t("ChildBirthPlace")}}</label>
                 <input
+                v-model="children.birthplace"
                   type="text"
                   class="form-control form-control-sm"
                   id="birthplace"
@@ -192,6 +194,7 @@
                     </span>
                   </div>
                   <input
+                   v-model="children.birthday"
                     type="date"
                     name="birthday"
                     id="birthday"
@@ -221,7 +224,6 @@
                     v-on:click="hide_unhide_sponsor"
                     type="checkbox"
                     name="IsTheChildSponsored"
-                   
                     id="exampleCheck1"
                   />
                   <label for="sponsorQuestion">{{$t("IsTheChildSponsored")}} &nbsp</label>
@@ -230,12 +232,12 @@
               <!--Input If there is a sponsor-->
               <div v-bind:class="{ hide:sponsorVar  }" class="form-group">
                 <label for="SponsorAnswer">Sponsore Name</label>
-                <input
-                  type="text"
-                  id="sponsor"
-                  name="sponosr"
-                  placeholder="$t('EnterSponsorName')"
-                />
+                <input 
+                  v-model="sponsor.sponosrName"
+                type="text" 
+                id="sponsor" 
+                name="sponosrName"
+                 placeholder="$t('EnterSponsorName')" />
               </div>
               <!--Sponosr Start and End Date -->
               <div v-bind:class="{ hide:sponsorVar  }" class="form-group">
@@ -247,14 +249,21 @@
                       <i class="far fa-clock"></i>
                     </span>
                   </div>
-                  <input type="date" name="startSponsor" class="form-control float-right" />
+                  <input 
+                    v-model="sponsor.sponsorStartDate"
+                  type="date"
+                   name="startSponsor"
+                    class="form-control float-right" />
                 </div>
                 <div class="input-group-prepend">
                   <span class="input-group-text">
                     <i class="far fa-clock"></i>
                   </span>
                 </div>
-                <input type="date" name="endSponosr" class="form-control float-right" />
+                <input 
+                v-model="sponsor.sponsorEndDate"
+                type="date"
+                name="endSponosr" class="form-control float-right" />
               </div>
               <!-- Need Surgery-->
               <div class="form-group">
@@ -262,6 +271,7 @@
                 <div class="form-group" v-bind:class="{ hide: surgeryVar }">
                   <label for="SurgerAnswer">SrugeryType</label>
                   <input
+                    v-model="surgeryType"
                     type="text"
                     class="form-control form-control-sm"
                     name="surgeryType"
@@ -280,30 +290,41 @@
 import axios from "axios";
 export default {
   data() {
-    return {
-      sponsorVar: true,
-      surgeryVar: true,
-      children: []
+    return { 
+      surgeryType:"",
+      children: [],
+      child:{
+        "id":"",
+        "firstname":"",
+        "lastname":"",
+        "mothername":"",
+        "father":"",
+        "mobilephone":"",
+        "phone":"",
+        "birthplace":"",
+        "birthday":"",
+        "extradata":"",
+      },
+      sponsor:{
+        'sponosrName':"",
+        'sponsorStartDate':"",
+        'sponsorEndDate':"",
+
+      }
     };
   },
   methods: {
-    hide_unhide_sponsor: function() {
-      this.sponsorVar = !this.sponsorVar;
-    },
-    hide_unhide_surgeryNeed: function() {
-      this.surgeryVar = !this.surgeryVar;
-    },
-    created() {
-      axios
-        .get("https://jsonplaceholder.typicode.com/todos")
-        .then(res => (this.children = res.data))
-        .catch(err => console.log(err));
-    }
+    
   }
 };
 </script>
 <style  scoped>
 .hide {
-  visibility: hidden;
+  display: none;
+}
+.tap-style {
+  width: 50%;
+  border: rgb(82, 82, 82) 1px solid;
+  background: rgb(215, 231, 66);
 }
 </style>
