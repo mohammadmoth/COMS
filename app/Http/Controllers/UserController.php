@@ -12,6 +12,7 @@ class UserController extends Controller
 {
     public $successStatus = 200;
     public $errorStatus = 401;
+    
     /**
      * login api
      *
@@ -106,21 +107,29 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\tags  $tags
+     * @param  \App\User  $tags
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $User)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required|string|max:191',
-            'name' => 'required|string|max:191',
-            'type' => 'required|string|max:255',
+            'id' => 'required',
+            'email' => 'email',            
         ]);
 
         if ($validator->passes()) {
-            $user =  $User->where("id",  $request->input("id"));
+        
+            $user =  $User->where("id",  $request->input("id"))->first();
+            if ($request->has("name"))
             $user->name = $request->input("name");
-            $user->type = $request->input("type");
+            if ($request->has("email"))
+            $user->email = $request->input("email");
+            if ($request->has("rules"))
+            $user->rules = $request->input("rules");
+
+            if ($request->has("passowrd"))
+            $user->passowrd =bcrypt ( $request->input("passowrd"));
+
             $user->save();
             return response()->json([
                 'error' => 0
@@ -131,11 +140,20 @@ class UserController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ] ,$this->errorStatus);
         }
 
         //
     }
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $tags
+     * @return \Illuminate\Http\Response
+     */
+   
+
     /**
      * Remove the specified resource from storage.
      *

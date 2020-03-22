@@ -38,10 +38,10 @@ export const constantRoutes = [
          roles:  'montor' }
       },
       {
-        path: 'sponsers',
-        component: require ("./pages/sponsers.vue").default ,
-        name: 'sponsers',
-        meta: {  requiresAuth : true,title: 'sponsers',
+        path: 'sponosers',
+        component: require ("./pages/sponosers.vue").default ,
+        name: 'sponosers',
+        meta: {  requiresAuth : true,title: 'sponosers',
          roles:  'montor' }
       }
       ,

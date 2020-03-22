@@ -54,7 +54,7 @@
                           <div class="dropdown-divider"></div>
                           <a
                             class="dropdown-item"
-                            @click="ResetPassword(user.id)"
+                            @click="ShowMesBoxConfingResetPassword(user.id)"
                             href="#"
                           >{{$t("ResetPassword")}}</a>
                         </div>
@@ -68,6 +68,7 @@
                     :key="index"
                     type="text"
                     v-model="user.name"
+                    @change="updating(index)"
                     style="border: 0px none; background-color: transparent;width: 100%;
     min-width: 240px;"
                   />
@@ -76,6 +77,7 @@
                   <input
                     :key="index"
                     type="text"
+                    @change="updating(index)"
                     v-model="user.email"
                     style="border: 0px none; background-color: transparent;width: 100%;
     min-width: 240px;"
@@ -88,6 +90,7 @@
                     v-model="user.rules"
                     style="min-width: 100px;"
                     class="form-control select2bs4"
+                    @change="updating(index)"
                   >
                     <option value="admin">{{$t("admin")}}</option>
                     <option value="editor">{{$t("editor")}}</option>
@@ -173,7 +176,7 @@
           <!-- /.card-body -->
 
           <div class="card-footer">
-            <button :disabled="!sendbutton" type="submit" class="btn btn-info">{{$t("Submit")}}</button>
+            <button :disabled="!sendbutton" type="submit" class="btn btn-info">{{ $t("Add") }}</button>
           </div>
         </form>
       </div>
@@ -192,28 +195,27 @@ export default {
       rules: "editor",
       password: "",
       sendbutton: true,
-
+      passwordReset: "",
       //tablestart
       pagetable: 0,
       pagetablecurrct: 1,
       countporpage: 2
-        //tableend
+      //tableend
     };
   },
   computed: {
-        //tablestart
+    //tablestart
     dataTable: function() {
       this.pagetable = Math.ceil(this.users.length / this.countporpage);
       if (this.users.length >= this.countporpage) {
         let data = [];
-     if (    this.pagetable < this.pagetablecurrct)
-     this.pagetablecurrct = this.pagetable;
-     let   maxindex = this.countporpage * this.pagetablecurrct;
-        if (maxindex >this.users.length)
-           maxindex = this.users.length
+        if (this.pagetable < this.pagetablecurrct)
+          this.pagetablecurrct = this.pagetable;
+        let maxindex = this.countporpage * this.pagetablecurrct;
+        if (maxindex > this.users.length) maxindex = this.users.length;
         for (
           let index = this.countporpage * (this.pagetablecurrct - 1);
-          index <  maxindex;
+          index < maxindex;
           index++
         ) {
           data.push(this.users[index]);
@@ -223,11 +225,21 @@ export default {
     }
     //tableend
   },
-  methods: {  //tablestart
-   pagetablecurrctset(number) {
+  methods: {
+    //tablestart
+    pagetablecurrctset(number) {
       this.pagetablecurrct = number;
     },
-       //tableend
+    //tableend
+    updating(index) {
+      this.$user
+        .update(this.users[index])
+        .then()
+        .catch(function(error) {
+          console.log(error);
+          this.ShowMesBox("error_send_data_not_saved", "error", "try_agein");
+        });
+    },
     remove(id, index) {
       this.users.splice(index, 1);
       this.$user
@@ -241,7 +253,41 @@ export default {
         });
     },
 
-    ResetPassword(id) {},
+    ResetPassword(id, password) {
+    this.$user.update({id:id , password:password}).then().catch(function(error) {
+          console.log(error);
+          this.ShowMesBox("error_send_data_not_saved", "error", "try_agein");
+        });
+    },
+    ShowMesBoxConfingResetPassword(id) {
+      var vm = this;
+      $.confirm({
+        title: this.$t("ConformPasswordResetTitle"),
+        content:
+         
+          '<div class="form-group">' +
+          "<label></label>" +
+          '<input type="passowrd" name"passwordReset" placeholder="' +
+          this.$t("EnterPassword") +'"   class="name form-control" required />' +
+          "</div>" ,
+        buttons: {
+          formSubmit: {
+            text: this.$t("ConformPasswordReset"),
+            btnClass: "btn-red",
+            action: function() {
+               if ( this.$content.find(".name").val() == "")
+              return false;
+
+              vm.ResetPassword(id, this.$content.find(".name").val());
+             
+            }
+          },
+          cancel: function() {
+            //close
+          }
+        }
+      });
+    },
     ShowMesBox(messg, title, btnname) {
       $.alert({
         title: this.$t(title),
