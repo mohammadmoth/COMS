@@ -28,8 +28,6 @@ class CreateChildrensTable extends Migration
 
             $table->timestamps();
 
-            
-            $table->foreign('srugerytypeid')->references('id')->on('tags');
         });
     }
 
