@@ -439,7 +439,7 @@ export default {
         }
       }
 
-      if (this.child.srugerytypeid != null || this.child.srugerytypeid != 0) {
+      if (this.child.srugerytypeid != null && this.child.srugerytypeid != 0) {
         this.SrugeryType = this.getSrugerytype(this.child.srugerytypeid);
         this.needsurgery = true;
       }
@@ -466,6 +466,7 @@ export default {
       }
     },
     cancelModeEdit() {
+
       this.cleaninput();
       this.editmode = false;
     },
@@ -534,7 +535,7 @@ export default {
       return this.$t("TagsNotFound");
     },
     cleaninput: function() {
-     
+     this.child={};
         this.child.firstname= ""
         this.child.lastname= ""
         this.child.mothername= ""
@@ -547,6 +548,7 @@ export default {
     
       this.IsSponsored = false;
       this.needsurgery = false;
+      this.sponsor={};
         this.sponsor.id= 0
           this.sponsor.firstname= "Not"
           this.sponsor.lastname= "Found"
@@ -739,7 +741,7 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-  
+
       this.$api.childrens
         .index()
         .then(res => {
