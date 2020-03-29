@@ -574,7 +574,7 @@ export default {
       }
 
       if (this.needsurgery) {
-        if (this.child.srugerytypeid == 0 && SrugeryType != "") {
+        if ( (this.child.srugerytypeid == 0  || this.child.srugerytypeid==null) && SrugeryType != "") {
           await this.$api.tags
             .store({
               name: this.SrugeryType,
