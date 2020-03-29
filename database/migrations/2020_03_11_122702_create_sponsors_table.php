@@ -19,7 +19,7 @@ class CreateSponsorsTable extends Migration
             $table->string('lastname');
             $table->string('mobilephone');
             $table->string('phone');
-            $table->json('infoSponser');
+     
             $table->timestamps();
         });
     }

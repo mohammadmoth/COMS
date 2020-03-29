@@ -1,330 +1,802 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">{{$t("ChildrenTable")}}</h3>
-          </div>
-          <!-- Card Body For table-->
-          <div class="card-body">
-            <table
-              id="example1"
-              class="table table-bordered table-striped dataTable"
-              role="grid"
-              aria-describedby="example1_info"
-            >
-              <tr role="row" class="odd">
-                <td>:{{$t("PersonalInformation")}}</td>
-                <td>:{{$t("ContactInfo")}}</td>
-                <td>:{{$t("BirthInfo")}}</td>
-                <td>:{{$t("isSponsored")}}</td>
-                <td>:{{$t("needSurgery")}}</td>
-                <td>:{{$t("ExtraInformation")}}</td>
-                <td>:{{$t("editButton")}}</td>
-              </tr>
-              <tr role="row" class="even">
-                <td>
-                  <b>:{{$t("firstName")}} :</b>
-                  <br />
-                  <b>:{{$t("lastName")}} :</b>
-                  <br />
-                  <b>:{{$t("fatherName")}}:</b>
-                  <br />
-                  <b>:{{$t("motherName")}}:</b>
-                  <br />
-                  <b>:{{$t("MobilePhone")}}</b>
-                </td>
-
-                <td>
-                  <b>:{{$t("MobilePhone:")}}</b>
-                  <br />
-                  <b>:{{$t("Phone:")}}</b>
-                  <br />
-                </td>
-                <td>
-                  <b>:{{$t("Age:")}}</b>
-                  <br />
-                  <b>:{{$t("BirthDate:")}}</b>
-                  <br />
-                  <b>:{{$t("BirhPlace:")}}</b>
-                  <br />
-                </td>
-                <td>
-                  <b>:{{$t("SponsorName")}} :</b>
-                  <br />
-                  <b>:{{$t("SponsorStart")}} :</b>
-                  <br />
-                  <b>:{{$t("SponsorEnd")}} :</b>
-                  <br />
-                </td>
-                <td>:{{$t("TypeOfSurgery:")}}</td>
-                <td>
-                  <br />
-                  <br />
-                  :{{$t("ExtraInformation")}}
-                  <br />
-                  <br />
-                </td>
-                <td>
-                  <div class="btn-group show">
-                    <button type="button" class="btn btn-info btn-flat">Action</button>
-                    <button
-                      type="button"
-                      class="btn btn-info btn-flat dropdown-toggle dropdown-icon"
-                      data-toggle="dropdown"
-                      aria-expanded="true"
-                    >
-                      <span class="sr-only">Toggle Dropdown</span>
-                      <div
-                        class="dropdown-menu show"
-                        role="menu"
-                        x-placement="top-start"
-                        style="position: absolute; transform: translate3d(-1px, -206px, 0px); top: 0px; left: 0px; will-change: transform;"
-                      >
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Edit</a>
-                      </div>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
+    <div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">{{$t("ChildrenTable")}}</h3>
         </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <!--  <li class="page-item">
+                <a class="page-link" href="#">Previous</a>
+              </li>-->
+
+              <li v-for=" i in pagetable" class="page-item" :class="{active:i == pagetablecurrct }">
+                <button class="page-link" @click="pagetablecurrctset(i)">{{i}}</button>
+              </li>
+
+              <!-- <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>-->
+            </ul>
+          </nav>
+
+          <table id="usersData" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>{{$t("event")}}</th>
+                <th>{{$t("name")}}</th>
+                <th>{{$t("ContactInfo")}}</th>
+                <th>{{$t("BirthInfo")}}</th>
+                <th>{{$t("SponsoredInfo")}}</th>
+                <th>{{$t("SurgeryInfo")}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data ,index) in dataTable" :key="index">
+                <td>
+                  <div class="margin">
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-default dropdown-toggle dropdown-icon"
+                        data-toggle="dropdown"
+                      >
+                        <i class="fas fa-cogs"></i>
+                        <span class="sr-only">Toggle Dropdown</span>
+                        <div class="dropdown-menu" role="menu">
+                          <a
+                            class="dropdown-item"
+                            @click="enb_edit( data.id)"
+                            href="#"
+                          >{{$t("edit")}}</a>
+                          <div class="dropdown-divider"></div>
+                          <a
+                            class="dropdown-item"
+                            @click="ShowMesBoxConfingRemove(data.id)"
+                            href="#"
+                          >{{$t("remove")}}</a>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div>{{data.firstname}} {{data.lastname}}</div>
+                  <div>{{$t("mothername")}}: {{data.mothername}}</div>
+                  <div>{{$t("father")}}: {{data.father}}</div>
+                </td>
+                <td>
+                  <div>{{$t("mobilephone")}}: {{data.mobilephone}}</div>
+                  <div>{{$t("phone")}}: {{data.phone}}</div>
+                </td>
+                <td>
+                  <div>{{$t("birthplace")}}: {{data.birthplace}}</div>
+                  <div>{{$t("birthday")}}: {{data.birthday | moment("DD/MM/YYYY" )}}</div>
+                </td>
+                <td>
+                  <span v-show="getsponser(data.id).id!=0">
+                    <div>{{$t("name")}}: {{getsponser(data.id).firstname}} {{getsponser(data.id).lastname}}</div>
+                  </span>
+                  <span v-show="getsponser(data.id).id==0">
+                    <div>{{$t("IsNotSponsored")}}</div>
+                  </span>
+                </td>
+                <td>
+                  <span v-show="data.srugerytypeid !=null">
+                    <div>{{$t("SrugeryType")}}: {{getSrugerytype( data.srugerytypeid)}}</div>
+                  </span>
+                  <span v-show="data.srugerytypeid ==null">
+                    <div>{{$t("NoNeedSurgery")}}</div>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>{{$t("event")}}</th>
+                <th>{{$t("name")}}</th>
+                <th>{{$t("ContactInfo")}}</th>
+                <th>{{$t("BirthInfo")}}</th>
+                <th>{{$t("SponsoredInfo")}}</th>
+                <th>{{$t("SurgeryInfo")}}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
       </div>
-      <div class="col-md-7" >
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">{{$t("Child Input")}}</h3>
-          </div>
-          <form role="form">
-            <div class="card-body">
-              <!-- Child First Name Input-->
-              <div class="form-group">
-                <label for="firstname">{{$t("Child First Name")}}</label>
-                <input
-                  v-model="children.firstname"
-                  type="text"
-                  class="form-control"
-                  id="firstname"
-                  name="firstname"
-                  :placeholder="$t( 'EnterChildFirstName')"
-                />
-              </div>
-              <!-- Child Last Name Input-->
-              <div class="form-group">
-                <label for="lastname">{{$t("Child Last Name")}}</label>
-                <input
-                   v-model="children.lastname"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="lastname"
-                  name="lastname"
-                  :placeholder="$t('EnterChildLastName')"
-                />
-              </div>
-              <!-- Child Father Name Input-->
-              <div class="form-group">
-                <label for="father">{{$t("Child Father Name")}}</label>
-                <input
-                   v-model="children.father"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="father"
-                  name="father"
-                  :placeholder="$t('EnterChildFatherName')"
-                />
-              </div>
-              <!-- Child Mother Name Input-->
-              <div class="form-group">
-                <label for="mothername">{{$t("Child Mother Name")}}</label>
-                <input
-                v-model="children.mothername"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="mothername"
-                  name="mothername"
-                  :placeholder="$t('EnterChildMotherFirstAndName')"
-                />
-              </div>
-              <!-- Child Phone Number Input-->
-              <div class="form-group">
-                <label for="phone_number">{{$t("Child Phone Number")}}</label>
-                <input
-                  v-model="children.phone"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="phone"
-                  name="phone"
-                  :placeholder="$t('EnterChildPhoneNumber')"
-                />
-              </div>
-              <!-- Child MobliePhone Number Input-->
-              <div class="form-group">
-                <label for="phone_number">{{$t("ChildMobliePhoneNumber")}}</label>
-                <input
-                 v-model="children.mobilephone"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="mobilephone"
-                  name="mobilephone"
-                  :placeholder="$t('EnterChildMobliePhoneNumber')"
-                />
-              </div>
-              <!-- Child Birth Place Input-->
-              <div class="form-group">
-                <label for="BirthPlace">{{$t("ChildBirthPlace")}}</label>
-                <input
-                v-model="children.birthplace"
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="birthplace"
-                  name="birthplace"
-                  :placeholder="$t('EnterBirthPlaceNumber')"
-                />
-              </div>
-              <!-- Child Birth Date Input-->
-              <div class="form-group">
-                <label for="BirthDate">{{$t("ChildBirthDate")}}</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="far fa-calendar-alt"></i>
-                    </span>
-                  </div>
-                  <input
-                   v-model="children.birthday"
-                    type="date"
-                    name="birthday"
-                    id="birthday"
-                    class="form-control"
-                    data-inputmask-alias="datetime"
-                    data-inputmask-inputformat="dd/mm/yyyy"
-                    data-mask
-                    im-insert="false"
-                  />
-                </div>
-              </div>
-              <!--CheckBox For Sponsors-->
-              <div class="form-check">
-                <span>
-                  <input
-                    type="checkbox"
-                    v-on:click="hide_unhide_surgeryNeed"
-                    name="Need_A_Surgery"
-                    :placeholder="$t('DoesTheChildNeedAsurgery')"
-                  />
-                  <label for="SurgerQuestion">Does the child need a surgery?</label>
-                </span>
-                <b></b>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col">
+      <!-- general form elements -->
+      <div class="card card-info">
+        <div class="card-header">
+          <h3 class="card-title">{{$t(editmodeString)}} {{$t("child")}}</h3>
+        </div>
+        <!-- /.card-header -->
 
-                <span>
-                  <input
-                    v-on:click="hide_unhide_sponsor"
-                    type="checkbox"
-                    name="IsTheChildSponsored"
-                    id="exampleCheck1"
-                  />
-                  <label for="sponsorQuestion">{{$t("IsTheChildSponsored")}} &nbsp</label>
-                </span>
-              </div>
-              <!--Input If there is a sponsor-->
-              <div v-bind:class="{ hide:sponsorVar  }" class="form-group">
-                <label for="SponsorAnswer">Sponsore Name</label>
-                <input 
-                  v-model="sponsor.sponosrName"
-                type="text" 
-                id="sponsor" 
-                name="sponosrName"
-                 placeholder="$t('EnterSponsorName')" />
-              </div>
-              <!--Sponosr Start and End Date -->
-              <div v-bind:class="{ hide:sponsorVar  }" class="form-group">
-                <label>Date and time range:</label>
-
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="far fa-clock"></i>
-                    </span>
-                  </div>
-                  <input 
-                    v-model="sponsor.sponsorStartDate"
-                  type="date"
-                   name="startSponsor"
-                    class="form-control float-right" />
-                </div>
+        <!-- form start -->
+        <form @submit="checkForm" action="#" role="form">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="firstname">{{$t("firstname")}}</label>
+              <input
+                required
+                type="text"
+                name="firstname"
+                class="form-control"
+                id="firstname"
+                :placeholder="$t('enterfirstname')"
+                v-model="child.firstname"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastname">{{$t("lastname")}}</label>
+              <input
+                required
+                type="text"
+                name="lastname"
+                class="form-control"
+                id="lastname"
+                :placeholder="$t('enterlastname')"
+                v-model="child.lastname"
+              />
+            </div>
+            <div class="form-group">
+              <label for="mothername">{{$t("mothername")}}</label>
+              <input
+                required
+                type="text"
+                name="mothername"
+                class="form-control"
+                id="mothername"
+                :placeholder="$t('entermothername')"
+                v-model="child.mothername"
+              />
+            </div>
+            <!---->
+            <div class="form-group">
+              <label for="father">{{$t("father")}}</label>
+              <input
+                required
+                type="text"
+                id="father"
+                name="father"
+                class="form-control"
+                :placeholder="$t('Enterfather')"
+                v-model="child.father"
+              />
+            </div>
+            <!---->
+            <div class="form-group">
+              <label for="mobilephone">{{$t("mobilephone")}}</label>
+              <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
-                    <i class="far fa-clock"></i>
+                    <i class="fas fa-mobile"></i>
                   </span>
                 </div>
-                <input 
-                v-model="sponsor.sponsorEndDate"
-                type="date"
-                name="endSponosr" class="form-control float-right" />
-              </div>
-              <!-- Need Surgery-->
-              <div class="form-group">
-                <!-- Surgery Type-->
-                <div class="form-group" v-bind:class="{ hide: surgeryVar }">
-                  <label for="SurgerAnswer">SrugeryType</label>
-                  <input
-                    v-model="surgeryType"
-                    type="text"
-                    class="form-control form-control-sm"
-                    name="surgeryType"
-                    :placeholder="$t('EnterSurgeryType')"
-                  />
-                </div>
+                <input
+                  type="text"
+                  id="mobilephone"
+                  name="mobilephone"
+                  maxlength="10"
+                  class="form-control"
+                  :placeholder="$t('Entermobilephone')"
+                  v-model="child.mobilephone"
+                />
               </div>
             </div>
-          </form>
-        </div>
+            <!---->
+            <div class="form-group">
+              <label for="phone">{{$t("phone")}}</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-phone"></i>
+                  </span>
+                </div>
+                <input
+                  required
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  maxlength="10"
+                  class="form-control"
+                  :placeholder="$t('Enterphone')"
+                  v-model="child.phone"
+                />
+              </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+              <label>{{$t("birthday")}}</label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="far fa-calendar-alt"></i>
+                  </span>
+                </div>
+                <input
+                  required
+                  type="date"
+                  class="form-control"
+                  data-inputmask-alias="date"
+                  data-inputmask-inputformat="dd/mm/yyyy"
+                  data-mask
+                  v-model="child.birthday"
+                />
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label for="birthplace">{{$t("birthplace")}}</label>
+              <input
+                required
+                type="text"
+                id="birthplace"
+                name="birthplace"
+                class="form-control"
+                :placeholder="$t('Enterbirthplace')"
+                v-model="child.birthplace"
+              />
+            </div>
+
+            <!---->
+            <div class="form-group">
+              <div class="icheck-danger d-inline">
+                <input type="checkbox" v-model="needsurgery" id="needsurgery" />
+                <label for="needsurgery">{{$t("needsurgery")}}</label>
+              </div>
+              <span v-show="needsurgery">
+                <div class="form-group">
+                  <label for="SrugeryType">{{$t("SrugeryType")}}</label>
+                  <input
+                    type="text"
+                    id="SrugeryType"
+                    name="SrugeryType"
+                    class="form-control"
+                    :placeholder="$t('EnterSrugeryType')"
+                    v-model="SrugeryType"
+                    list="SrugeryTypeL"
+                    autocomplete="off"
+                  />
+                  <datalist id="SrugeryTypeL">
+                    <option
+                      v-for="(SrugeryType ,index) in tags "
+                      :key="index"
+                      :value="SrugeryType.name"
+                      v-if="SrugeryType.type =='sopnsors'"
+                    />
+                  </datalist>
+                </div>
+              </span>
+            </div>
+
+            <!---->
+            <div class="form-group">
+              <div class="icheck-danger d-inline">
+                <input type="checkbox" v-model="IsSponsored" id="IsSponsored" />
+                <label for="IsSponsored">{{ $t("IsSponsored") }}</label>
+              </div>
+              <span v-show="IsSponsored">
+                <div class="form-group">
+                  <label>{{$t("sponsor")}}</label>
+                  <model-select
+                    :options="sponsoroject"
+                    v-model="sponsorid"
+                    :placeholder="$t('search')"
+                  ></model-select>
+                </div>
+                <!-- Date range -->
+                <div class="form-group">
+                  <label>{{$t('DateRangeofsponsor')}}</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                    </div>
+                    <input
+                      required
+                      type="text"
+                      data-inputmask-inputformat="dd/mm/yyyy"
+                      class="form-control float-right"
+                      id="reservation"
+                    />
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+              </span>
+            </div>
+          </div>
+          <!---->
+
+          <div class="card-footer">
+            <button
+              :disabled="!sendbutton"
+              type="submit"
+              class="btn btn-info"
+            >{{ $t(editmodeString) }}</button>
+          
+        
+            <button
+              v-show="editmode"
+              type="button"
+              class="btn btn-info"
+              @click="cancelModeEdit()"
+            >{{ $t("cancel") }}</button>
+          </div>
+        </form>
       </div>
+      <!-- /.card -->
     </div>
   </div>
 </template>
-  <script lang="ts">
-import axios from "axios";
-export default {
-  data() {
-    return { 
-      surgeryType:"",
-      children: [],
-      child:{
-        "id":"",
-        "firstname":"",
-        "lastname":"",
-        "mothername":"",
-        "father":"",
-        "mobilephone":"",
-        "phone":"",
-        "birthplace":"",
-        "birthday":"",
-        "extradata":"",
-      },
-      sponsor:{
-        'sponosrName':"",
-        'sponsorStartDate':"",
-        'sponsorEndDate':"",
 
-      }
+<script>
+import { ModelSelect } from "vue-search-select";
+export default {
+  components: {
+    ModelSelect
+  },
+  data: function() {
+    return {
+      sponsors: [],
+      children: [],
+      tags: [],
+      hasfromsponsors: [],
+      editmode: false,
+      sponsorid: 0,
+      IsSponsored: false,
+      needsurgery: false,
+      SrugeryType: "",
+      sponsor: {
+        id: 0,
+        firstname: "Not",
+        lastname: "Found",
+        phone: "00000000000",
+        startsopnser: "2000-01-01",
+        endsponosor: "2000-12-30",
+        hasfromsponsors_id: 0
+      },
+
+      child: {
+        firstname: "",
+        lastname: "",
+        mothername: "",
+        father: "",
+        mobilephone: "",
+        phone: "",
+        birthplace: "",
+        birthday: "",
+        srugerytypeid: 0
+      },
+      sendbutton: true,
+      //tablestart
+      pagetable: 0,
+      pagetablecurrct: 1,
+      countporpage: 10
+      //tableend
     };
   },
+  computed: {
+    editmodeString: function() {
+      if (this.editmode) {
+        return "edit";
+      } else {
+        return "add";
+      }
+    },
+    sponsoroject: function() {
+      let array = [];
+      for (let index = 0; index < this.sponsors.length; index++) {
+        array.push({
+          value: this.sponsors[index].id,
+          text:
+            this.sponsors[index].firstname + " " + this.sponsors[index].lastname
+        });
+      }
+      return array;
+    },
+    //tablestart
+    dataTable: function() {
+      this.pagetable = Math.ceil(this.children.length / this.countporpage);
+      if (this.children.length >= this.countporpage) {
+        let data = [];
+        if (this.pagetable < this.pagetablecurrct)
+          this.pagetablecurrct = this.pagetable;
+        let maxindex = this.countporpage * this.pagetablecurrct;
+        if (maxindex > this.children.length) maxindex = this.children.length;
+        for (
+          let index = this.countporpage * (this.pagetablecurrct - 1);
+          index < maxindex;
+          index++
+        ) {
+          data.push(this.children[index]);
+        }
+        return data;
+      } else return this.children;
+    }
+    //tableend
+  },
   methods: {
+    enb_edit(id) {
+      this.editmode = true;
+      for (let index = 0; index < this.children.length; index++) {
+        if (this.children[index].id == id) {
+          this.child = this.children[index];
+          break;
+        }
+      }
+
+      if (this.child.srugerytypeid != null || this.child.srugerytypeid != 0) {
+        this.SrugeryType = this.getSrugerytype(this.child.srugerytypeid);
+        this.needsurgery = true;
+      }
+
+      if (this.getsponser(this.child.id).id != 0) {
+        this.sponsor = this.getsponser(this.child.id);
+        this.IsSponsored = true;
+        this.sponsorid = this.sponsor.id;
+
+        $("#reservation")
+          .data("daterangepicker")
+          .setStartDate(
+            this.$moment(this.sponsor.startsopnser, "YYYY-MM-DD").format(
+              "DD/MM/YYYY"
+            )
+          );
+        $("#reservation")
+          .data("daterangepicker")
+          .setEndDate(
+            this.$moment(this.sponsor.endsponosor, "YYYY-MM-DD").format(
+              "DD/MM/YYYY"
+            )
+          );
+      }
+    },
+    cancelModeEdit() {
+      this.cleaninput();
+      this.editmode = false;
+    },
+    getsponser(id) {
+      for (let index = 0; index < this.hasfromsponsors.length; index++) {
+        if (this.hasfromsponsors[index].id_child == id)
+          for (let je = 0; je < this.sponsors.length; je++) {
+            if (
+              this.sponsors[je].id == this.hasfromsponsors[index].id_sponsor
+            ) {
+              this.sponsors[je].startsopnser = this.hasfromsponsors[
+                index
+              ].startsopnser;
+              this.sponsors[je].endsponosor = this.hasfromsponsors[
+                index
+              ].endsponosor;
+              this.sponsors[je].hasfromsponsors_id = this.hasfromsponsors[
+                index
+              ].id;
+              return this.sponsors[je];
+            }
+          }
+      }
+
+      return this.sponsor;
+    },
+    //tablestart
+    pagetablecurrctset(number) {
+      this.pagetablecurrct = number;
+    },
+    ShowMesBox(messg, title, btnname) {
+      $.alert({
+        title: title,
+        content: messg,
+
+        typeAnimated: true,
+        buttons: {
+          tryAgain: {
+            rtl: true,
+            text: btnname,
+            btnClass: "btn",
+            action: function() {}
+          }
+        }
+      });
+    },
+    show: function(mess) {},
+    checkinput: function(data, name) {
+      if (data == "") {
+        this.ShowMesBox(
+          this.$t("pleaseenter") + this.$t(name),
+          this.$t("Errorinput"),
+          this.$t("ok")
+        );
+        return false;
+      }
+
+      return true;
+    },
+    getSrugerytype: function(id) {
+      for (let index = 0; index < this.tags.length; index++) {
+        if (this.tags[index].id == id) {
+          return this.tags[index].name;
+        }
+      }
+      return this.$t("TagsNotFound");
+    },
+    cleaninput: function() {
+     
+        this.child.firstname= ""
+        this.child.lastname= ""
+        this.child.mothername= ""
+        this.child.father= ""
+        this.child.mobilephone= ""
+        this.child.phone= ""
+        this.child.birthplace= ""
+        this.child.birthday= ""
+        this.child.srugerytypeid= 0
     
+      this.IsSponsored = false;
+      this.needsurgery = false;
+        this.sponsor.id= 0
+          this.sponsor.firstname= "Not"
+          this.sponsor.lastname= "Found"
+          this.sponsor.phone= "00000000000"
+          this.sponsor.startsopnser= "2000-01-01"
+          this.sponsor.endsponosor= "2000-12-30"
+          this.sponsor.hasfromsponsors_id=0
+     
+      this.SrugeryType = "";
+      this.sponsorid = 0;
+    },
+    checkForm: async function(e) {
+      e.preventDefault();
+
+      if (this.needsurgery)
+        if (!this.checkinput(this.SrugeryType, "SrugeryType")) return false;
+
+      if (this.needsurgery) {
+        for (let index = 0; index < this.tags.length; index++) {
+          if (this.tags[index].name == this.SrugeryType)
+            this.child.srugerytypeid = this.tags[index].id;
+        }
+      }
+
+      if (this.needsurgery) {
+        if (this.child.srugerytypeid == 0 && SrugeryType != "") {
+          await this.$api.tags
+            .store({
+              name: this.SrugeryType,
+              type: "sopnsors"
+            })
+            .then(res => {
+              this.child.srugerytypeid = res.data.data.id;
+            })
+            .catch(err => {});
+        }
+      } else {
+        this.child.srugerytypeid = null;
+      }
+
+      this.sendbutton = false;
+      if (
+        !this.checkinput(this.child.firstname, "firstname") ||
+        !this.checkinput(this.child.lastname, "lastname") ||
+        !this.checkinput(this.child.mothername, "mothername") ||
+        !this.checkinput(this.child.father, "father") ||
+        !this.checkinput(this.child.mobilephone, "mobilephone") ||
+        !this.checkinput(this.child.phone, "phone") ||
+        !this.checkinput(this.child.birthplace, "birthplace") ||
+        !this.checkinput(this.child.birthday, "birthday")
+      )
+        return false;
+      // $('#reservation').data('daterangepicker').startDate.format();
+      if (
+        this.$moment(this.child.birthday, "YYYY-MM-DD").isAfter(
+          this.$moment(new Date())
+        )
+      ) {
+        this.ShowMesBox(
+          this.$t("ErrorOnDataIsAfterNowBirthday"),
+          this.$t("Errorinput"),
+          this.$t("ok")
+        );
+
+        this.sendbutton = true;
+        return false;
+      }
+
+      var error = false;
+      if (this.editmode) {
+        await this.$api.childrens
+          .update(this.child)
+          .then(res => {
+          
+          })
+          .catch(error => {
+            error = true;
+            console.log(error);
+          });
+
+        if (this.sponsor.id == 0 && this.sponsorid != 0)
+          await this.$api.hasfromsponsors
+            .store({
+              id_child: this.child.id,
+              id_sponsor: this.sponsorid,
+              startsopnser: $("#reservation")
+                .data("daterangepicker")
+                .startDate.format("YYYY-MM-DD"),
+
+              endsponosor: $("#reservation")
+                .data("daterangepicker")
+                .endDate.format("YYYY-MM-DD")
+            })
+            .then(res => {})
+            .catch(error => {
+              error = true;
+              console.log(error);
+            });
+        else if (this.sponsor.id != 0 && ( this.sponsorid == 0 || !this.IsSponsored) )
+          await this.$api.hasfromsponsors
+            .destroy(this.sponsor.hasfromsponsors_id)
+            .then(res => {})
+            .catch(error => {
+              error = true;
+              console.log(error);
+            });
+        else if (this.sponsor.id != 0 && this.sponsorid != 0)
+          await this.$api.hasfromsponsors
+            .update({
+              id: this.sponsor.hasfromsponsors_id,
+              id_child: this.child.id,
+              id_sponsor: this.sponsorid,
+              startsopnser: $("#reservation")
+                .data("daterangepicker")
+                .startDate.format("YYYY-MM-DD"),
+
+              endsponosor: $("#reservation")
+                .data("daterangepicker")
+                .endDate.format("YYYY-MM-DD")
+            })
+            .then(res => {})
+            .catch(error => {
+              error = true;
+              console.log(error);
+            });
+      } else {
+        await this.$api.childrens
+          .store(this.child)
+          .then(res => {
+            this.child = res.data.data;
+          })
+          .catch(error => {
+            error = true;
+            console.log(error);
+          });
+        if (this.IsSponsored && this.sponsorid != 0 && !error)
+          await this.$api.hasfromsponsors
+            .store({
+              id_child: this.child.id,
+              id_sponsor: this.sponsorid,
+              startsopnser: $("#reservation")
+                .data("daterangepicker")
+                .startDate.format("YYYY-MM-DD"),
+
+              endsponosor: $("#reservation")
+                .data("daterangepicker")
+                .endDate.format("YYYY-MM-DD")
+            })
+            .then(res => {})
+            .catch(error => {
+              error = true;
+              console.log(error);
+            });
+        this.ShowMesBox(
+          this.$t("AddingComplete"),
+          this.$t("AddingComplete"),
+          this.$t("ok")
+        );
+      }
+
+      this.cleaninput();
+
+      this.fetch();
+      this.sendbutton = true;
+    },
+    fetch: function() {
+       this.$api.hasfromsponsors
+        .index()
+        .then(res => {
+          this.hasfromsponsors = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      this.$api.sponsors
+        .index()
+        .then(res => {
+          this.sponsors = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      this.$api.tags
+        .index()
+        .then(res => {
+          this.tags = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+  
+      this.$api.childrens
+        .index()
+        .then(res => {
+          this.children = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+     
+    }
+  },
+  mounted() {
+    this.fetch();
+
+    $("#reservation").daterangepicker({
+      locale: {
+        format: "DD/MM/YYYY",
+        separator: " - ",
+        applyLabel: this.$t("ok"),
+        cancelLabel: this.$t("cancel"),
+        fromLabel: this.$t("from"),
+        toLabel: this.$t("to"),
+        customRangeLabel: "Custom",
+
+        daysOfWeek: [
+          this.$t("Su"),
+          this.$t("Mo"),
+          this.$t("Tu"),
+          this.$t("We"),
+          this.$t("Th"),
+          this.$t("Fr"),
+          this.$t("Sa")
+        ],
+        monthNames: [
+          this.$t("January"),
+          this.$t("February"),
+          this.$t("March"),
+          this.$t("April"),
+          this.$t("May"),
+          this.$t("June"),
+          this.$t("July"),
+          this.$t("August"),
+          this.$t("September"),
+          this.$t("October"),
+          this.$t("November"),
+          this.$t("December")
+        ],
+        firstDay: this.$t("firstDay")
+      }
+    });
+    $(function() {
+      $(".select2").select2();
+    });
   }
 };
 </script>
-<style  scoped>
-.hide {
-  display: none;
-}
-.tap-style {
-  width: 50%;
-  border: rgb(82, 82, 82) 1px solid;
-  background: rgb(215, 231, 66);
-}
+
+<style>
 </style>

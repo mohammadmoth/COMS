@@ -39,10 +39,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('details', 'UserController@details');
     Route::apiResource('tags',             'TagsController');
-    Route::apiResource('ClinicalExams',             'ClinicalExamController');
-    Route::apiResource('Doctors',             'DoctorController');
-    Route::apiResource('Sponsors',         'SponsorsController');
-    Route::apiResource('Hasfromsponsors',  'HasfromsponsorsController');
-    Route::apiResource('Medicines',        'MedicinesController');
-    Route::apiResource('Children',         'ChildrensController');
+    Route::apiResource('clinicalExams',             'ClinicalExamController');
+    Route::apiResource('doctors',             'DoctorController');
+    Route::apiResource('sponsors',         'SponsorsController');
+    Route::apiResource('hasfromsponsors',  'HasfromsponsorsController');
+    Route::apiResource('medicines',        'MedicinesController');
+    Route::apiResource('childrens',         'ChildrensController');
 });

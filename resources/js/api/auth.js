@@ -15,10 +15,10 @@ export function removeToken() {
 }
 
 export function isHaveAcsses(stringRoule) {
-  console.log("isHaveAcsses")
+  
 if (Vue.user.getUser().hasOwnProperty("rules"))
 {
-  console.log("isHaveAcsses1")
+  
 if ( Vue.user.getUser().rules=="admin")
 return true;
 

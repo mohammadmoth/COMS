@@ -9,7 +9,7 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-        <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css">
 
 
       </head>
@@ -20,9 +20,9 @@
         </div>
 
 
-        <script src="{{asset('js/app.js')}}"></script>
-        <script src="{{asset('js/manifest.js')}}"></script>
-        <script src="{{asset('js/vendor.js')}}"></script>
+        <script src="{{mix('js/app.js')}}"></script>
+        <script src="{{mix('js/manifest.js')}}"></script>
+        <script src="{{mix('js/vendor.js')}}"></script>
         <script>
             window.csrfToken = "{{csrf_token()}}";
             window.Laravel = <?php echo json_encode([

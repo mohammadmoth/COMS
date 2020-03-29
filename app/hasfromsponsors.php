@@ -8,7 +8,7 @@ class Hasfromsponsors extends Model
 {
 
     protected $fillable = [
-        'id_child', 'id_sponsor', 'startsopnser', 'startend' , 'extradata'
+        'id_child', 'id_sponsor', 'startsopnser', 'startend' 
     ];
 
     //

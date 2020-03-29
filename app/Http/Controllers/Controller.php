@@ -10,4 +10,10 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public $successStatus = 200;
+    public $errorStatus = 401;
+    public $badRequest=400;
+     
+    
 }

@@ -1,95 +1,16 @@
 import SendData from './service.js'
+import * as users  from './users.js'
 
+let rules = ["monitor","editor" ,'admin']
 
-
-var user = {};
-
-//var rules = ["editor","monitor" ,'admin']
-var rules = ['admin']
 export function checkRules(type = null) {
 if ( type == null)
 type = rules;
 
     for (let index = 0; index < type.length; index++)
-        if (type[index] == getUser().rules)
+        if (type[index] == users.getUser().rules)
             return true
     return false
-}
-
-export function login(data) {
-    return SendData({
-        url: '/api/login',
-        method: 'post',
-        data
-    })
-}
-
-
-
-export function getall() {
-    if (this.checkRules() ) {
-        return SendData({
-            url: '/api/users',
-            method: 'get', data: {}
-        })
-    }
-
-    return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
-
-}
-
-
-export function RefreshUserInfo() {
-    return SendData({
-        url: '/api/details',
-        method: 'post'
-    }
-    )
-}
-
-
-export function logout() {
-
-}
-export function init() {
-    try {
-        if (localStorage.user)
-            user = JSON.parse(localStorage.user);
-    } catch (error) {
-
-    }
-
-
-
-    this.initUserData();
-}
-export function getUser() {
-
-    try {
-        if (localStorage.user)
-            user = JSON.parse(localStorage.user);
-        else
-            this.initUserData()
-    } catch (error) {
-
-    }
-
-
-
-
-    return user;
-
-}
-export async function initUserData() {
-
-    await this.RefreshUserInfo().then(function (response) {
-        user = response.data.success;
-        localStorage.user = JSON.stringify(user)
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-    return user
 }
 
 
@@ -101,7 +22,7 @@ export function index() {
               'c_password' => 'required|same:password',*/
     if (this.checkRules()) {
         return SendData({
-            url: '/api/users',
+            url: '/api/tags',
             method: 'get'
 
         })
@@ -117,7 +38,7 @@ export function store(data) {
               'c_password' => 'required|same:password',*/
     if (this.checkRules()) {
         return SendData({
-            url: '/api/users',
+            url: '/api/tags',
             method: 'post',
             data
         })
@@ -130,7 +51,7 @@ export function show(id) {
   /* id */
     if (this.checkRules()) {
         return SendData({
-            url: '/api/users/'+   id,
+            url: '/api/tags/'+   id,
             method: 'get',
             data
         })
@@ -145,7 +66,7 @@ export function update(data) {
             'type' => 'required|string|max:255',*/
     if (this.checkRules()) {
         return SendData({
-            url: '/api/users/'+data.id,
+            url: '/api/tags/'+data.id,
             method: 'put',
             data
         })
@@ -158,7 +79,7 @@ export function destroy(id) {
     /* id */
     if (this.checkRules()) {
         return SendData({
-            url:  '/api/users/'+id,
+            url:  '/api/tags/'+id,
             method: 'delete'
         })
     }
@@ -166,6 +87,3 @@ export function destroy(id) {
     return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
 
 }
-
-
-

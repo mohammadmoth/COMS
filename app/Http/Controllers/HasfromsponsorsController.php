@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\hasfromsponsors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 class HasfromsponsorsController extends Controller
 {
    /**
@@ -22,16 +23,6 @@ class HasfromsponsorsController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,9 +36,9 @@ class HasfromsponsorsController extends Controller
 
             'id_child'=>"exists:childrens,id",
             'id_sponsor' =>"exists:tags,id",
-            'startsopnser'=>'required|date_format:m/d/Y|after_or_equal:'.date('m/d/Y'),
-            "startend"=>'required|date|after:startsopnser',
-            'extradata' => 'required',
+            'startsopnser'=>'required|date_format:"Y-m-d"',
+            "endsponosor"=>'required|date|after:startsopnser',
+   
 
         ]);
 
@@ -55,9 +46,9 @@ class HasfromsponsorsController extends Controller
             $hasfromsponsors = new hasfromsponsors();
             $hasfromsponsors->id_child = $request->input("id_child");
             $hasfromsponsors->id_sponsor = $request->input("id_sponsor");
-            $hasfromsponsors->startsopnser = $request->input("startsopnser");
-            $hasfromsponsors->startsopnser = $request->input("startend");
-            $hasfromsponsors->startsopnser = $request->input("extradata");
+            $hasfromsponsors->startsopnser =Carbon::parse($request->input("startsopnser"))->format('Y-m-d');
+            $hasfromsponsors->endsponosor = Carbon::parse($request->input("endsponosor"))->format('Y-m-d'); 
+           
             $hasfromsponsors->save();
 
                     return response()->json([
@@ -72,7 +63,7 @@ class HasfromsponsorsController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
         //
     }
@@ -86,27 +77,15 @@ class HasfromsponsorsController extends Controller
     public function show(hasfromsponsors $hasfromsponsors , $id)
     {
         if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        return response()->json(['error'=>true],$this->badRequest);
          $hasfromsponsor = $hasfromsponsors->whereId($id)->first();
 
-           if ( $hasfromsponsor == null ) return response()->json(['error'=>true]);
+           if ( $hasfromsponsor == null ) return response()->json(['error'=>true] ,$this->badRequest);
             else
            return response()->json(['error'=>false, "data"=> $hasfromsponsor]);
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\hasfromsponsors  $hasfromsponsors
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(hasfromsponsors $hasfromsponsors)
-    {
-
-
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -117,24 +96,24 @@ class HasfromsponsorsController extends Controller
      */
     public function update(Request $request, hasfromsponsors $hasfromsponsors , $id)
     {
-        $request->input["id"]=$id;
+        $request->id=$id;
         $validator = Validator::make($request->all(), [
             'id'=>"exists:hasfromsponsors,id",
-            'id_childrens'=>"exists:childrens,id",
+            'id_child'=>"exists:childrens,id",
             'id_sponsor' =>"exists:tags,id",
-            'startsopnser'=>'required|date_format:m/d/Y|after_or_equal:'.date('m/d/Y'),
-            "startend"=>'required|date|after:startsopnser',
-            'extradata' => 'required',
+            'startsopnser'=>'required|date_format:"Y-m-d"',
+            "endsponosor"=>'required|date|after:startsopnser',
+       
 
         ]);
 
         if ($validator->passes()) {
-            $hasfromsponsors = $hasfromsponsors->whereId("id",$id );
-            $hasfromsponsors->id_child = $request->input("id_childrens");
+            $hasfromsponsors = $hasfromsponsors->whereId($id )->first();
+            $hasfromsponsors->id_child = $request->input("id_child");
             $hasfromsponsors->id_sponsor = $request->input("id_sponsor");
             $hasfromsponsors->startsopnser = $request->input("startsopnser");
-            $hasfromsponsors->startsopnser = $request->input("startend");
-            $hasfromsponsors->startsopnser = $request->input("extradata");
+            $hasfromsponsors->endsponosor = $request->input("endsponosor");
+     
             $hasfromsponsors->save();
 
             return response()->json([
@@ -146,7 +125,7 @@ class HasfromsponsorsController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
 
         //
@@ -161,7 +140,7 @@ class HasfromsponsorsController extends Controller
     public function destroy(hasfromsponsors $hasfromsponsors , $id)
     {
         if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        return response()->json(['error'=>true] ,$this->badRequest);
 
 
            $hasfromsponsors->whereId( $id)-> delete();

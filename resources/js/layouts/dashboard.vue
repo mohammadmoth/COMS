@@ -48,7 +48,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <NavBarItem :activeItem="false" iconName="list-alt" routeName="dashboard" name="status"></NavBarItem>
           <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>
-          <NavBarItem :activeItem="false" iconName="user-shield" routeName="sponsers" name="sponsers"></NavBarItem>
+          <NavBarItem :activeItem="false" iconName="user-shield" routeName="sponsors" name="sponsors"></NavBarItem>
 
           
           <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>

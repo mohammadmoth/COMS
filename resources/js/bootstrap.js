@@ -13,13 +13,15 @@ try {
 
 
     require('bootstrap');
+    require('icheck-bootstrap');
     require('overlayscrollbars');
     require('jqvmap');
     require('@fortawesome/fontawesome-free');
     require('admin-lte');
     require('bs4-summernote');
     require('codemirror');
-
+    require('daterangepicker');
+    require("select2")
     require('chart.js');
 
     require   ('./javascript/confirm.js')

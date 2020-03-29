@@ -23,8 +23,13 @@ class CreateChildrensTable extends Migration
             $table->string('phone');
             $table->string('birthplace');
             $table->date('birthday');
-            $table->json('extradata');
+            $table->bigInteger('srugerytypeid')->nullable();
+
+
             $table->timestamps();
+
+            
+            $table->foreign('srugerytypeid')->references('id')->on('tags');
         });
     }
 

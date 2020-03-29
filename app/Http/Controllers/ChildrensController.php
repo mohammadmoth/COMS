@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Childrens;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 class ChildrensController extends Controller
 {
     /**
@@ -18,17 +19,6 @@ class ChildrensController extends Controller
 
         //
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -44,11 +34,11 @@ class ChildrensController extends Controller
             'lastname' =>"required|string",
             'mothername'=>"required|string",
             "father"=>"required|string",
-            'mobilephone' => 'required',
-            'phone' => 'required',
+            'mobilephone' => 'required|numeric',
+            'phone' => 'required|numeric',
             'birthplace' => 'required',
-            'birthday' => 'required|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
-            'extradata' => 'required|json',
+            'birthday' => 'required|date_format:"Y-m-d"|before_or_equal:'.date('d/m/Y'),
+            'srugerytypeid' => 'nullable|exists:tags,id',
 
         ]);
 
@@ -63,8 +53,9 @@ class ChildrensController extends Controller
             $Childrens->phone = $request->input("phone");
 
             $Childrens->birthplace = $request->input("birthplace");
-            $Childrens->birthday = $request->input("birthday");
-            $Childrens->extradata = $request->input("extradata");
+            $Childrens->birthday = Carbon::parse($request->input("birthday"))->format('Y-m-d');
+ 
+            $Childrens->srugerytypeid = $request->input("srugerytypeid");
 
             $Childrens->save();
 
@@ -80,7 +71,7 @@ class ChildrensController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
         //
     }
@@ -108,24 +99,11 @@ class ChildrensController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
 
             }
 
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Childrens  $Childrens
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Childrens $Childrens)
-    {
-
-
-        //
     }
 
     /**
@@ -148,7 +126,7 @@ class ChildrensController extends Controller
             'phone' => 'required',
             'birthplace' => 'required',
             'birthday' => 'required|date_format:Y-m-d|before_or_equal:'.date('Y-m-d'),
-            'extradata' => 'required|json',
+            'srugerytypeid' => 'required|exists:tags,id',
 
 
         ]);
@@ -165,7 +143,7 @@ class ChildrensController extends Controller
 
             $Childrens->birthplace = $request->input("birthplace");
             $Childrens->birthday = $request->input("birthday");
-            $Childrens->extradata = $request->input("extradata");
+            $Childrens->srugerytypeid =$request->input("srugerytypeid");
             $Childrens->save();
              return response()->json([
                 'error' => 0
@@ -176,7 +154,7 @@ class ChildrensController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
 
         //
@@ -191,7 +169,7 @@ class ChildrensController extends Controller
     public function destroy(Childrens $Childrens , $id)
     {
         if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        return response()->json(['error'=>true] ,$this->badRequest);
 
 
            $Childrens->whereId( $id)-> delete();

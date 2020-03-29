@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public $successStatus = 200;
-    public $errorStatus = 401;
-    
+   
     /**
      * login api
      *

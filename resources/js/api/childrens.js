@@ -1,32 +1,90 @@
-import SendData from './api/service.js'
+import SendData from './service.js'
+import * as users  from './users.js'
 
-export function login(data) {
-  return SendData({
-    url: '',
-    method: 'post',
-    data
-  })
+let rules = ["monitor","editor" ,'admin']
+
+export function checkRules(type = null) {
+if ( type == null)
+type = rules;
+
+    for (let index = 0; index < type.length; index++)
+        if (type[index] == users.getUser().rules)
+            return true
+    return false
 }
-export function login(data) {
-    return SendData({
-      url: '',
-      method: 'post',
-      data
-    })
+
+
+
+
+export function index() {
+  /* 'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password',*/
+  if (this.checkRules()) {
+      return SendData({
+          url: '/api/childrens',
+          method: 'get'
+
+      })
   }
-  
 
-export function getInfo(token) {
-  return SendData({
-    url: '',
-    method: 'get',
-    params: { token }
-  })
+  return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
+
 }
+export function store(data) {
+  /* 'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password',*/
+  if (this.checkRules(["editor" ,'admin'])) {
+      return SendData({
+          url: '/api/childrens',
+          method: 'post',
+          data
+      })
+  }
 
-export function logout() {
-  return SendData({
-    url: '',
-    method: 'post'
-  })
+  return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
+
+}
+export function show(id) {
+/* id */
+  if (this.checkRules()) {
+      return SendData({
+          url: '/api/childrens/'+   id,
+          method: 'get',
+          data
+      })
+  }
+
+  return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
+
+}
+export function update(data) {
+  /*   'id' => 'required|string|max:191',
+          'name' => 'required|string|max:191',
+          'type' => 'required|string|max:255',*/
+  if (this.checkRules(["editor" ,'admin'])) {
+      return SendData({
+          url: '/api/childrens/'+data.id,
+          method: 'put',
+          data
+      })
+  }
+
+  return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
+
+}
+export function destroy(id) {
+  /* id */
+  if (this.checkRules(["editor" ,'admin'])) {
+      return SendData({
+          url:  '/api/childrens/'+id,
+          method: 'delete'
+      })
+  }
+
+  return Promise.reject({ msg: "You_do_not_have_privileges_to_do_that", code: 0 })
+
 }
