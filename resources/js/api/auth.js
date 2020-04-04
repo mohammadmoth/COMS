@@ -22,10 +22,11 @@ if (Vue.user.getUser().hasOwnProperty("rules"))
 if ( Vue.user.getUser().rules=="admin")
 return true;
 
-else if (  (Vue.user.getUser().rules== "editor" && "monitor"==stringRoule ) ||  Vue.user.getUser().rules==stringRoule)
+else if (  (Vue.user.getUser().rules== "editor" && "montor"==stringRoule ) ||  Vue.user.getUser().rules==stringRoule)
 return true;
 
-}return false;
+}
+return false;
 
   
 }

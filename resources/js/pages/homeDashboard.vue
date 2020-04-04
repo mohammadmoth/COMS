@@ -2,7 +2,7 @@
 
         <!-- Small boxes (Stat box) -->
         <div class="row">
-   <CardSammare title="mohmmad" count="150" routName="404" typenamber=0> </CardSammare>       
+   <CardSammare title="Test" count="150" routName="404" typenamber=0> </CardSammare>       
           <!-- ./col -->
         </div>
         <!-- /.row -->

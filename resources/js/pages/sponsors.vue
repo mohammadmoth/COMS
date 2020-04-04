@@ -1,138 +1,767 @@
 <template>
-<div>
-  <div class="row">
-     <ul class="nav nav-tabs hundred" id="custom-tabs-one-tab" role="tablist" >
-        <li class="nav-item text-center tap-style">
-          <a
-
-            class="nav-link"
-            id="custom-tabs-one-home-tab"
-            data-toggle="pill"
-            href="#custom-tabs-one-home"
-            role="tab"
-            aria-controls="custom-tabs-one-home"
-            aria-selected="true"
-          >Tables</a>
-        </li>
-        <li class="nav-item text-center tap-style">
-          <a
-            class="nav-link"
-            id="custom-tabs-one-profile-tab"
-            data-toggle="pill"
-            href="#custom-tabs-one-profile"
-            role="tab"
-            aria-controls="custom-tabs-one-profile"
-            aria-selected="false"
-          >Add</a>
-        </li>
-     </ul>
-     </div>
-    <br>
- 
-<div class="row">
-    
-    <div class="col"></div>
-    <div class="col-md-6">
-      <!-- general form elements -->
-      <div class="card card-primary">
+  <div>
+    <div>
+      <div class="card">
         <div class="card-header">
-          <h3 class="card-title">{{$t("SponsorForm")}}</h3>
+          <h3 class="card-title">{{$t("SponsorsTable")}}</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <!--  <li class="page-item">
+                <a class="page-link" href="#">Previous</a>
+              </li>-->
+
+              <li v-for=" i in pagetable" class="page-item" :class="{active:i == pagetablecurrct }">
+                <button class="page-link" @click="pagetablecurrctset(i)">{{i}}</button>
+              </li>
+
+              <!-- <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>-->
+            </ul>
+          </nav>
+
+          <table id="usersData" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>{{$t("event")}}</th>
+                <th>{{$t("name")}}</th>
+                <th>{{$t("ContactInfo")}}</th>
+                <th>{{$t("BirthInfo")}}</th>
+                <th>{{$t("idnumber")}}</th>
+                <th>{{$t("childrenInfo")}}</th>
+                <th>{{$t("sponsorInfo")}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data ,index) in dataTable" :key="index">
+                <td>
+                  <div class="margin">
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-default dropdown-toggle dropdown-icon"
+                        data-toggle="dropdown"
+                      >
+                        <i class="fas fa-cogs"></i>
+                        <span class="sr-only">Toggle Dropdown</span>
+                        <div class="dropdown-menu" role="menu">
+                          <a
+                            class="dropdown-item"
+                            @click="enb_edit( data.id)"
+                            href="#"
+                          >{{$t("edit")}}</a>
+                          <div class="dropdown-divider"></div>
+                          <a
+                            class="dropdown-item"
+                            @click="ShowMesBoxConfingRemove(data.id)"
+                            href="#"
+                          >{{$t("remove")}}</a>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div>{{data.firstname}} {{data.lastname}}</div>
+                </td>
+                <td>
+                  <div>{{$t("mobilephone")}}: {{data.mobilephone}}</div>
+                  <div>{{$t("phone")}}: {{data.phone}}</div>
+                </td>
+
+                <td>
+                  <div>{{$t("birthday")}}: {{data.birthday | moment("DD/MM/YYYY" )}}</div>
+                </td>
+                <td>
+                  <div>{{data.idnumber}}</div>
+                </td>
+                <td>
+                  <span v-show="getchildren(data.id).length!=0">
+                    <div
+                      v-for="( child , index) in getchildren(data.id)"
+                      :key="index"
+                    >{{index+1}}. {{child.firstname}} {{child.lastname}}</div>
+                  </span>
+                  <span v-show="getchildren(data.id).length==0">
+                    <div>{{$t("IshaveNotChildren")}}</div>
+                  </span>
+                </td>
+                <td>
+                  <div v-if="data.typesponsor=='money'">{{$t(data.typesponsor)}}</div>
+                  <div v-else>{{$t(data.typesponsor)}} <div> </div></div>
+                  
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>{{$t("event")}}</th>
+                <th>{{$t("name")}}</th>
+                <th>{{$t("ContactInfo")}}</th>
+                <th>{{$t("BirthInfo")}}</th>
+                <th>{{$t("idnumber")}}</th>
+                <th>{{$t("childrenInfo")}}</th>
+                <th>{{$t("sponsorInfo")}}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col">
+      <!-- general form elements -->
+      <div class="card card-info">
+        <div class="card-header">
+          <h3 class="card-title">{{$t(editmodeString)}} {{$t("Sponsors")}}</h3>
         </div>
         <!-- /.card-header -->
 
         <!-- form start -->
-        <form @submit="checkForm" role="form">
+        <form @submit="checkForm" action="#" role="form">
           <div class="card-body">
-            <!--Firstname Input-->
             <div class="form-group">
-              <label for="SponosorFirstname">{{$t("FirstName")}}</label>
+              <label for="firstname">{{$t("firstname")}}</label>
               <input
+                required
                 type="text"
                 name="firstname"
                 class="form-control"
-                :placeholder="$t('EnterFirstName')"
+                id="firstname"
+                :placeholder="$t('enterfirstname')"
+                v-model="sponsor.firstname"
               />
             </div>
-
-            <!---->
             <div class="form-group">
-              <label for="SponsorLastName">{{$t("LastName")}}Last Name</label>
+              <label for="lastname">{{$t("lastname")}}</label>
               <input
+                required
                 type="text"
                 name="lastname"
                 class="form-control"
-                :placeholder="$t('EnterLastName')"
+                id="lastname"
+                :placeholder="$t('enterlastname')"
+                v-model="sponsor.lastname"
               />
+            </div>
+            <div class="form-group">
+              <label for="idnumber">{{$t("idnumber")}}</label>
+              <input
+                required
+                type="text"
+                name="idnumber"
+                class="form-control"
+                id="idnumber"
+                :placeholder="$t('enteridnumber')"
+                v-model="sponsor.idnumber"
+              />
+            </div>
+            <div class="form-group">
+              <label>{{$t("birthday")}}</label>
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="far fa-calendar-alt"></i>
+                  </span>
+                </div>
+                <input
+                  required
+                  type="date"
+                  class="form-control"
+                  data-inputmask-alias="date"
+                  data-inputmask-inputformat="dd/mm/yyyy"
+                  data-mask
+                  v-model="sponsor.birthday"
+                />
+              </div>
+            </div>
+            <!---->
+            <!---->
+            <div class="form-group">
+              <label for="mobilephone">{{$t("mobilephone")}}</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-mobile"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="mobilephone"
+                  name="mobilephone"
+                  maxlength="10"
+                  class="form-control"
+                  :placeholder="$t('Entermobilephone')"
+                  v-model="sponsor.mobilephone"
+                />
+              </div>
+            </div>
+            <!---->
+            <div class="form-group">
+              <label for="phone">{{$t("phone")}}</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-phone"></i>
+                  </span>
+                </div>
+                <input
+                  required
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  maxlength="10"
+                  class="form-control"
+                  :placeholder="$t('Enterphone')"
+                  v-model="sponsor.phone"
+                />
+              </div>
             </div>
 
             <!---->
             <div class="form-group">
-              <label for="SponosrMobilePhone">{{$t("MobileNumber")}}</label>
-              <input
-                type="text"
-                name="mobilephone"
-                class="form-control"
-                :placeholder="$t('EnterMobileNumber')"
-              />
+              <span>
+                <div class="form-group">
+                  <label>{{$t("typesponsor")}}</label>
+                  <model-select
+                    :options="typesponsorstring"
+                    v-model="sponsor.typesponsor"
+                    :placeholder="$t('search')"
+                  ></model-select>
+                </div>
+
+                <!-- /.form group -->
+              </span>
             </div>
 
             <!---->
             <div class="form-group">
-              <label for="PhoneNumber">{{$t('PhoneNumber')}}</label>
-              <input
-                type="text"
-                name="phone"
-                class="form-control"
-                :placeholder="$t('EnterPhoneNumber')"
-              />
+              <span v-show="sponsor.typesponsor=='medical'">
+                <div class="form-group">
+                  <label>{{$t("typesponsor")}}</label>
+                  <model-select
+                    :options="tagsifmedica"
+                    v-model="tagsifmedicaSelected"
+                    :placeholder="$t('search')"
+                  ></model-select>
+                </div>
+                <div class="form-group">
+                  <label for="TagsType">{{$t(stringOfTypeSelected)}}</label>
+                  <input
+                    type="text"
+                    id="TagsType"
+                    name="TagsType"
+                    class="form-control"
+                    :placeholder="$t('Enter')+' '+$t(stringOfTypeSelected)"
+                    v-model="tagsifmedicastring"
+                    list="TagsTypeL"
+                    autocomplete="off"
+                  />
+                  <datalist id="TagsTypeL">
+                    <option
+                      v-for="(Type ,index) in tags "
+                      :key="index"
+                      :value="Type.name"
+                      v-if="Type.type ==tagsifmedicaSelected"
+                    />
+                  </datalist>
+                </div>
+              </span>
             </div>
-
             <!---->
             <div class="form-group">
-              <label for="SponsorAdditionalInfo">{{$t('EnterSponsorAdditionalInformation')}}</label>
-              <input
-                type="text"
-                name="infoSponser"
-                class="form-control"
-                :placeholder="$t('EnterSponsorAdditionalInformation')"
-              />
+              <div class="form-group">
+                <label>{{$t("children")}}</label>
+                <model-select
+                  :options="childrenobject"
+                  v-model="selectchildrenobjectid"
+                  :placeholder="$t('search')"
+                ></model-select>
+                <button
+                  @click="addingNewChild(selectchildrenobjectid)"
+                  type="button"
+                  class="btn btn-info"
+                >
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="form-group">
+                <label>{{$t("children")}}</label>
+
+                <div
+                  v-for="(child , index) in sponsor.childrenaddingtable"
+                  :key="index"
+                  class="form-group"
+                >
+                  {{index+1}}. {{child.firstname}} {{child.lastname}}
+                  <button
+                    @click="sponsor.childrenaddingtable.splice(index, 1)"
+                    type="button"
+                    class="btn btn-info"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <!-- /.card-body -->
+          <!---->
 
           <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              :disabled="!sendbutton"
+              type="submit"
+              class="btn btn-info"
+            >{{ $t(editmodeString) }}</button>
+
+            <button
+              v-show="editmode"
+              type="button"
+              class="btn btn-info"
+              @click="cancelModeEdit()"
+            >{{ $t("cancel") }}</button>
           </div>
         </form>
       </div>
       <!-- /.card -->
     </div>
-    <div class="col"></div>
   </div>
-</div>
-  
 </template>
 
 <script>
+import { ModelSelect } from "vue-search-select";
 export default {
+  components: {
+    ModelSelect
+  },
   data: function() {
-    return {};
+    return {
+      sponsors: [],
+      tags: [],
+      hasfromsponsors: [],
+      children: [],
+      tagsifmedica: [
+        {
+          value: "sopnsors",
+          text: this.$t("surgery")
+        },
+        {
+          value: "medical",
+          text: this.$t("medicine")
+        }
+      ],
+      typesponsorstring: [
+        {
+          value: "money",
+          text: this.$t("money")
+        },
+        {
+          value: "medical",
+          text: this.$t("medical")
+        },
+        {
+          value: "educational",
+          text: this.$t("educational")
+        }
+      ],
+      editmode: false,
+
+      tagsifmedicaSelected: "surgery",
+      tagsifmedicastring: "",
+      selectchildrenobjectid: 0,
+      sponsor: {
+        id: 0,
+        firstname: "",
+        lastname: "",
+        mobilephone: "",
+        phone: "",
+        idnumber: "",
+        birthday: "",
+        typesponsor: "money",
+        tag_id: null,
+        childrenaddingtable: []
+      },
+
+      child: {
+        firstname: "Error",
+        lastname: "No Name",
+        mothername: "",
+        father: "",
+        mobilephone: "",
+        phone: "",
+        birthplace: "",
+        birthday: "",
+        srugerytypeid: 0
+      },
+
+      sendbutton: true,
+      //tablestart
+      pagetable: 0,
+      pagetablecurrct: 1,
+      countporpage: 10
+      //tableend
+    };
+  },
+  computed: {
+    editmodeString: function(data) {
+      if (this.editmode) {
+        return "edit";
+      } else {
+        return "add";
+      }
+    },
+    stringOfTypeSelected: function() {
+      if (this.tagsifmedicaSelected == "sopnsors") {
+        return "surgery";
+      } else return "medicine";
+    },
+
+    sponsoroject: function() {
+      let array = [];
+      for (let index = 0; index < this.sponsors.length; index++) {
+        array.push({
+          value: this.sponsors[index].id,
+          text:
+            this.sponsors[index].firstname + " " + this.sponsors[index].lastname
+        });
+      }
+      return array;
+    },
+    childrenobject: function() {
+      let array = [];
+      for (let index = 0; index < this.children.length; index++) {
+        array.push({
+          value: this.children[index].id,
+          text:
+            this.children[index].firstname + " " + this.children[index].lastname
+        });
+      }
+      return array;
+    },
+    //tablestart
+    dataTable: function() {
+      this.pagetable = Math.ceil(this.sponsors.length / this.countporpage);
+      if (this.sponsors.length >= this.countporpage) {
+        let data = [];
+        if (this.pagetable < this.pagetablecurrct)
+          this.pagetablecurrct = this.pagetable;
+        let maxindex = this.countporpage * this.pagetablecurrct;
+        if (maxindex > this.sponsors.length) maxindex = this.sponsors.length;
+        for (
+          let index = this.countporpage * (this.pagetablecurrct - 1);
+          index < maxindex;
+          index++
+        ) {
+          data.push(this.sponsors[index]);
+        }
+        return data;
+      } else return this.sponsors;
+    }
+    //tableend
+  },
+  watch: {
+    /*  firstname: function(val) {
+      this.fullname = val + " " + this.lastname;
+    }*/
+  },
+
+  filters: {
+    numbers: function(number) {
+      if (this.isNumeric(number)) {
+        console.log(number);
+        return number;
+      } else {
+        console.log(number);
+        return "";
+      }
+    }
   },
   methods: {
-    checkForm: function(e) {
+    addingNewChild() {
+      for (let index = 0; index < this.children.length; index++) {
+        let it_added_befor = false;
+        if (this.selectchildrenobjectid == this.children[index].id) {
+          this.selectchildrenobjectid = 0;
+
+          for (
+            let index2 = 0;
+            index2 < this.sponsor.childrenaddingtable.length;
+            index2++
+          ) {
+            if (
+              this.sponsor.childrenaddingtable[index2].id ==
+              this.children[index].id
+            ) {
+              it_added_befor = true;
+              break;
+            }
+          }
+          if (it_added_befor) break;
+
+          this.sponsor.childrenaddingtable.push(this.children[index]);
+          break;
+        }
+      }
+    },
+    getchildren(idsponsor) {
+      let array = [];
+      for (let index = 0; index < this.hasfromsponsors.length; index++) {
+        if (this.hasfromsponsors[index].id_sponsor == idsponsor)
+          for (let je = 0; je < this.children.length; je++) {
+            if (this.children[je].id == this.hasfromsponsors[index].id_child) {
+              this.children[je].startsopnser = this.hasfromsponsors[
+                index
+              ].startsopnser;
+              this.children[je].endsponosor = this.hasfromsponsors[
+                index
+              ].endsponosor;
+              this.children[je].hasfromsponsors_id = this.hasfromsponsors[
+                index
+              ].id;
+
+              array.push(this.children[je]);
+              break;
+            }
+          }
+      }
+
+      return array;
+    },
+    enb_edit(id) {
+      this.editmode = true;
+      for (let index = 0; index < this.sponsors.length; index++) {
+        if (this.sponsors[index].id == id) {
+          this.sponsor = this.sponsors[index];
+          break;
+        }
+      }
+    },
+    cancelModeEdit() {
+      this.cleaninput();
+      this.editmode = false;
+    },
+    //tablestart
+    pagetablecurrctset(number) {
+      this.pagetablecurrct = number;
+    },
+    ShowMesBox(messg, title, btnname) {
+      $.alert({
+        title: title,
+        content: messg,
+
+        typeAnimated: true,
+        buttons: {
+          tryAgain: {
+            rtl: true,
+            text: btnname,
+            btnClass: "btn",
+            action: function() {}
+          }
+        }
+      });
+    },
+    show: function(mess) {},
+    checkinput: function(data, name) {
+      if (data == "") {
+        this.ShowMesBox(
+          this.$t("pleaseenter") + this.$t(name),
+          this.$t("Errorinput"),
+          this.$t("ok")
+        );
+        return false;
+      }
+
+      return true;
+    },
+    getSrugerytype: function(id) {
+      for (let index = 0; index < this.tags.length; index++) {
+        if (this.tags[index].id == id) {
+          return this.tags[index].name;
+        }
+      }
+      return this.$t("TagsNotFound");
+    },
+    cleaninput: function() {
+      this.sponsor = {};
+      this.sponsor = {
+        id: 0,
+        firstname: "",
+        lastname: "",
+        mobilephone: "",
+        phone: "",
+        birthplace: "",
+        birthday: "",
+        idnumber: "",
+        typesponsor: "money",
+        tag_id: null
+      };
+    },
+    checkForm: async function(e) {
       e.preventDefault();
+
+      if (!this.checkinput(this.typeofsupport, "typeofsupport")) return false;
+
+      if (this.needsurgery) {
+        for (let index = 0; index < this.tags.length; index++) {
+          if (this.tags[index].name == this.SrugeryType)
+            this.child.srugerytypeid = this.tags[index].id;
+        }
+      }
+
+      if (this.needsurgery) {
+        if (
+          (this.child.srugerytypeid == 0 || this.child.srugerytypeid == null) &&
+          SrugeryType != ""
+        ) {
+          await this.$api.tags
+            .store({
+              name: this.SrugeryType,
+              type: "sopnsors"
+            })
+            .then(res => {
+              this.child.srugerytypeid = res.data.data.id;
+            })
+            .catch(err => {});
+        }
+      } else {
+        this.child.srugerytypeid = null;
+      }
+
+      this.sendbutton = false;
+      if (
+        !this.checkinput(this.sponsor.firstname, "firstname") ||
+        !this.checkinput(this.sponsor.lastname, "lastname") ||
+        !this.checkinput(this.sponsor.mothername, "mothername") ||
+        !this.checkinput(this.sponsor.father, "father") ||
+        !this.checkinput(this.sponsor.mobilephone, "mobilephone") ||
+        !this.checkinput(this.sponsor.phone, "phone") ||
+        !this.checkinput(this.sponsor.birthplace, "birthplace") ||
+        !this.checkinput(this.sponsor.birthday, "birthday") ||
+        !this.checkinput(this.sponsor.idnumber, "idnumber")
+      )
+        return false;
+      // $('#reservation').data('daterangepicker').startDate.format();
+
+      var error = false;
+      if (this.editmode) {
+        await this.$api.sponsors
+          .update(this.sponsor)
+          .then(res => {})
+          .catch(error => {
+            error = true;
+            console.log(error);
+          });
+      } else {
+        await this.$api.sponsors
+          .store(this.sponsor)
+          .then(res => {
+            this.sponsor = res.data.data;
+          })
+          .catch(error => {
+            error = true;
+            console.log(error);
+          });
+        this.ShowMesBox(
+          this.$t("AddingComplete"),
+          this.$t("AddingComplete"),
+          this.$t("ok")
+        );
+      }
+
+      this.cleaninput();
+
+      this.fetch();
+      this.sendbutton = true;
+    },
+    fetch: function() {
+      this.$api.hasfromsponsors
+        .index()
+        .then(res => {
+          this.hasfromsponsors = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      this.$api.tags
+        .index()
+        .then(res => {
+          this.tags = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      this.$api.childrens
+        .index()
+        .then(res => {
+          this.children = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.$api.sponsors
+        .index()
+        .then(res => {
+          this.sponsors = res.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
+  },
+  mounted() {
+    this.fetch();
+
+    $("#reservation").daterangepicker({
+      locale: {
+        format: "DD/MM/YYYY",
+        separator: " - ",
+        applyLabel: this.$t("ok"),
+        cancelLabel: this.$t("cancel"),
+        fromLabel: this.$t("from"),
+        toLabel: this.$t("to"),
+        customRangeLabel: "Custom",
+
+        daysOfWeek: [
+          this.$t("Su"),
+          this.$t("Mo"),
+          this.$t("Tu"),
+          this.$t("We"),
+          this.$t("Th"),
+          this.$t("Fr"),
+          this.$t("Sa")
+        ],
+        monthNames: [
+          this.$t("January"),
+          this.$t("February"),
+          this.$t("March"),
+          this.$t("April"),
+          this.$t("May"),
+          this.$t("June"),
+          this.$t("July"),
+          this.$t("August"),
+          this.$t("September"),
+          this.$t("October"),
+          this.$t("November"),
+          this.$t("December")
+        ],
+        firstDay: this.$t("firstDay")
+      }
+    });
+    $(function() {
+      $(".select2").select2();
+    });
   }
 };
 </script>
 
-<style scoped>
-.tap-style {
-  width: 50%;
-  border: rgb(82, 82, 82) 1px solid;
-  background: rgb(215, 231, 66);
-}
-.hundred{
-  width: 100%;
-}
+<style>
 </style>
