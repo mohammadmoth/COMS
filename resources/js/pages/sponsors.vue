@@ -92,8 +92,10 @@
                 </td>
                 <td>
                   <div v-if="data.typesponsor=='money'">{{$t(data.typesponsor)}}</div>
-                  <div v-else>{{$t(data.typesponsor)}} <div> </div></div>
-                  
+                  <div v-else>
+                    {{$t(data.typesponsor)}}
+                    <div></div>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -373,7 +375,7 @@ export default {
       ],
       editmode: false,
 
-      tagsifmedicaSelected: "surgery",
+      tagsifmedicaSelected: "sopnsors",
       tagsifmedicastring: "",
       selectchildrenobjectid: 0,
       sponsor: {
@@ -568,14 +570,39 @@ export default {
       });
     },
     show: function(mess) {},
-    checkinput: function(data, name) {
-      if (data == "") {
-        this.ShowMesBox(
-          this.$t("pleaseenter") + this.$t(name),
-          this.$t("Errorinput"),
-          this.$t("ok")
-        );
-        return false;
+    checkinput: function(data, name, mes="", title="" , button ="",rex = "") {
+      if ( button == "")
+      button = this.$t("ok")
+
+      if ( title == "")
+      title =this.$t("Errorinput")
+
+      if ( mes == "")
+      mes = this.$t("pleaseenter") + this.$t(name)
+
+      if (rex == "") {
+        if (data == "") {
+          this.ShowMesBox(
+          title ,title,
+            button
+          );
+          return false;
+        }
+      }else
+      {
+        if (   rex.test(data))
+        {
+          this.ShowMesBox(
+            title ,title,
+              button
+            );
+            return true;
+        }else
+        {
+
+         return false;
+        }
+
       }
 
       return true;
@@ -590,36 +617,39 @@ export default {
     },
     cleaninput: function() {
       this.sponsor = {};
+
+      this.tagsifmedicaSelected = "surgery";
+      this.tagsifmedicastring = "";
+      this.selectchildrenobjectid = 0;
       this.sponsor = {
         id: 0,
         firstname: "",
         lastname: "",
         mobilephone: "",
         phone: "",
-        birthplace: "",
-        birthday: "",
         idnumber: "",
+        birthday: "",
         typesponsor: "money",
-        tag_id: null
+        tag_id: null,
+        childrenaddingtable: []
       };
     },
     checkForm: async function(e) {
       e.preventDefault();
+      var error = []
+      if ( this.sponsor.typesponsor != "money"){
 
-      if (!this.checkinput(this.typeofsupport, "typeofsupport")) return false;
+        
+          if (!this.checkinput(this.tagsifmedicastring, "tagsifmedicastring")) return false;
 
-      if (this.needsurgery) {
-        for (let index = 0; index < this.tags.length; index++) {
-          if (this.tags[index].name == this.SrugeryType)
-            this.child.srugerytypeid = this.tags[index].id;
-        }
-      }
+         
+            for (let index = 0; index < this.tags.length; index++) {
+              if (this.tags[index].name == this.tagsifmedicastring)
+                this.sponsor.tag_id = this.tags[index].id;
+            }
 
-      if (this.needsurgery) {
-        if (
-          (this.child.srugerytypeid == 0 || this.child.srugerytypeid == null) &&
-          SrugeryType != ""
-        ) {
+            if ( this.sponsor.tag_id == null || this.sponsor.tag_id==0)
+            {
           await this.$api.tags
             .store({
               name: this.SrugeryType,
@@ -629,6 +659,19 @@ export default {
               this.child.srugerytypeid = res.data.data.id;
             })
             .catch(err => {});
+
+
+
+            }
+          
+       }
+
+      if (this.needsurgery) {
+        if (
+          (this.child.srugerytypeid == 0 || this.child.srugerytypeid == null) &&
+          SrugeryType != ""
+        ) {
+         
         }
       } else {
         this.child.srugerytypeid = null;
@@ -638,13 +681,11 @@ export default {
       if (
         !this.checkinput(this.sponsor.firstname, "firstname") ||
         !this.checkinput(this.sponsor.lastname, "lastname") ||
-        !this.checkinput(this.sponsor.mothername, "mothername") ||
-        !this.checkinput(this.sponsor.father, "father") ||
         !this.checkinput(this.sponsor.mobilephone, "mobilephone") ||
         !this.checkinput(this.sponsor.phone, "phone") ||
-        !this.checkinput(this.sponsor.birthplace, "birthplace") ||
-        !this.checkinput(this.sponsor.birthday, "birthday") ||
-        !this.checkinput(this.sponsor.idnumber, "idnumber")
+        !this.checkinput(this.sponsor.idnumber, "idnumber") ||
+        !this.checkinput(this.sponsor.birthplace, "birthplace" ) ||
+        !this.checkinput(this.sponsor.birthday, "birthday") 
       )
         return false;
       // $('#reservation').data('daterangepicker').startDate.format();
