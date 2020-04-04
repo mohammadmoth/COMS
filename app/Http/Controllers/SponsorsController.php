@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Validator;
 
 class SponsorsController extends Controller
 {
+
+    /// filter
+    public $filter = [
+
+        'firstname' => 'required|string|max:191',
+        'lastname' => 'required|string|max:191',
+        'mobilephone' => 'required|numeric',
+        'phone' => 'required|numeric',
+        'typesponsor' => 'required|string|max:191',
+        'idnumber' => 'required|max:191',
+        'tags_id' => 'nullable|exists:tags,id',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +33,7 @@ class SponsorsController extends Controller
         //
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -29,16 +43,7 @@ class SponsorsController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-
-            'firstname' => 'required|string|max:191',
-            'lastname' => 'required|string|max:191',
-            'mobilephone' => 'required|numeric|max:191',
-            'phone' => 'required|numeric|max:191',
-            'typesponsor' => 'required|string|max:191',
-            'idnumber' => 'required|max:191',
-            'tags_id' => 'nullable|exists:tags,id',
-        ]);
+        $validator = Validator::make($request->all(),$this->filter );
 
         if ($validator->passes()) {
             $sponsors = new Sponsors();
@@ -92,19 +97,11 @@ class SponsorsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $request->id=$id;
-        
-        $validator = Validator::make($request->all(), [
-            'id' => 'nullable|exists:sponsors,id',
-            'firstname' => 'required|string|max:191',
-            'lastname' => 'required|string|max:191',
-            'mobilephone' => 'required|numeric|max:191',
-            'phone' => 'required|numeric|max:191',
-            'typesponsor' => 'required|string|max:191',
-            'idnumber' => 'required|max:191',
-            'tags_id' => 'nullable|exists:tags,id',
-        ]);
+        $filter= $this->filter;
+        $filter[]= ['id' => 'nullable|exists:sponsors,id'];
+        $validator = Validator::make($request->all(),$filter);
 
         if ($validator->passes()) {
             $sponsors =  Sponsors::whereId($id)->first();
@@ -115,7 +112,7 @@ class SponsorsController extends Controller
             $sponsors->typesponsor = $request->input("typesponsor");
             $sponsors->idnumber = $request->input("idnumber");
             $sponsors->tags_id = $request->input("tags_id");
-        
+
 
 
             $sponsors->save();
