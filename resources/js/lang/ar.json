@@ -9,7 +9,7 @@
     "password": "كلمة مرور",
     "error_password_or_username": "كلمة مرور او اسم المستخدم خطأ",
     "error": "خطأ",
-    "TRY_AGEIN": "حاول مره ثانية",
+    "try_agein": "حاول مره ثانية",
     "homepage": "صفحة الرئيسية",
     "admin_nav": "خصائص الادمن",
     "GithubAnyErrorOrSendHere": "Github",
@@ -84,5 +84,22 @@
     "firstDay": 1,
     "cancel": "الغاء",
     "from": "من",
-    "to": "الى"
+    "to": "الى",
+    "childrenInfo":"اسماء الاطفال",
+    "sponsorInfo":"معلومات الداعمين",
+    "SponsorsTable": "جدول الداعمين",
+
+    "Sponsors": "الداعمين",
+    "idnumber": "الرقم الوطني",
+    "enteridnumber": "ادخل رقم الوطني",
+    "typesponsor": "نوع الدعم",
+    "medicine": "دواء",
+    "Enter": "ادخل",
+    "logout": "تسجل خروج",
+    "surgery": "عملية",
+    
+    "money": "مالي",
+    "medical": "طبي",
+    "educational": "تعليمي"
+
 }

@@ -11,7 +11,7 @@
     "admin_nav": "Admin Bar",
     "error_password_or_username":"Password or username is incorrect",
     "error":"Error",
-    "TRY_AGEIN":"Try agein",
+    "try_agein":"Try agein",
     "GithubAnyErrorOrSendHere": "Github repo",
     "Documentation": "Ask here for bugs",
     "status": "Status",
@@ -84,5 +84,21 @@
     "firstDay": 1,
     "cancel": "Cancel",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "childrenInfo":"Children Info",
+    "sponsorInfo":"Sponsor Type",
+    "SponsorsTable": "Sponsors Table",
+
+    "Sponsors": "Sponsors",
+    "idnumber": "National id number",
+    "enteridnumber": "Enter National id number",
+    "typesponsor": "Type sponsor",
+    "medicine": "Medicine",
+    "Enter": "Enter",
+    "logout": "Logout",
+    "surgery": "Surgery",
+    
+    "money": "Money",
+    "medical": "Medical",
+    "educational": "Educational"
 }
