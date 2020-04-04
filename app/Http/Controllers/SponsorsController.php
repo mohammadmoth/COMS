@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\sponsors;
+use App\Sponsors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,18 +15,8 @@ class SponsorsController extends Controller
      */
     public function index()
     {
-        return response()->json(['error'=>false , "data" => sponsors::get()]);
+        return response()->json(['error'=>false , "data" => Sponsors::get()]);
 
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
         //
     }
 
@@ -43,19 +33,22 @@ class SponsorsController extends Controller
 
             'firstname' => 'required|string|max:191',
             'lastname' => 'required|string|max:191',
-            'mobilephone' => 'required|string|max:191',
-            'phone' => 'required|string|max:191',
-            'infoSponser' => 'required',
+            'mobilephone' => 'required|numeric|max:191',
+            'phone' => 'required|numeric|max:191',
+            'typesponsor' => 'required|string|max:191',
+            'idnumber' => 'required|max:191',
+            'tags_id' => 'nullable|exists:tags,id',
         ]);
 
         if ($validator->passes()) {
-            $sponsors = new sponsors();
+            $sponsors = new Sponsors();
             $sponsors->firstname = $request->input("firstname");
             $sponsors->lastname = $request->input("lastname");
             $sponsors->mobilephone = $request->input("mobilephone");
             $sponsors->phone = $request->input("phone");
-            $sponsors->infoSponser = $request->input("infoSponser");
-
+            $sponsors->typesponsor = $request->input("typesponsor");
+            $sponsors->idnumber = $request->input("idnumber");
+            $sponsors->tags_id = $request->input("tags_id");
 
             $sponsors->save();
             return response()->json([
@@ -67,7 +60,7 @@ class SponsorsController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
         //
     }
@@ -75,60 +68,54 @@ class SponsorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\sponsors  $sponsors
+     * @param  \App\Sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
-    public function show(sponsors $sponsors , $id)
+    public function show(Sponsors $sponsors , $id)
     {
         if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        return response()->json(['error'=>true],$this->badRequest);
          $sponsor = $sponsors->whereId($id)->first();
 
-        if ( $sponsor == null ) return response()->json(['error'=>true]);
+        if ( $sponsor == null ) return response()->json(['error'=>true],$this->badRequest);
         else
         return response()->json(['error'=>false, "data"=> $sponsor]);
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\sponsors  $sponsors
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(sponsors $sponsors)
-    {
-
-
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\sponsors  $sponsors
+     * @param  \App\Sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {   
-        $request["id"]=$id;
+        $request->id=$id;
         
         $validator = Validator::make($request->all(), [
+            'id' => 'nullable|exists:sponsors,id',
             'firstname' => 'required|string|max:191',
             'lastname' => 'required|string|max:191',
-            'mobilephone' => 'required|string|max:191',
-            'phone' => 'required|string|max:191',
-            'infoSponser' => 'required',
+            'mobilephone' => 'required|numeric|max:191',
+            'phone' => 'required|numeric|max:191',
+            'typesponsor' => 'required|string|max:191',
+            'idnumber' => 'required|max:191',
+            'tags_id' => 'nullable|exists:tags,id',
         ]);
 
         if ($validator->passes()) {
-            $sponsors = sponsors::find($id);
+            $sponsors =  Sponsors::whereId($id)->first();
             $sponsors->firstname = $request->input("firstname");
             $sponsors->lastname = $request->input("lastname");
             $sponsors->mobilephone = $request->input("mobilephone");
             $sponsors->phone = $request->input("phone");
-            $sponsors->infoSponser = $request->input("infoSponser");
+            $sponsors->typesponsor = $request->input("typesponsor");
+            $sponsors->idnumber = $request->input("idnumber");
+            $sponsors->tags_id = $request->input("tags_id");
+        
 
 
             $sponsors->save();
@@ -141,7 +128,7 @@ class SponsorsController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ],$this->badRequest);
         }
 
         //
@@ -150,13 +137,13 @@ class SponsorsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\sponsors  $sponsors
+     * @param  \App\Sponsors  $sponsors
      * @return \Illuminate\Http\Response
      */
-    public function destroy(sponsors $sponsors , $id)
+    public function destroy(Sponsors $sponsors , $id)
     {
         if ( !is_numeric($id))
-        return response()->json(['error'=>true]);
+        return response()->json(['error'=>true],$this->badRequest);
 
 
            $sponsors->whereId( $id)-> delete();

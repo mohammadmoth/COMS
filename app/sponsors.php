@@ -8,7 +8,7 @@ class Sponsors extends Model
 {
 
     protected $fillable = [
-        'firstname', 'lastname', 'mobilephone', 'phone' , 'infoSponser'
+        'firstname', 'lastname', 'mobilephone', 'phone' ,"birthday","idnumber", 'typesponsor' , "tags_id"
     ];
     //
 }
