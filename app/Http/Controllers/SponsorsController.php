@@ -5,21 +5,12 @@ namespace App\Http\Controllers;
 use App\Sponsors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Carbon;
 class SponsorsController extends Controller
 {
 
     /// filter
-    public $filter = [
-
-        'firstname' => 'required|string|max:191',
-        'lastname' => 'required|string|max:191',
-        'mobilephone' => 'required|numeric',
-        'phone' => 'required|numeric',
-        'typesponsor' => 'required|string|max:191',
-        'idnumber' => 'required|max:191',
-        'tags_id' => 'nullable|exists:tags,id',
-    ];
+    public $filter =[];
 
     /**
      * Display a listing of the resource.
@@ -32,6 +23,26 @@ class SponsorsController extends Controller
 
         //
     }
+    public function __construct()
+    {
+        
+       $this->filter = [
+
+            'firstname' => 'required|string|max:191',
+            'lastname' => 'required|string|max:191',
+            'mobilephone' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'typesponsor' => 'required|string|max:191',
+            'idnumber' => 'required|max:191',
+            'birthday' => 'required|date_format:"Y-m-d"|before_or_equal:'.date('d/m/Y'),
+            'tags_id' => 'nullable|exists:tags,id',
+        ];
+
+
+
+
+    }
+
 
 
     /**
@@ -54,7 +65,7 @@ class SponsorsController extends Controller
             $sponsors->typesponsor = $request->input("typesponsor");
             $sponsors->idnumber = $request->input("idnumber");
             $sponsors->tags_id = $request->input("tags_id");
-
+            $sponsors->birthday = Carbon::parse($request->input("birthday"))->format('Y-m-d');
             $sponsors->save();
             return response()->json([
                 'error' => 0 ,"data"=> $sponsors
@@ -112,7 +123,7 @@ class SponsorsController extends Controller
             $sponsors->typesponsor = $request->input("typesponsor");
             $sponsors->idnumber = $request->input("idnumber");
             $sponsors->tags_id = $request->input("tags_id");
-
+            $sponsors->birthday = Carbon::parse($request->input("birthday"))->format('Y-m-d');
 
 
             $sponsors->save();
