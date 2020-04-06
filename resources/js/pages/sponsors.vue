@@ -121,7 +121,7 @@
       <!-- general form elements -->
       <div class="card card-info">
         <div class="card-header">
-          <h3 class="card-title">{{$t(editmodeString)}} {{$t("Sponsors")}}</h3>
+          <h3 class="card-title">{{$t(editmodeString)}} {{$t("Sponsor")}}</h3>
         </div>
         <!-- /.card-header -->
 
@@ -294,6 +294,26 @@
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
+              <!-- Date range -->
+              <div class="form-group">
+                <label>{{$t('DateRangeofsponsor')}}</label>
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="far fa-calendar-alt"></i>
+                    </span>
+                  </div>
+                  <input
+                    required
+                    type="text"
+                    data-inputmask-inputformat="dd/mm/yyyy"
+                    class="form-control float-right"
+                    id="reservation"
+                  />
+                </div>
+                <!-- /.input group -->
+              </div>
               <div class="form-group">
                 <label>{{$t("children")}}</label>
 
@@ -302,9 +322,9 @@
                   :key="index"
                   class="form-group"
                 >
-                  {{index+1}}. {{child.firstname}} {{child.lastname}}
+                  {{index+1}}. {{child.firstname}} {{child.lastname}} {{child.startsopnser || moment("DD/MM/YYYY" )}} - {{child.endsponosor || moment("DD/MM/YYYY" )}}
                   <button
-                    @click="sponsor.childrenaddingtable.splice(index, 1)"
+                    @click="removeitemchlid(index)"
                     type="button"
                     class="btn btn-info"
                   >
@@ -375,6 +395,7 @@ export default {
       ],
       editmode: false,
 
+      ChildRemoveHas: [],
       tagsifmedicaSelected: "sopnsors",
       tagsifmedicastring: "",
       selectchildrenobjectid: 0,
@@ -387,20 +408,8 @@ export default {
         idnumber: "",
         birthday: "",
         typesponsor: "money",
-        tag_id: null,
+        tags_id: null,
         childrenaddingtable: []
-      },
-
-      child: {
-        firstname: "Error",
-        lastname: "No Name",
-        mothername: "",
-        father: "",
-        mobilephone: "",
-        phone: "",
-        birthplace: "",
-        birthday: "",
-        srugerytypeid: 0
       },
 
       sendbutton: true,
@@ -486,7 +495,39 @@ export default {
     }
   },
   methods: {
+    removeitemchlid(index) {
+      if (this.editmode)
+        this.ChildRemoveHas.push(this.sponsor.childrenaddingtable[index]);
+
+      this.sponsor.childrenaddingtable.splice(index, 1);
+      this.$forceUpdate();
+    },
     addingNewChild() {
+      ///chackdate
+
+      if (
+        this.$moment(
+          $("#reservation")
+            .data("daterangepicker")
+            .startDate.format("YYYY-MM-DD"),
+          "YYYY-MM-DD"
+        ).isSameOrAfter(
+          this.$moment(
+            $("#reservation")
+              .data("daterangepicker")
+              .endDate.format("YYYY-MM-DD"),
+            "YYYY-MM-DD"
+          )
+        )
+      ) {
+        this.ShowMesBox(
+          this.$t("ErrorOnDateMostDataStartFirstEnd"),
+          this.$t("Errorinput"),
+          this.$t("ok")
+        );
+        return;
+      }
+
       for (let index = 0; index < this.children.length; index++) {
         let it_added_befor = false;
         if (this.selectchildrenobjectid == this.children[index].id) {
@@ -506,6 +547,14 @@ export default {
             }
           }
           if (it_added_befor) break;
+
+          this.children[index].startsopnser = $("#reservation")
+            .data("daterangepicker")
+            .startDate.format("YYYY-MM-DD");
+
+          this.children[index].endsponosor = $("#reservation")
+            .data("daterangepicker")
+            .endDate.format("YYYY-MM-DD");
 
           this.sponsor.childrenaddingtable.push(this.children[index]);
           break;
@@ -537,13 +586,33 @@ export default {
       return array;
     },
     enb_edit(id) {
-      this.editmode = true;
       for (let index = 0; index < this.sponsors.length; index++) {
         if (this.sponsors[index].id == id) {
           this.sponsor = this.sponsors[index];
           break;
         }
       }
+      if (this.sponsor.id != 0) {
+        this.sponsor.childrenaddingtable = this.getchildren(this.sponsor.id);
+      }
+
+      if (this.sponsor.tags_id > 0) {
+        var type = {};
+        for (let index = 0; index < this.tags.length; index++) {
+          if (this.tags[index].id == this.sponsor.tags_id) {
+            type = this.tags[index];
+          }
+        }
+
+        if ("id" in type) {
+          if (type.type == "medici") this.tagsifmedicaSelected = "medical";
+          else this.tagsifmedicaSelected = type.type;
+
+          this.tagsifmedicastring = type.name;
+        }
+      }
+
+      this.editmode = true;
     },
     cancelModeEdit() {
       this.cleaninput();
@@ -570,39 +639,32 @@ export default {
       });
     },
     show: function(mess) {},
-    checkinput: function(data, name, mes="", title="" , button ="",rex = "") {
-      if ( button == "")
-      button = this.$t("ok")
+    checkinput: function(
+      data,
+      name,
+      mes = "",
+      title = "",
+      button = "",
+      rex = ""
+    ) {
+      if (button == "") button = this.$t("ok");
 
-      if ( title == "")
-      title =this.$t("Errorinput")
+      if (title == "") title = this.$t("Errorinput");
 
-      if ( mes == "")
-      mes = this.$t("pleaseenter") + this.$t(name)
+      if (mes == "") mes = this.$t("pleaseenter") + this.$t(name);
 
       if (rex == "") {
         if (data == "") {
-          this.ShowMesBox(
-          title ,title,
-            button
-          );
+          this.ShowMesBox(mes ,title, button);
           return false;
         }
-      }else
-      {
-        if (   rex.test(data))
-        {
-          this.ShowMesBox(
-            title ,title,
-              button
-            );
-            return true;
-        }else
-        {
-
-         return false;
+      } else {
+        if (rex.test(data)) {
+          this.ShowMesBox(mes, title, button);
+          return true;
+        } else {
+          return false;
         }
-
       }
 
       return true;
@@ -618,7 +680,8 @@ export default {
     cleaninput: function() {
       this.sponsor = {};
 
-      this.tagsifmedicaSelected = "surgery";
+      this.ChildRemoveHas = [];
+      this.tagsifmedicaSelected = "sopnsors";
       this.tagsifmedicastring = "";
       this.selectchildrenobjectid = 0;
       this.sponsor = {
@@ -630,95 +693,237 @@ export default {
         idnumber: "",
         birthday: "",
         typesponsor: "money",
-        tag_id: null,
+        tags_id: null,
         childrenaddingtable: []
       };
     },
-    checkForm: async function(e) {
-      e.preventDefault();
-      var error = []
-      if ( this.sponsor.typesponsor != "money"){
+    showAllMsg(error) {
+      let msg = "";
 
-        
-          if (!this.checkinput(this.tagsifmedicastring, "tagsifmedicastring")) return false;
-
-         
-            for (let index = 0; index < this.tags.length; index++) {
-              if (this.tags[index].name == this.tagsifmedicastring)
-                this.sponsor.tag_id = this.tags[index].id;
-            }
-
-            if ( this.sponsor.tag_id == null || this.sponsor.tag_id==0)
-            {
-          await this.$api.tags
-            .store({
-              name: this.SrugeryType,
-              type: "sopnsors"
-            })
-            .then(res => {
-              this.child.srugerytypeid = res.data.data.id;
-            })
-            .catch(err => {});
-
-
-
-            }
-          
-       }
-
-      if (this.needsurgery) {
-        if (
-          (this.child.srugerytypeid == 0 || this.child.srugerytypeid == null) &&
-          SrugeryType != ""
-        ) {
-         
-        }
-      } else {
-        this.child.srugerytypeid = null;
+      for (let index = 0; index < error.length; index++) {
+        msg += `<div>${index + 1}. ${error[index].msg}</div> `;
       }
 
+      this.ShowMesBox(msg, this.$t("error"), this.$t("ok"));
+      this.sendbutton = true;
+    },
+    checkForm: async function(e) {
+      e.preventDefault();
+
       this.sendbutton = false;
+      var error = [];
+
+      if (this.sponsor.typesponsor != "money") {
+        if (!this.checkinput(this.tagsifmedicastring, "tagsifmedicastring"))
+          return false;
+
+        for (let index = 0; index < this.tags.length; index++) {
+          if (this.tags[index].name == this.tagsifmedicastring)
+            this.sponsor.tags_id = this.tags[index].id;
+        }
+
+        if (this.sponsor.tags_id == null || this.sponsor.tags_id == 0) {
+          var typeoftag = "sopnsors";
+          if (this.tagsifmedicaSelected == "medical") typeoftag = "medici";
+
+          await this.$api.tags
+            .store({
+              name: this.tagsifmedicastring,
+              type: typeoftag
+            })
+            .then(res => {
+              this.sponsor.tags_id = res.data.data.id;
+            })
+            .catch(err => {
+              console.log(err);
+              error.push({
+                msg: this.$t("IcantAddTags")
+              });
+            });
+        }
+      }
+      if (this.sponsor.typesponsor != "money") {
+        if (this.sponsor.tags_id == 0 || this.sponsor.tags_id == null)
+          error.push({
+            msg: this.$t("IcantAddTags") + " #1"
+          });
+      }
+      if (error.length > 0) {
+        this.showAllMsg(error);
+        return;
+      }
+
       if (
         !this.checkinput(this.sponsor.firstname, "firstname") ||
         !this.checkinput(this.sponsor.lastname, "lastname") ||
         !this.checkinput(this.sponsor.mobilephone, "mobilephone") ||
         !this.checkinput(this.sponsor.phone, "phone") ||
         !this.checkinput(this.sponsor.idnumber, "idnumber") ||
-        !this.checkinput(this.sponsor.birthplace, "birthplace" ) ||
-        !this.checkinput(this.sponsor.birthday, "birthday") 
-      )
+        !this.checkinput(this.sponsor.birthplace, "birthplace") ||
+        !this.checkinput(this.sponsor.birthday, "birthday")
+      ) {
+        this.sendbutton = true;
         return false;
+      }
+
+      if (
+        this.$moment(this.sponsor.birthday, "YYYY-MM-DD").isAfter(
+          this.$moment(new Date())
+        )
+      ) {
+        this.ShowMesBox(
+          this.$t("ErrorOnDataIsAfterNowBirthday"),
+          this.$t("Errorinput"),
+          this.$t("ok")
+        );
+        this.sendbutton = true;
+        return;
+      }
+
       // $('#reservation').data('daterangepicker').startDate.format();
 
-      var error = false;
       if (this.editmode) {
+        /*
+        remove maping in data base
+        */
+        for (let index = 0; index < this.ChildRemoveHas.length; index++) {
+          if ("hasfromsponsors_id" in this.ChildRemoveHas[index])
+            await this.$api.hasfromsponsors
+              .destroy(this.ChildRemoveHas[index].hasfromsponsors_id)
+              .then(res => {})
+              .catch(err => {
+                error.push({ msg: "IcantRemoveItemFromHasChlidrenTable" });
+              });
+          if (error.length > 0) break;
+        }
+        this.ChildRemoveHas = []; // reset Chlid for remove array
+
+        if (error.length > 0) {
+          this.showAllMsg(error);
+          return;
+        }
+
+        /*
+        add maping
+        */
+        for (
+          let index = 0;
+          index < this.sponsor.childrenaddingtable.length;
+          index++
+        ) {
+          if ("hasfromsponsors_id" in this.sponsor.childrenaddingtable[index]) {
+            await this.$api.hasfromsponsors
+              .update({
+                id: this.sponsor.childrenaddingtable[index].hasfromsponsors_id,
+                id_child: this.sponsor.childrenaddingtable[index].id,
+                id_sponsor: this.sponsor.id,
+                startsopnser: this.sponsor.childrenaddingtable[index]
+                  .startsopnser,
+                endsponosor: this.sponsor.childrenaddingtable[index].endsponosor
+              })
+              .then(res => {})
+              .catch(err => {
+                error.push({ msg: "IcantEditMapingChildAndSponsor" });
+              });
+          } else {
+            await this.$api.hasfromsponsors
+              .store({
+                id_child: this.sponsor.childrenaddingtable[index].id,
+                id_sponsor: this.sponsor.id,
+                startsopnser: this.sponsor.childrenaddingtable[index]
+                  .startsopnser,
+                endsponosor: this.sponsor.childrenaddingtable[index].endsponosor
+              })
+              .then(res => {})
+              .catch(err => {
+                // if ( error.res.data.data)
+                error.push({
+                  msg: this.$t("IcantMapingChildAndSponsor")
+                });
+              });
+          }
+          if (error.length > 0) break;
+        }
+        if (error.length > 0) {
+          this.showAllMsg(error);
+          return;
+        }
+
         await this.$api.sponsors
           .update(this.sponsor)
           .then(res => {})
           .catch(error => {
-            error = true;
-            console.log(error);
+            error.push({
+              msg: this.$t("IcantMapingChildAndSponsor")
+            });
           });
+
+        if (error.length > 0) {
+          this.showAllMsg(error);
+          return;
+        } else {
+          this.ShowMesBox(
+            this.$t("updateComplete"),
+            this.$t("updateComplete"),
+            this.$t("ok")
+          );
+        }
       } else {
+        /* **Adding sponsor first
+
+          */
         await this.$api.sponsors
           .store(this.sponsor)
           .then(res => {
-            this.sponsor = res.data.data;
+            this.sponsor.id = res.data.data.id;
           })
-          .catch(error => {
-            error = true;
-            console.log(error);
+          .catch(err => {
+            error.push({ msg: this.$t("icantaddsponsor") });
           });
+        /* **if have error
+
+          */
+        if (error.length > 0) {
+          this.showAllMsg(error);
+          return;
+        }
+        for (
+          let index = 0;
+          index < this.sponsor.childrenaddingtable.length;
+          index++
+        ) {
+          await this.$api.hasfromsponsors
+            .store({
+              id_child: this.sponsor.childrenaddingtable[index].id,
+              id_sponsor: this.sponsor.id,
+              startsopnser: this.sponsor.childrenaddingtable[index]
+                .startsopnser,
+
+              endsponosor: this.sponsor.childrenaddingtable[index].endsponosor
+            })
+            .then(res => {})
+            .catch(err => {
+              // if ( error.res.data.data)
+              error.push({
+                msg: this.$t("IcantMapingChildAndSponsor")
+              });
+            });
+
+          if (error.length > 0) {
+            this.showAllMsg(error);
+            return;
+          }
+        }
+
         this.ShowMesBox(
           this.$t("AddingComplete"),
           this.$t("AddingComplete"),
           this.$t("ok")
         );
       }
-
-      this.cleaninput();
-
       this.fetch();
+      this.cleaninput();
+      this.editmode = false;
       this.sendbutton = true;
     },
     fetch: function() {
