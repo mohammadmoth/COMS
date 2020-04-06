@@ -81,7 +81,7 @@
     "October": "October",
     "November": "November",
     "December": "December",
-    "firstDay": 1,
+    "firstDay": "1",
     "cancel": "Cancel",
     "from": "From",
     "to": "To",
@@ -97,8 +97,15 @@
     "Enter": "Enter",
     "logout": "Logout",
     "surgery": "Surgery",
-    
+
     "money": "Money",
     "medical": "Medical",
-    "educational": "Educational"
+    "educational": "Educational",
+    "IshaveNotChildren" : "Not have Children ",
+    "Sponsor":"Sponsor",
+    "ErrorOnDateMostDataStartFirstEnd":"The start date is equal to or greater than the end date",
+    "AddingComplete":"Added successfully",
+    "updateComplete":"Updated successfully",
+    "IcantAddTags":"I can't Add Tags",
+    "tagsifmedicastring": "Name Of type sponsor"
 }

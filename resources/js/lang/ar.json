@@ -81,7 +81,7 @@
     "October": "تشرين الأول",
     "November": "تشرين الثاني",
     "December": "كانون الأول",
-    "firstDay": 1,
+    "firstDay": "1",
     "cancel": "الغاء",
     "from": "من",
     "to": "الى",
@@ -97,9 +97,16 @@
     "Enter": "ادخل",
     "logout": "تسجل خروج",
     "surgery": "عملية",
-    
+
     "money": "مالي",
     "medical": "طبي",
-    "educational": "تعليمي"
+    "educational": "تعليمي",
+    "IshaveNotChildren":"لا يوجد اطفال",
+    "Sponsor":"داعم",
+    "ErrorOnDateMostDataStartFirstEnd":"تاريخ البداية يساوي او اكبر من تاريخ النهاية",
+    "AddingComplete":"تم اضافة",
+    "updateComplete":"تم التعديل",
+    "IcantAddTags":"لا استطيع اضافة صنف جديد",
+    "tagsifmedicastring":"اسم نوع الدعم"
 
 }
