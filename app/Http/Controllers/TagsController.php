@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use App\tags;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TagsController extends Controller
 {
@@ -33,7 +34,11 @@ class TagsController extends Controller
         $validator = Validator::make($request->all(), [
 
             'name' => 'required|string|max:191',
-            'type' => 'required|string|max:255',
+
+            'type' => [
+                'required','string','max:255',
+                Rule::in(["medici" , "sopnsors" , "warehause"]),
+            ]
         ]);
 
         if ($validator->passes()) {

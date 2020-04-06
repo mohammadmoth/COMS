@@ -35,10 +35,10 @@ class HasfromsponsorsController extends Controller
         $validator = Validator::make($request->all(), [
 
             'id_child'=>"exists:childrens,id",
-            'id_sponsor' =>"exists:tags,id",
+            'id_sponsor' =>"exists:sponsors,id",
             'startsopnser'=>'required|date_format:"Y-m-d"',
             "endsponosor"=>'required|date|after:startsopnser',
-   
+
 
         ]);
 
@@ -47,8 +47,8 @@ class HasfromsponsorsController extends Controller
             $hasfromsponsors->id_child = $request->input("id_child");
             $hasfromsponsors->id_sponsor = $request->input("id_sponsor");
             $hasfromsponsors->startsopnser =Carbon::parse($request->input("startsopnser"))->format('Y-m-d');
-            $hasfromsponsors->endsponosor = Carbon::parse($request->input("endsponosor"))->format('Y-m-d'); 
-           
+            $hasfromsponsors->endsponosor = Carbon::parse($request->input("endsponosor"))->format('Y-m-d');
+
             $hasfromsponsors->save();
 
                     return response()->json([
@@ -100,10 +100,10 @@ class HasfromsponsorsController extends Controller
         $validator = Validator::make($request->all(), [
             'id'=>"exists:hasfromsponsors,id",
             'id_child'=>"exists:childrens,id",
-            'id_sponsor' =>"exists:tags,id",
+            'id_sponsor' =>"exists:sponsors,id",
             'startsopnser'=>'required|date_format:"Y-m-d"',
             "endsponosor"=>'required|date|after:startsopnser',
-       
+
 
         ]);
 
@@ -113,7 +113,7 @@ class HasfromsponsorsController extends Controller
             $hasfromsponsors->id_sponsor = $request->input("id_sponsor");
             $hasfromsponsors->startsopnser = $request->input("startsopnser");
             $hasfromsponsors->endsponosor = $request->input("endsponosor");
-     
+
             $hasfromsponsors->save();
 
             return response()->json([
