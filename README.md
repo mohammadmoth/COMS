@@ -26,6 +26,7 @@ npm run production
 ```bash
 composer instal
 npm install
+php artisan migrate
 npm run production
 ```
 
