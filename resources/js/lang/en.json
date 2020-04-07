@@ -107,5 +107,15 @@
     "AddingComplete":"Added successfully",
     "updateComplete":"Updated successfully",
     "IcantAddTags":"I can't Add Tags",
-    "tagsifmedicastring": "Name Of type sponsor"
+    "tagsifmedicastring": "Name Of type sponsor",
+    "icantaddclinicalexam":"I Cant Add Clinical Exam",
+    "doctorname":"Doctor name",
+    "case":"Case",
+    "date":"Date",
+    "enterdoctorname":"Enter doctor name",
+    "dateofexam":"Date of referrals",
+    "clinicalexam":"Medical referrals",
+    "Entercase":"Enter case",
+    "ShowMesBoxConfingRemove": "Are you suer? ",
+    "table":"Table"
 }

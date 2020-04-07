@@ -11,13 +11,13 @@
       <li class="nav-item d-none d-sm-inline-block">
          <router-link  class="nav-link" :to="{ name: 'home'}"><a >{{$t("homepage")}} </a></router-link>
       </li>
-   
+
     </ul>
 
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-  
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -50,8 +50,8 @@
           <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>
           <NavBarItem :activeItem="false" iconName="user-shield" routeName="sponsors" name="sponsors"></NavBarItem>
 
-          
-          <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>
+
+          <NavBarItem :activeItem="false" iconName="hospital" routeName="clinicalexam" name="clinicalexam"></NavBarItem>
           <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>
                <NavBarItem :activeItem="false" iconName="sign-out-alt" routeName="logout" name="logout"></NavBarItem>
           <li class="nav-header" v-show="$user.getUser().rules=='admin'" >{{$t("admin_nav")}}</li>
@@ -65,12 +65,12 @@
               <p>{{$t("Documentation")}}</p>
             </a>
           </li>
-       
- 
-        
-        
-     
-         
+
+
+
+
+
+
 
         </ul>
       </nav>
@@ -100,7 +100,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content"> 
+    <section class="content">
       <div class="container-fluid">
       <router-view/>
            </div><!-- /.container-fluid -->
@@ -135,7 +135,7 @@ export default {
   },
         data:function () {
                 return {
-                   
+
 
                 }
         },
@@ -145,10 +145,10 @@ export default {
                  }
 
         },
-        mounted() { 
-      
+        mounted() {
+
             this.init()
-  
+
 
         }
     }

@@ -107,6 +107,19 @@
     "AddingComplete":"تم اضافة",
     "updateComplete":"تم التعديل",
     "IcantAddTags":"لا استطيع اضافة صنف جديد",
-    "tagsifmedicastring":"اسم نوع الدعم"
+    "tagsifmedicastring":"اسم نوع الدعم",
+    "icantaddclinicalexam":"لا استطيع فحص للطفل جديد",
+    "doctorname":"اسم الدكتور",
+    "Doctor":"الدكتور",
+    "case":"الحالة",
+    "date":"التاريخ",
+    "enterdoctorname":"ادخل اسم الدكتور",
+    "dateofexam":"تاريخ فحص",
+    "clinicalexam":"احالات",
+    "Entercase":"ادخل الحالة",
+    "ShowMesBoxConfingRemove": "هل انت متأكد ؟",
+    "table":"جدول"
+
+
 
 }

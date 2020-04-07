@@ -13,7 +13,7 @@ export const constantRoutes = [
   { path: '/404', name: "404", component: require("./views/NotFound.vue").default },
   { path: '*', redirect: '/404' },
   { path: '/logout', name: "logout", component: require("./views/logout.vue").default },
-  
+
   {
     path: '/dashboard',
     component: require("./layouts/dashboard.vue").default,
@@ -58,7 +58,17 @@ export const constantRoutes = [
           requiresAuth: true, title: 'users',
           roles: 'admin'
         }
+      },
+      {
+        path: 'clinicalexam',
+        component: require("./pages/clinicalexam.vue").default,
+        name: 'clinicalexam',
+        meta: {
+          requiresAuth: true, title: 'clinicalexam',
+          roles: 'montor'
+        }
       }
+
 
 
     ]

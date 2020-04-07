@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\ClinicalExam;
+use Illuminate\Support\Carbon;
 
 class ClinicalExamController extends Controller
 {
+
+    public  $fliter = [
+
+        'children_id' => "required|exists:childrens,id",
+        'doctor_id' => "required|exists:tags,id",
+        'date' => 'required|date_format:"Y-m-d"',
+        'case' => 'required|max:300'
+
+
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,7 @@ class ClinicalExamController extends Controller
      */
     public function index()
     {
-        return response()->json(['error'=>false ,"data"=>ClinicalExam::get()]);
+        return response()->json(['error' => false, "data" => ClinicalExam::get()]);
     }
 
     /**
@@ -37,28 +48,23 @@ class ClinicalExamController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-
-            'children_id'=>"required|exists:childrens,id",
-            'doctor_id'=>"required|exists:doctors,id",
-
-        ]);
+        $validator = Validator::make($request->all(), $this->fliter);
         if ($validator->passes()) {
-            $clinicalExam= new ClinicalExam();
-            $clinicalExam->children_id=$request->input("children_id");
-            $clinicalExam->doctor_id=$request->input("doctor_id");
+            $clinicalExam = new ClinicalExam();
+            $clinicalExam->children_id = $request->input("children_id");
+            $clinicalExam->doctor_id = $request->input("doctor_id");
+            $clinicalExam->date = Carbon::parse($request->input("date"))->format('Y-m-d');
+            $clinicalExam->case = $request->input("case");
             $clinicalExam->save();
             return response()->json([
-                'error'=>0,"data"=>$clinicalExam
+                'error' => 0, "data" => $clinicalExam
             ]);
-        }
-        else{
+        } else {
             return response()->json([
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
             ]);
-
         }
     }
 
@@ -93,17 +99,17 @@ class ClinicalExamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request["id"]=$id;
-        $validator = Validator::make($request->all(), [
-            'id'=>"exists:clinical_exams,id",
-            'children_id'=>"required|exists:childrens,id",
-            'doctor_id'=>"required|exists:doctors,id",
-        ]);
+        $request["id"] = $id;
+        $this->fliter[] = ['id' => "exists:clinical_exams,id"];
+        $validator = Validator::make($request->all(), $this->fliter);
 
         if ($validator->passes()) {
-            $clinicalExam = ClinicalExam::where("id",$id )->first();
+            $clinicalExam = ClinicalExam::where("id", $id)->first();
             $clinicalExam->children_id = $request["children_id"];
             $clinicalExam->doctor_id = $request["doctor_id"];
+            $clinicalExam->date = Carbon::parse($request->input("date"))->format('Y-m-d');
+            $clinicalExam->case = $request->input("case");
+
             $clinicalExam->save();
 
 
@@ -130,11 +136,10 @@ class ClinicalExamController extends Controller
     public function destroy($id)
     {
         if (!is_numeric($id))
-        return respose()->json(['error'=>true]);
-        ClinicalExam::where('id',$id)->delete();
+            return respose()->json(['error' => true]);
+        ClinicalExam::where('id', $id)->delete();
         return response()->json([
             'error' => 0
         ]);
-
     }
 }

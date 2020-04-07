@@ -37,7 +37,7 @@ class TagsController extends Controller
 
             'type' => [
                 'required','string','max:255',
-                Rule::in(["medici" , "sopnsors" , "warehause"]),
+                Rule::in(["medici" , "sopnsors" , "warehause" ,"doctors"]),
             ]
         ]);
 
@@ -91,7 +91,10 @@ class TagsController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|string|max:191',
             'name' => 'required|string|max:191',
-            'type' => 'required|string|max:255',
+            'type' => [
+                'required','string','max:255',
+                Rule::in(["medici" , "sopnsors" , "warehause" ,"doctors"]),
+            ]
         ]);
 
         if ($validator->passes()) {

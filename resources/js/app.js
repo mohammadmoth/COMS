@@ -15,23 +15,23 @@ import * as auth   from './api/auth.js'
 import * as user   from './api/users.js'
 
 import * as childrens   from './api/childrens.js'
-import * as clinicalExam   from './api/clinicalExam.js'
 import * as sponsors   from './api/sponsors.js'
 import * as tags   from './api/tags.js'
 import * as hasfromsponsors   from './api/hasfromsponsors.js'
+import * as clinicalexam   from './api/clinicalexam.js'
+
 
 import VueMoment from 'vue-moment'
 import moment from 'moment-timezone'
- 
+
 var api = {
   auth:auth,
   user:user,
   childrens:childrens,
-  clinicalExam:clinicalExam,
   sponsors:sponsors,
   tags:tags,
   hasfromsponsors:hasfromsponsors,
-
+  clinicalexam:clinicalexam
 
 };
 Vue.use(VueMoment, {
@@ -97,7 +97,7 @@ const app = new Vue({
     router, // router
     auth,
     user,
- 
+
 //lang start
     i18n: new VueI18n({
         locale: defaultLocale,
