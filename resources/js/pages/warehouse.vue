@@ -301,7 +301,7 @@ export default {
       var data = [];
 
       for (let index = 0; index < datasorting.length; index++) {
-          debugger;
+
         var find = false;
         for (let index2 = 0; index2 < data.length; index2++) {
           if (datasorting[index].tags_id == data[index2].id) {
