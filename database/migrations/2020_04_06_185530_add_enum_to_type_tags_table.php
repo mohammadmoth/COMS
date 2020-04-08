@@ -21,7 +21,7 @@ class AddEnumToTypeTagsTable extends Migration
         });
 
         Schema::table('tags', function (Blueprint $table) {
-            $table->enum('type', ["medici", "sopnsors", "warehause", "doctors"]);
+            $table->enum('type', ["medici", "sopnsors", "warehouse", "doctors"]);
         });
     }
 
