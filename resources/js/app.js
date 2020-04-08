@@ -20,6 +20,7 @@ import * as tags   from './api/tags.js'
 import * as hasfromsponsors   from './api/hasfromsponsors.js'
 import * as clinicalexam   from './api/clinicalexam.js'
 import * as families   from './api/families.js'
+import * as warehouses   from './api/warehouses.js'
 
 
 import VueMoment from 'vue-moment'
@@ -33,7 +34,8 @@ var api = {
   tags:tags,
   hasfromsponsors:hasfromsponsors,
   clinicalexam:clinicalexam,
-  families:families
+  families:families,
+  warehouses:warehouses
 
 };
 Vue.use(VueMoment, {

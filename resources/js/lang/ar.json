@@ -141,7 +141,19 @@
     "families": "العائلات",
     "bad":"سئ",
     "middle":"موسط",
-    "good":"جيد"
+    "good":"جيد",
+    "IcantAddwarehouses":"لا استطيع اضافة مخزن",
+    "Icantupdatewarehouses":"لا اسطيع تعديل في مخزن",
+    "countofwares":"عدد العنصر",
+    "inputoutput":"ادخال/اخراج",
+    "warehouse":"مخزن",
+    "nameware":"اسم العنصر ",
+    "output":"اخراج",
+    "input":"ادخال",
+    "enter":"ادخل",
+    "inventorycount":"جرد",
+    "countonwarehouse":"العدد في المخزن",
+    "warehouses":"مخازن"
 
 
 

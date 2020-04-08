@@ -76,7 +76,17 @@ export const constantRoutes = [
           requiresAuth: true, title: 'families',
           roles: 'montor'
         }
+      },
+      {
+        path: 'warehouse',
+        component: require("./pages/warehouse.vue").default,
+        name: 'warehouse',
+        meta: {
+          requiresAuth: true, title: 'warehouse',
+          roles: 'montor'
+        }
       }
+
 
 
 

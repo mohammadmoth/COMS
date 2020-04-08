@@ -123,8 +123,8 @@
     "family_card_id": "family card id",
     "enterfamily_card_id": "Enter family card id",
     "have_previous_resident_address": "have previous resident address",
-    "previous_resident_address":"previous resident address",
-    "enterprevious_resident_address":"enter previous resident address",
+    "previous_resident_address": "previous resident address",
+    "enterprevious_resident_address": "enter previous resident address",
     "current_resident_address": "current resident address",
     "entercurrent_resident_address": "enter current resident address",
     "economic_status": "Economic status",
@@ -136,8 +136,18 @@
     "AddressInfo": "Address Info",
     "IcantAddfamilies": "I cant Added families",
     "families": "Families",
-    "middle":"middle",
-    "good":"good",
-    "bad":"bad"
-
+    "middle": "middle",
+    "good": "good",
+    "bad": "bad",
+    "IcantAddwarehouses": "I cant Add to warehouses",
+    "Icantupdatewarehouses": "Icant update warehouses",
+    "countofwares": "count of wares",
+    "inputoutput": "input/output",
+    "warehouse": "warehouse",
+    "nameware": "nameware",
+    "output": "output",
+    "input": "input",
+    "enter": "enter",
+    "inventorycount": "inventory count",
+    "countonwarehouse": "count in warehouse"
 }

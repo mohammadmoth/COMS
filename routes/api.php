@@ -46,5 +46,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('medicines',        'MedicinesController');
     Route::apiResource('childrens',         'ChildrensController');
     Route::apiResource('families',         'FamilyController');
+    Route::apiResource('warehouses',         'WarehouseController');
+
+
 
 });
