@@ -511,7 +511,7 @@ export default {
         this.sendbutton = true;
         return false;
       }
-      if (!Number.isInteger(this.family.count)) {
+      if (!Number.isInteger(Number.parseInt (this.family.count))) {
         this.family.count = 0;
         this.checkinput(this.family.count, "count");
         this.sendbutton = true;
