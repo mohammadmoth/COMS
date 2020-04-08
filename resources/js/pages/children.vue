@@ -327,8 +327,8 @@
               type="submit"
               class="btn btn-info"
             >{{ $t(editmodeString) }}</button>
-          
-        
+
+
             <button
               v-show="editmode"
               type="button"
@@ -545,7 +545,7 @@ export default {
         this.child.birthplace= ""
         this.child.birthday= ""
         this.child.srugerytypeid= 0
-    
+
       this.IsSponsored = false;
       this.needsurgery = false;
       this.sponsor={};
@@ -556,7 +556,7 @@ export default {
           this.sponsor.startsopnser= "2000-01-01"
           this.sponsor.endsponosor= "2000-12-30"
           this.sponsor.hasfromsponsors_id=0
-     
+
       this.SrugeryType = "";
       this.sponsorid = 0;
     },
@@ -622,7 +622,7 @@ export default {
         await this.$api.childrens
           .update(this.child)
           .then(res => {
-          
+
           })
           .catch(error => {
             error = true;
@@ -751,7 +751,7 @@ export default {
           console.log(error);
         });
 
-     
+
     }
   },
   mounted() {

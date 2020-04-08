@@ -149,5 +149,9 @@
     "input": "input",
     "enter": "enter",
     "inventorycount": "inventory count",
-    "countonwarehouse": "count in warehouse"
+    "countonwarehouse": "count in warehouse",
+    "ware":"item",
+    "settings":"settings",
+    "warehouses": "warehouses"
+
 }
