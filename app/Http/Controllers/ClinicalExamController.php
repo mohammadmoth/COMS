@@ -64,7 +64,7 @@ class ClinicalExamController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ], $this->badRequest);
         }
     }
 
@@ -123,7 +123,7 @@ class ClinicalExamController extends Controller
                 'error' => 1,
                 'data' => $validator->errors()
                     ->all()
-            ]);
+            ], $this->badRequest);
         }
     }
 
@@ -136,7 +136,7 @@ class ClinicalExamController extends Controller
     public function destroy($id)
     {
         if (!is_numeric($id))
-            return respose()->json(['error' => true]);
+            return respose()->json(['error' => true], $this->badRequest);
         ClinicalExam::where('id', $id)->delete();
         return response()->json([
             'error' => 0
