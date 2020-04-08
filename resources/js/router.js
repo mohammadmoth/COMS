@@ -67,7 +67,20 @@ export const constantRoutes = [
           requiresAuth: true, title: 'clinicalexam',
           roles: 'montor'
         }
+      },
+      {
+        path: 'families',
+        component: require("./pages/families.vue").default,
+        name: 'families',
+        meta: {
+          requiresAuth: true, title: 'families',
+          roles: 'montor'
+        }
       }
+
+
+
+
 
 
 

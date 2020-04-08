@@ -19,6 +19,7 @@ import * as sponsors   from './api/sponsors.js'
 import * as tags   from './api/tags.js'
 import * as hasfromsponsors   from './api/hasfromsponsors.js'
 import * as clinicalexam   from './api/clinicalexam.js'
+import * as families   from './api/families.js'
 
 
 import VueMoment from 'vue-moment'
@@ -31,7 +32,8 @@ var api = {
   sponsors:sponsors,
   tags:tags,
   hasfromsponsors:hasfromsponsors,
-  clinicalexam:clinicalexam
+  clinicalexam:clinicalexam,
+  families:families
 
 };
 Vue.use(VueMoment, {

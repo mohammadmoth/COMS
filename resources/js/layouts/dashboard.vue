@@ -52,7 +52,9 @@
 
 
           <NavBarItem :activeItem="false" iconName="hospital" routeName="clinicalexam" name="clinicalexam"></NavBarItem>
-          <NavBarItem :activeItem="false" iconName="child" routeName="children" name="children"></NavBarItem>
+          <NavBarItem :activeItem="false" iconName="users" routeName="families" name="families"></NavBarItem>
+
+
                <NavBarItem :activeItem="false" iconName="sign-out-alt" routeName="logout" name="logout"></NavBarItem>
           <li class="nav-header" v-show="$user.getUser().rules=='admin'" >{{$t("admin_nav")}}</li>
           <li class="nav-item" v-show="$user.getUser().rules=='admin'" >

@@ -118,7 +118,30 @@
     "clinicalexam":"احالات",
     "Entercase":"ادخل الحالة",
     "ShowMesBoxConfingRemove": "هل انت متأكد ؟",
-    "table":"جدول"
+    "table":"جدول",
+     "husband": "اسم الزوج",
+    "wife": "اسم الزوجة",
+    "enterhusband": "ادخل اسم الزوج",
+    "enterwife": "ادخل اسم الزوجة",
+    "family_card_id": "رقم بطاقة العائلة",
+    "enterfamily_card_id": "ادخل رقم بطاقة العائلة",
+    "have_previous_resident_address": "لديه مسكن سابق",
+    "previous_resident_address":"مسكن سابق",
+    "enterprevious_resident_address":"ادخل مسكن سابق",
+    "current_resident_address": "العنوان الحالي",
+    "entercurrent_resident_address": "ادخل عنوان الحالي",
+    "economic_status": "الحالة الاقتصادية",
+    "entercount": "ادخل عدد الاطفال  ",
+    "count": "عدد الاطفال",
+    "family": "العائلة",
+    "Count": "عدد الاطفال",
+    "Docs": "الوثائق",
+    "AddressInfo": "العناوين",
+    "IcantAddfamilies": "لا استطيع ادخال العائلة",
+    "families": "العائلات",
+    "bad":"سئ",
+    "middle":"موسط",
+    "good":"جيد"
 
 
 
