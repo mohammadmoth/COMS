@@ -152,6 +152,8 @@
     "countonwarehouse": "count in warehouse",
     "ware":"item",
     "settings":"settings",
-    "warehouses": "warehouses"
+    "warehouses": "warehouses",
+    "hasfromsponsors":"Children has been sponsord"
+
 
 }
