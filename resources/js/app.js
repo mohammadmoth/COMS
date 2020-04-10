@@ -50,7 +50,7 @@ const PluginMethodeGlobal = {
 
       Vue.user = user;
       Vue.prototype.$user = user;
-      Vue.prototype.$Version ="Beta 0.1"
+      Vue.prototype.$Version ="Master"
 
       ///api
       Vue.api = api;
