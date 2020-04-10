@@ -495,6 +495,38 @@ export default {
     }
   },
   methods: {
+    ShowMesBoxConfingRemove(id) {
+      var vm = this;
+      $.confirm({
+        title: this.$t("ShowMesBoxConfingRemove"),
+        content:
+          '<div class="form-group">' +
+          "<label>" +
+          this.$t("ShowMesBoxConfingRemove") +
+          "</label>" +
+          "</div>",
+        buttons: {
+          formSubmit: {
+            text: this.$t("ok"),
+            btnClass: "btn-red",
+            action: function() {
+              vm.$api.sponsors.destroy(id);
+              for (let index = 0; index < vm.sponsors.length; index++) {
+                if (vm.sponsors[index].id == id) {
+                  vm.sponsors.splice(index, 1);
+                  break;
+                }
+              }
+            }
+          },
+          cancel: {
+            text: this.$t("cancel"),
+            btnClass: "btn-info",
+            action: function() {}
+          }
+        }
+      });
+    },
     removeitemchlid(index) {
       if (this.editmode)
         this.ChildRemoveHas.push(this.sponsor.childrenaddingtable[index]);
@@ -655,7 +687,7 @@ export default {
 
       if (rex == "") {
         if (data == "") {
-          this.ShowMesBox(mes ,title, button);
+          this.ShowMesBox(mes, title, button);
           return false;
         }
       } else {

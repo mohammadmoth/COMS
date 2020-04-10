@@ -328,7 +328,6 @@
               class="btn btn-info"
             >{{ $t(editmodeString) }}</button>
 
-
             <button
               v-show="editmode"
               type="button"
@@ -430,6 +429,38 @@ export default {
     //tableend
   },
   methods: {
+    ShowMesBoxConfingRemove(id) {
+      var vm = this;
+      $.confirm({
+        title: this.$t("ShowMesBoxConfingRemove"),
+        content:
+          '<div class="form-group">' +
+          "<label>" +
+          this.$t("ShowMesBoxConfingRemove") +
+          "</label>" +
+          "</div>",
+        buttons: {
+          formSubmit: {
+            text: this.$t("ok"),
+            btnClass: "btn-red",
+            action: function() {
+              vm.$api.childrens.destroy(id);
+              for (let index = 0; index < vm.children.length; index++) {
+                if (vm.children[index].id == id) {
+                  vm.children.splice(index, 1);
+                  break;
+                }
+              }
+            }
+          },
+          cancel: {
+            text: this.$t("cancel"),
+            btnClass: "btn-info",
+            action: function() {}
+          }
+        }
+      });
+    },
     enb_edit(id) {
       this.editmode = true;
       for (let index = 0; index < this.children.length; index++) {
@@ -466,7 +497,6 @@ export default {
       }
     },
     cancelModeEdit() {
-
       this.cleaninput();
       this.editmode = false;
     },
@@ -535,27 +565,27 @@ export default {
       return this.$t("TagsNotFound");
     },
     cleaninput: function() {
-     this.child={};
-        this.child.firstname= ""
-        this.child.lastname= ""
-        this.child.mothername= ""
-        this.child.father= ""
-        this.child.mobilephone= ""
-        this.child.phone= ""
-        this.child.birthplace= ""
-        this.child.birthday= ""
-        this.child.srugerytypeid= 0
+      this.child = {};
+      this.child.firstname = "";
+      this.child.lastname = "";
+      this.child.mothername = "";
+      this.child.father = "";
+      this.child.mobilephone = "";
+      this.child.phone = "";
+      this.child.birthplace = "";
+      this.child.birthday = "";
+      this.child.srugerytypeid = 0;
 
       this.IsSponsored = false;
       this.needsurgery = false;
-      this.sponsor={};
-        this.sponsor.id= 0
-          this.sponsor.firstname= "Not"
-          this.sponsor.lastname= "Found"
-          this.sponsor.phone= "00000000000"
-          this.sponsor.startsopnser= "2000-01-01"
-          this.sponsor.endsponosor= "2000-12-30"
-          this.sponsor.hasfromsponsors_id=0
+      this.sponsor = {};
+      this.sponsor.id = 0;
+      this.sponsor.firstname = "Not";
+      this.sponsor.lastname = "Found";
+      this.sponsor.phone = "00000000000";
+      this.sponsor.startsopnser = "2000-01-01";
+      this.sponsor.endsponosor = "2000-12-30";
+      this.sponsor.hasfromsponsors_id = 0;
 
       this.SrugeryType = "";
       this.sponsorid = 0;
@@ -574,7 +604,10 @@ export default {
       }
 
       if (this.needsurgery) {
-        if ( (this.child.srugerytypeid == 0  || this.child.srugerytypeid==null) && SrugeryType != "") {
+        if (
+          (this.child.srugerytypeid == 0 || this.child.srugerytypeid == null) &&
+          SrugeryType != ""
+        ) {
           await this.$api.tags
             .store({
               name: this.SrugeryType,
@@ -621,9 +654,7 @@ export default {
       if (this.editmode) {
         await this.$api.childrens
           .update(this.child)
-          .then(res => {
-
-          })
+          .then(res => {})
           .catch(error => {
             error = true;
             console.log(error);
@@ -647,7 +678,10 @@ export default {
               error = true;
               console.log(error);
             });
-        else if (this.sponsor.id != 0 && ( this.sponsorid == 0 || !this.IsSponsored) )
+        else if (
+          this.sponsor.id != 0 &&
+          (this.sponsorid == 0 || !this.IsSponsored)
+        )
           await this.$api.hasfromsponsors
             .destroy(this.sponsor.hasfromsponsors_id)
             .then(res => {})
@@ -715,7 +749,7 @@ export default {
       this.sendbutton = true;
     },
     fetch: function() {
-       this.$api.hasfromsponsors
+      this.$api.hasfromsponsors
         .index()
         .then(res => {
           this.hasfromsponsors = res.data.data;
@@ -750,8 +784,6 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-
-
     }
   },
   mounted() {
