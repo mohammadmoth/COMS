@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Hasfromsponsors;
 use App\Sponsors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,7 @@ class SponsorsController extends Controller
     }
     public function __construct()
     {
-        
+
        $this->filter = [
 
             'firstname' => 'required|string|max:191',
@@ -153,7 +154,8 @@ class SponsorsController extends Controller
         if ( !is_numeric($id))
         return response()->json(['error'=>true],$this->badRequest);
 
-
+            $hasfromsponsors = new \App\Hasfromsponsors();
+            $hasfromsponsors->where("id_sponsor" , $id)->delete();
            $sponsors->whereId( $id)-> delete();
 
             return response()->json([
