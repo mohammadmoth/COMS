@@ -9,6 +9,9 @@ use Illuminate\Support\Carbon;
 
 class ChildrensController extends Controller
 {
+
+
+    public $filds   ;
     /**
      * Display a listing of the resource.
      *
@@ -20,16 +23,10 @@ class ChildrensController extends Controller
 
         //
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
 
-        $validator = Validator::make($request->all(), [
+    public function __construct()
+    {
+        $this->filds =   [
 
             'firstname' => "required|string",
             'lastname' => "required|string",
@@ -41,7 +38,18 @@ class ChildrensController extends Controller
             'birthday' => 'required|date_format:"Y-m-d"|before_or_equal:' . date('d/m/Y'),
             'srugerytypeid' => 'nullable|exists:tags,id',
 
-        ]);
+        ];
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $validator = Validator::make($request->all(),$this->filds);
 
         if ($validator->passes()) {
             $Childrens = new Childrens();
@@ -110,20 +118,8 @@ class ChildrensController extends Controller
     public function update(Request $request, Childrens $Childrens, $id)
     {
         $request["id"] = $id;
-        $validator = Validator::make($request->all(), [
-            'id' => "exists:childrens,id",
-            'firstname' => "required|string",
-            'lastname' => "required|string",
-            'mothername' => "required|string",
-            "father" => "required|string",
-            'mobilephone' => 'required',
-            'phone' => 'required',
-            'birthplace' => 'required',
-            'birthday' => 'required|date_format:Y-m-d|before_or_equal:' . date('Y-m-d'),
-            'srugerytypeid' => 'required|exists:tags,id',
-
-
-        ]);
+        $this->filds[] = [ 'id' => "exists:childrens,id"];
+        $validator = Validator::make($request->all(), $this->filds);
 
         if ($validator->passes()) {
             $Childrens = $Childrens::find($id);
@@ -136,7 +132,8 @@ class ChildrensController extends Controller
             $Childrens->phone = $request->input("phone");
 
             $Childrens->birthplace = $request->input("birthplace");
-            $Childrens->birthday = $request->input("birthday");
+            $Childrens->birthday = Carbon::parse($request->input("birthday"))->format('Y-m-d');
+
             $Childrens->srugerytypeid = $request->input("srugerytypeid");
             $Childrens->save();
             return response()->json([
